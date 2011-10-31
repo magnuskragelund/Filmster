@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filmster.Data", "Filmster.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filmster.Web", "Filmster.Web\Filmster.Web.csproj", "{FF756176-8416-4F67-9F37-D4C68575A058}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filmster.Web.Tests", "Filmster.Web.Tests\Filmster.Web.Tests.csproj", "{AC9F6227-BF11-482A-A1AA-503F433482F5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filmster.Common", "Filmster.Common\Filmster.Common.csproj", "{BB56E619-EC6F-4FD1-A544-DBA825C91DA1}"
 EndProject
 Global
@@ -51,16 +49,6 @@ Global
 		{FF756176-8416-4F67-9F37-D4C68575A058}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{FF756176-8416-4F67-9F37-D4C68575A058}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{FF756176-8416-4F67-9F37-D4C68575A058}.Release|x86.ActiveCfg = Release|Any CPU
-		{AC9F6227-BF11-482A-A1AA-503F433482F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC9F6227-BF11-482A-A1AA-503F433482F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC9F6227-BF11-482A-A1AA-503F433482F5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{AC9F6227-BF11-482A-A1AA-503F433482F5}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{AC9F6227-BF11-482A-A1AA-503F433482F5}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AC9F6227-BF11-482A-A1AA-503F433482F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC9F6227-BF11-482A-A1AA-503F433482F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AC9F6227-BF11-482A-A1AA-503F433482F5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{AC9F6227-BF11-482A-A1AA-503F433482F5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{AC9F6227-BF11-482A-A1AA-503F433482F5}.Release|x86.ActiveCfg = Release|Any CPU
 		{BB56E619-EC6F-4FD1-A544-DBA825C91DA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BB56E619-EC6F-4FD1-A544-DBA825C91DA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB56E619-EC6F-4FD1-A544-DBA825C91DA1}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
