@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<publishData>
+  <publishProfile publishUrl="80.70.4.57:8172/MsDeploy.axd" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="beta.filmster.dk" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="True" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Filmster Test" publishMethod="MSDeploy" replaceMatchingFiles="True" userName="administrator" savePWD="True" userPWD="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAKMx5yw2hbk6vjv13lxH+VwAAAAACAAAAAAAQZgAAAAEAACAAAABLZ0JoqnfQLj1uJ1nbnX8/dOyA1Sg8L9R5JfqGM3IVQQAAAAAOgAAAAAIAACAAAAAFzvCnAvgcEkg/+oCQAwWlMWqDSCQOJi/oltM+VWgbpiAAAABpzt5cGMEIiMoonZYSu2XrQMLxYUqwxJAsy93nlWzZkkAAAAAygpOBGUOenFGsNa9ZqdGWGYxoAGKPWCLLHTY+/Fh9Av6MVL4/Q3YnRRoUbQACBx2tcC4BdpEB8M8G2x7kHzbi" SelectedForPublish="True" />
+</publishData>

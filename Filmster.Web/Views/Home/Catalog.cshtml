@@ -1,0 +1,29 @@
+﻿@using Filmster.Web.Utils
+@model Filmster.Web.Models.CatalogViewModel
+
+@{
+    ViewBag.Title = "Filmliste";
+}
+
+<h2>Katalog</h2>
+<div class="catalog">
+    <ol class="alphabet">
+        @foreach (var character in Model.Alphabet)
+        {
+            if(!character.Equals(Model.SelectedValue, StringComparison.InvariantCultureIgnoreCase))
+            {
+                <li>@Html.RouteLink(character, new {controller = "Home", action = "Catalog", id = character })</li>
+            }
+            else
+            {
+                <li>@character</li>
+            }
+        }
+    </ol>
+    <ol>
+        @foreach (var movie in Model.Movies)
+        {
+            <li>@Html.RouteLink(@movie.Title, movie.RouteValues())</li>
+        }
+    </ol>
+</div>
