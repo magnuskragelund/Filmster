@@ -16,6 +16,7 @@ namespace Filmster.Crawlers
         public SputnikCrawler()
         {
             DocumentEncoding = Encoding.GetEncoding("ISO-8859-1");
+            AllowUpdatePlot = false;
         }
 
         public void Start()

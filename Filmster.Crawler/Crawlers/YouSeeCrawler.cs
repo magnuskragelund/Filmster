@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Web;
 using Filmster.Common;
 using Filmster.Crawler;
 using Filmster.Data;
@@ -23,9 +24,10 @@ namespace Filmster.Crawlers
 
             HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//div[@class='list']//a[contains(@href, '/film/')]");
 
-            while (list != null && list.Count > 0)
-            //while(page == 1)
+            //while (list != null && list.Count > 0)
+                while (page == 1)
             {
+                page++;
                 foreach (HtmlNode htmlNode in list)
                 {
                     var path = htmlNode.Attributes["href"].Value;
@@ -34,7 +36,6 @@ namespace Filmster.Crawlers
 
                 doc = GetDocument(string.Format(_crawlstart, page));
                 list = doc.DocumentNode.SelectNodes("//div[@class='list']/div/a[contains(@href, '/film/')]");
-                page++;
             }
 
             StartedThreads = moviesToLoad.Count;
@@ -73,7 +74,7 @@ namespace Filmster.Crawlers
                 float price = 0;
                 int releaseYear = 0;
                 var title = doc.SelectSingleNode("//div[@class='summary']//h1").InnerText.Trim();
-                var plot = doc.SelectSingleNode("//div[@class='summary']/p").InnerText.Trim();
+                var plot = HttpUtility.HtmlDecode(doc.SelectSingleNode("//div[@class='summary']/p").InnerText.Trim());
                 var coverUrl = doc.SelectSingleNode("//div[@id='movie_info']/a/img").Attributes["src"].Value;
                 float.TryParse(doc.InnerText.SubstringByStringToString("DKK", ",-", false), out price);
                 int.TryParse(doc.SelectNodes("//div[@class='summary']/table//td[@class='col2']")[0].InnerText, out releaseYear);
@@ -94,7 +95,10 @@ namespace Filmster.Crawlers
 
         private void DecrementThreadCount()
         {
-            
+            if (Interlocked.Decrement(ref StartedThreads) == 0)
+            {
+                DoneEvent.Set();
+            }
         }
     }
 }

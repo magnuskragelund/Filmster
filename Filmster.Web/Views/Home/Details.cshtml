@@ -2,7 +2,7 @@
 @model Movie
 
 @{
-    ViewBag.Title = @Model.Title + " - her kan du streame filmen online";
+    ViewBag.Title = "Se " + @Model.Title + " online for kun " + @Model.RentalOptions.OrderBy(r => r.Price).First().Price + "kr,- med filmster";
 }
 
 <h2>@Model.Title</h2>
