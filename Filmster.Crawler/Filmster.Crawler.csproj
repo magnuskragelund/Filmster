@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Crawlers\YouSeeCrawler.cs" />
     <Compile Include="Crawlers\SFAnytimeCrawler.cs" />
     <Compile Include="Crawlers\HeadwebCrawler.cs" />
     <Compile Include="Crawlers\FilstribenCrawler.cs" />
