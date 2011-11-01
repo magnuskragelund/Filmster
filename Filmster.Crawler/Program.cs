@@ -10,7 +10,7 @@ namespace Filmster.Crawler
     {
         static void Main(string[] args)
         {
-            ThreadPool.SetMaxThreads(15, 15);
+            ThreadPool.SetMaxThreads(40, 40);
             Database.SetInitializer(new FilmsterInitializer());
             
             new YouSeeCrawler().Start();

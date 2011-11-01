@@ -24,16 +24,17 @@ namespace Filmster.Crawlers
             HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//div[@class='list']//a[contains(@href, '/film/')]");
 
             while (list != null && list.Count > 0)
+            //while(page == 1)
             {
-                doc = GetDocument(string.Format(_crawlstart, page));
-                list = doc.DocumentNode.SelectNodes("//div[@class='list']//a[contains(@href, '/film/')]");
-                page++;
-            }
+                foreach (HtmlNode htmlNode in list)
+                {
+                    var path = htmlNode.Attributes["href"].Value;
+                    moviesToLoad.Add("http://yousee.tv" + path);
+                }
 
-            foreach (HtmlNode htmlNode in list)
-            {
-                var path = htmlNode.Attributes["href"].Value;
-                moviesToLoad.Add("http://yousee.tv" + path);
+                doc = GetDocument(string.Format(_crawlstart, page));
+                list = doc.DocumentNode.SelectNodes("//div[@class='list']/div/a[contains(@href, '/film/')]");
+                page++;
             }
 
             StartedThreads = moviesToLoad.Count;
@@ -59,16 +60,23 @@ namespace Filmster.Crawlers
 
                 var doc = GetDocument(movieUrl).DocumentNode;
 
+                if(!doc.InnerText.Contains("DKK"))
+                {
+                    DecrementThreadCount();
+                    Logger.LogVerbose("Skipping movie due to access restrictions");
+                    return;
+                }
+
                 const bool porn = false;
-                const int releaseYear = 0;
-                const int vendorId = 2;
+                const int vendorId = 6;
                 
                 float price = 0;
-
-                var title = doc.SelectSingleNode("//div[@id='content']//div[@class='info']//h1").InnerText.Trim();
-                var plot = doc.SelectSingleNode("//div[@id='content']//div[@class='info']//p").InnerText.Trim();
-                var coverUrl = doc.SelectSingleNode("//img[@class='poster']").Attributes["src"].Value;
-                float.TryParse(doc.InnerText.SubstringByStringToString("\"price\":", ",", false), out price);
+                int releaseYear = 0;
+                var title = doc.SelectSingleNode("//div[@class='summary']//h1").InnerText.Trim();
+                var plot = doc.SelectSingleNode("//div[@class='summary']/p").InnerText.Trim();
+                var coverUrl = doc.SelectSingleNode("//div[@id='movie_info']/a/img").Attributes["src"].Value;
+                float.TryParse(doc.InnerText.SubstringByStringToString("DKK", ",-", false), out price);
+                int.TryParse(doc.SelectNodes("//div[@class='summary']/table//td[@class='col2']")[0].InnerText, out releaseYear);
 
                 ResolveRentalOption(repository, movieUrl, coverUrl, vendorId, title, plot, releaseYear, porn, false, price);
 
@@ -81,10 +89,12 @@ namespace Filmster.Crawlers
                 LogCrawlerError(ex);
             }
 
-            if (Interlocked.Decrement(ref StartedThreads) == 0)
-            {
-                DoneEvent.Set();
-            }
+            DecrementThreadCount();
+        }
+
+        private void DecrementThreadCount()
+        {
+            
         }
     }
 }
