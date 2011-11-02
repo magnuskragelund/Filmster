@@ -7,3 +7,4 @@ Vi mangler crawlere til
 
 
 Vi har adgang til tmdb.org's api her: http://api.themoviedb.org/2.1 API KEY: b0bbdb5a4e710542988a73c0a27c62d9
+Vi har en masse ikke-film-urler i itunes crawler plus priser bliver regnet forket 

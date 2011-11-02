@@ -13,7 +13,8 @@ namespace Filmster.Crawler
             ThreadPool.SetMaxThreads(40, 40);
             Database.SetInitializer(new FilmsterInitializer());
 
-            new SputnikCrawler().Start();
+            new ItunesCrawler().Start();
+            //new SputnikCrawler().Start();
             //new YouSeeCrawler().Start();
             //new HeadwebCrawler().Start();
             //new ViaPlayCrawler().Start();
