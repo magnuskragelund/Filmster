@@ -5,23 +5,27 @@
     ViewBag.Title = "Se " + @Model.Title + " online for kun " + @Model.RentalOptions.OrderBy(r => r.Price).First().Price + "kr,- med filmster";
 }
 
-<h2>@Model.Title</h2>
-<img src="@Model.RentalOptions.First().CoverUrl" alt="@Model.Title"/>
-<p>@Model.Plot</p>
-<table>
-    <tr>
-        <th>Udlejer</th>
-        <th>HD</th>
-        <th>Pris</th>
-        <th>Lej</th>
-    </tr>
-    @foreach (var rentalOption in Model.RentalOptions)
-    {
-        <tr>
-            <td>@rentalOption.Vendor.Name</td>
-            <td>@(rentalOption.HighDefinition ? "Ja" : "Nej")</td>
-            <td>@rentalOption.Price,-</td>
-            <td><a href="@rentalOption.Url" rel="nofollow">Lej!</a></td>
-        </tr>
-    }
-</table>
+<section class="block details">
+    <h2>@Model.Title</h2>
+    <img class="cover" src="@Model.RentalOptions.First().CoverUrl" alt="@Model.Title"/>
+    <p>@Model.Plot</p>
+    <section>
+        <table>
+            <tr>
+                <th>Udlejer</th>
+                <th>HD</th>
+                <th>Pris</th>
+                <th>Lej</th>
+            </tr>
+            @foreach (var rentalOption in Model.RentalOptions)
+            {
+                <tr>
+                    <td>@rentalOption.Vendor.Name</td>
+                    <td>@(rentalOption.HighDefinition ? "Ja" : "Nej")</td>
+                    <td>@rentalOption.Price,-</td>
+                    <td><a href="@rentalOption.Url" rel="nofollow">Lej!</a></td>
+                </tr>
+            }
+        </table>
+    </section>
+</section>
