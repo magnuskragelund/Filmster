@@ -47,18 +47,4 @@ namespace Filmster.Web
             Database.SetInitializer(new FilmsterInitializer());
         }        
     }
-
-    internal class MovieExistsConstraint : IRouteConstraint
-    {
-        private IFilmsterRepository _repo;
-        public MovieExistsConstraint()
-        {
-            _repo = new FilmsterRepository();
-        }
-        
-        public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
-        {
-            return _repo.GetMovie(Convert.ToInt32(values["id"])) != null;
-        }
-    }
 }

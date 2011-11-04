@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Web;
 using Filmster.Crawler;
 using Filmster.Data;
 using HtmlAgilityPack;
@@ -60,6 +61,7 @@ namespace Filmster.Crawlers
         {
             Movie movie;
             var existingMovie = repository.GetMovie(title, null);
+            plot = HttpUtility.HtmlDecode(plot);
             
             if (existingMovie != null)
             {

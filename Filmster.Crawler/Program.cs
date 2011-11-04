@@ -16,11 +16,11 @@ namespace Filmster.Crawler
 
             //new YouSeeCrawler().Start();
             //new SFAnytimeCrawler().Start();
-            new VoddlerCrawler().Start();
+            //new VoddlerCrawler().Start();
             //new ItunesCrawler().Start();
             //new SputnikCrawler().Start();
             //new HeadwebCrawler().Start();
-            //new ViaPlayCrawler().Start();
+            new ViaPlayCrawler().Start();
             //new FilmstribenCrawler().Start();
         }
     }

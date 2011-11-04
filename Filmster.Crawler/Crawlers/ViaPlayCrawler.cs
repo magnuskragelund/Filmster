@@ -11,34 +11,20 @@ namespace Filmster.Crawlers
     internal class ViaPlayCrawler : Crawlers.Crawler
     {
         private string _crawlstart =
-            "http://viaplay.dk/Handlers/SelectorSearchHandler.ashx?searchString=%26f1%3DUserDef18%26d1%3DPC%26o1%3Dctn%26f2%3DUserDef14%26d2%3D%26o2%3Dctn%26co2%3DAND&searchAtoZString=&sortBy=AtoZ&sortOrder=asc&pageSize=100&currentPage={0}&ViewType=None&_ViewType=&categoryIds=&category=movies&filter=rental&RowId=1&Genre=&GenreName=&movieCategoryId=0&isTelevision=false&ClientID=ctl00_cpBody_SearchResults&ShowNewArrivalsIfEmpty=false&Newtitlescategories=";
+            "http://beta.viaplay.dk/film/alle/250/alphabetical";
 
         public void Start()
         {
-            var page = 1;
-            var resultContainsMovies = true;
             var moviesToLoad = new List<string>();
 
-            while (resultContainsMovies)
-                //while (page == 1)
+            var doc = GetDocument(_crawlstart);
+
+            HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//ul[@class='atoz-list']//a[contains(@href, '/film/')]");
+
+
+            foreach (HtmlNode htmlNode in list)
             {
-                Logger.LogVerbose("Fetching page " + page);
-                page++;
-
-                var doc = GetDocument(string.Format(_crawlstart, page));
-
-                HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//a[contains(@href, '/Movies/')]");
-
-                if (list == null)
-                {
-                    resultContainsMovies = false;
-                    break;
-                }
-
-                foreach (HtmlNode htmlNode in list)
-                {
-                    moviesToLoad.Add("http://viaplay.dk" + htmlNode.Attributes["href"].Value);
-                }
+                moviesToLoad.Add("http://viaplay.dk" + htmlNode.Attributes["href"].Value);
             }
 
             StartedThreads = moviesToLoad.Count;
@@ -65,9 +51,9 @@ namespace Filmster.Crawlers
                 int releaseYear = 0;
                 float price = 0;
 
-                var title = doc.SelectSingleNode("//h1[@class='tit-h1']").InnerText.Trim();
-                var plot = doc.SelectSingleNode("//div[@id='plProduct']//p[@class='info-vid']").InnerText.Trim();
-                var coverUrl = doc.SelectSingleNode("//div[@id='plProduct']//img").Attributes["src"].Value;
+                var title = doc.SelectSingleNode("//h1").InnerText.Trim();
+                var plot = doc.SelectSingleNode("//div[@class='article-content']//p").InnerText.Trim();
+                var coverUrl = doc.SelectNodes("//div[@id='productSelect']//img")[0].Attributes["src"].Value;
 
                 if (title.Contains(" (HD)"))
                 {
@@ -75,10 +61,10 @@ namespace Filmster.Crawlers
                     title = title.Replace(" (HD)", "");
                 }
 
-                int.TryParse(doc.SelectNodes("//div[(@id='calification')]//div[@class='row cali']")[2].InnerText.RemoveNonNumericChars(), out releaseYear);
-                float.TryParse(
-                    doc.InnerHtml.SubstringByStringToString("&price=", "%2c", false),
-                    out price);
+                int.TryParse(doc.SelectSingleNode("//h2[(@class='genre')]").InnerText.RemoveNonNumericChars(), out releaseYear);
+                //float.TryParse(
+                //    doc.InnerHtml.SubstringByStringToString("&price=", "%2c", false),
+                //    out price);
 
                 ResolveRentalOption(repository, movieUrl, coverUrl, vendorId, title, plot, releaseYear, false, highDef, price);
                 repository.Save();

@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.Routing;
 using Filmster.Data;
 
@@ -24,8 +25,9 @@ namespace Filmster.Web.Utils
                 .Replace("ø", "oe")
                 .Replace("å", "aa")
                 .Replace(" ", "-")
-                .Replace("'", "")
                 .Replace("&", "and");
+
+            title = Regex.Replace(title, @"[^\w-]", "");
 
             return title;
         }
