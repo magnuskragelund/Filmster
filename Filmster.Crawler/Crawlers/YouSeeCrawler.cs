@@ -24,8 +24,8 @@ namespace Filmster.Crawlers
 
             HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//div[@class='list']//a[contains(@href, '/film/')]");
 
-            //while (list != null && list.Count > 0)
-                while (page == 1)
+            while (list != null && list.Count > 0)
+            //while (page == 1)
             {
                 page++;
                 foreach (HtmlNode htmlNode in list)

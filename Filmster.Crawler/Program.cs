@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Globalization;
 using System.Threading;
 using Filmster.Crawlers;
 using Filmster.Data;
@@ -13,13 +14,13 @@ namespace Filmster.Crawler
             ThreadPool.SetMaxThreads(40, 40);
             Database.SetInitializer(new FilmsterInitializer());
 
-            new ItunesCrawler().Start();
-            //new SputnikCrawler().Start();
             //new YouSeeCrawler().Start();
+            //new SFAnytimeCrawler().Start();
+            new VoddlerCrawler().Start();
+            //new ItunesCrawler().Start();
+            //new SputnikCrawler().Start();
             //new HeadwebCrawler().Start();
             //new ViaPlayCrawler().Start();
-            //new SFAnytimeCrawler().Start();
-            //new VoddlerCrawler().Start();
             //new FilmstribenCrawler().Start();
         }
     }
