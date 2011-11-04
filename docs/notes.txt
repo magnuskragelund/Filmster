@@ -5,5 +5,5 @@ Vi mangler crawlere til
 * Filmstriben (POST issue)
 --------------------------
 
-Check https://chrome.google.com/webstore/category/home for ide til film line-up
+https://chrome.google.com/webstore/category/home for ide til film line-up
 Vi har adgang til tmdb.org's api her: http://api.themoviedb.org/2.1 API KEY: b0bbdb5a4e710542988a73c0a27c62d9
