@@ -65,8 +65,33 @@ namespace Filmster.Crawlers
                 //float.TryParse(
                 //    doc.InnerHtml.SubstringByStringToString("&price=", "%2c", false),
                 //    out price);
+                
+                var id = doc.SelectSingleNode("//div[@id='productSelect']").Attributes["data-product-id"].Value;
+                var overlay = GetDocument("http://beta.viaplay.dk/ahah/overlay?productId=" + id).DocumentNode;
+                var rent = overlay.SelectSingleNode("//div[@data-content='movies']//p[@class='alternative']/a");
+                var subscription = overlay.SelectSingleNode("//div[@data-content='movies']//span[@class='price']");
+                var subscriptionBased = false;
+                
+                if(rent.InnerText.Contains("lej denne film"))
+                {
+                    // for rent
+                    movieUrl = "http://beta.viaplay.dk" + rent.Attributes["href"].Value;
+                    float.TryParse(
+                        rent.InnerHtml.RemoveNonNumericChars(),
+                        out price);
+                }
+                else
+                {
+                    // subscriptionbased
+                    float.TryParse(
+                        subscription.InnerHtml.RemoveNonNumericChars(),
+                        out price);
+                    subscriptionBased = true;
+                }
 
-                ResolveRentalOption(repository, movieUrl, coverUrl, vendorId, title, plot, releaseYear, false, highDef, price);
+
+
+                ResolveRentalOption(repository, movieUrl, coverUrl, vendorId, title, plot, releaseYear, false, highDef, price, subscriptionBased);
                 repository.Save();
 
                 Logger.LogVerbose(title.Trim());

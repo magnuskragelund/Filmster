@@ -28,6 +28,7 @@ namespace Filmster.Data
         public bool HighDefinition { get; set; }
         public string Url { get; set; }
         public string CoverUrl { get; set; }
+        public bool SubscriptionBased { get; set; }
         public DateTime Added { get; set; }
         public DateTime LastSeen { get; set; }
         public virtual Movie Movie { get; set; }

@@ -57,7 +57,7 @@ namespace Filmster.Crawlers
             return sb.ToString().Substring(1);
         }
 
-        internal void ResolveRentalOption(IFilmsterRepository repository ,string movieUrl, string coverUrl, int vendorId, string title, string plot, int releaseYear, bool porn, bool highDef, float price)
+        internal void ResolveRentalOption(IFilmsterRepository repository ,string movieUrl, string coverUrl, int vendorId, string title, string plot, int releaseYear, bool porn, bool highDef, float price, bool subscriptionBased = false)
         {
             Movie movie;
             var existingMovie = repository.GetMovie(title, null);
@@ -105,6 +105,7 @@ namespace Filmster.Crawlers
             {
                 rentalOption = existingOption;
                 rentalOption.Price = price;
+                rentalOption.SubscriptionBased = subscriptionBased;
                 rentalOption.Url = movieUrl;
                 rentalOption.CoverUrl = coverUrl;
                 rentalOption.LastSeen = DateTime.Now;
@@ -118,6 +119,7 @@ namespace Filmster.Crawlers
                                        Price = price,
                                        Url = movieUrl,
                                        CoverUrl = coverUrl,
+                                       SubscriptionBased = subscriptionBased,
                                        HighDefinition = highDef,
                                        Added = DateTime.Now,
                                        LastSeen = DateTime.Now
