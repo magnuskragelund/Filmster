@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using Lucene.Net.Analysis;
+using Lucene.Net.Analysis.Standard;
+using Lucene.Net.QueryParsers;
+using Lucene.Net.Search;
+using Lucene.Net.Store;
+using Version = Lucene.Net.Util.Version;
 
 namespace Filmster.Data
 {
     public class FilmsterRepository : IFilmsterRepository
     {
         private FilmsterMovies _context;
+        private string _luceneIndexPath = ConfigurationManager.AppSettings["LuceneIndexPath"];
 
         public FilmsterRepository()
         {
@@ -65,11 +73,28 @@ namespace Filmster.Data
             _context.RentalOptions.Add(rentalOption);
         }
 
-        public List<Movie> Query(string query)
+        public List<Movie> Query(string q)
         {
-            return _context.Movies
-                .Where(m => m.Title.Contains(query))
-                .Take(20).ToList();
+            Directory directory = FSDirectory.Open(new System.IO.DirectoryInfo(_luceneIndexPath));
+            Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_29);
+
+            MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_29, new[] { "plot", "title" }, analyzer);
+            Query query = parser.Parse(q);
+            IndexSearcher searcher = new IndexSearcher(directory);
+            Hits hits = searcher.Search(query);
+
+            var movies = new List<Movie>();
+
+            for(var i = 0; i < hits.Length(); i++)
+            {
+                var document = hits.Doc(i);
+                movies.Add(GetMovie(int.Parse(document.Get("id"))));
+            }
+
+            return movies;
+            //return _context.Movies
+            //    .Where(m => m.Title.Contains(query))
+            //    .Take(20).ToList();
         }
 
         public void Save()

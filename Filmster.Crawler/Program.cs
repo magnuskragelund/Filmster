@@ -19,8 +19,8 @@ namespace Filmster.Crawler
             new ItunesCrawler().Start();
             new ViaPlayCrawler().Start();
             new SFAnytimeCrawler().Start();
-            new YouSeeCrawler().Start();
-            new SputnikCrawler().Start();
+            //new YouSeeCrawler().Start();
+            //new SputnikCrawler().Start();
             //new FilmstribenCrawler().Start();
         }
     }

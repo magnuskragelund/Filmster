@@ -17,16 +17,25 @@ namespace Filmster.Crawlers
         internal ManualResetEvent DoneEvent = new ManualResetEvent(false);
         internal int StartedThreads;
         internal bool AllowUpdatePlot = true;
+        private object _lock = new object();
 
         private readonly HtmlWeb _htmlWeb = new HtmlWeb();
 
         internal HtmlDocument GetDocument(string url)
         {
-            Logger.LogVerbose("Loading page: " + url);
-            _htmlWeb.AutoDetectEncoding = false;
-            _htmlWeb.OverrideEncoding = DocumentEncoding;
-            HtmlDocument doc = _htmlWeb.Load(url);
-            return doc;
+            try
+            {
+                Logger.LogVerbose("Loading page: " + url);
+                _htmlWeb.AutoDetectEncoding = false;
+                _htmlWeb.OverrideEncoding = DocumentEncoding;
+                HtmlDocument doc = _htmlWeb.Load(url);
+                return doc;
+            }
+            catch (Exception e)
+            {
+                Logger.LogException("Failed loading document: " + url, e);
+                throw;
+            }
         }
 
         internal HtmlDocument PostDocument(NameValueCollection formValueCollection, string url)
@@ -60,7 +69,6 @@ namespace Filmster.Crawlers
         internal void ResolveRentalOption(IFilmsterRepository repository ,string movieUrl, string coverUrl, int vendorId, string title, string plot, int releaseYear, bool porn, bool highDef, float price, bool subscriptionBased = false)
         {
             Movie movie;
-            var existingMovie = repository.GetMovie(title, null);
             
             // some normalizing
             plot = HttpUtility.HtmlDecode(plot);
@@ -75,57 +83,61 @@ namespace Filmster.Crawlers
             if (title.EndsWith(" IIII", StringComparison.InvariantCulture)) title = title.Replace(" IIII", " 4");
             if (title.EndsWith(" IIIII", StringComparison.InvariantCulture)) title = title.Replace(" IIIII", " 5");
             if (title.EndsWith(", the", StringComparison.InvariantCultureIgnoreCase)) title = string.Format("The " + title.Replace(",the ", ""));
-            
-            if (existingMovie != null)
+
+            lock(_lock)
             {
-                if(AllowUpdatePlot)
+                var existingMovie = repository.GetMovie(title, null);
+                if (existingMovie != null)
                 {
-                    existingMovie.Plot = plot;
+                    if (AllowUpdatePlot)
+                    {
+                        existingMovie.Plot = plot;
+                    }
+
+                    movie = existingMovie;
+                }
+                else
+                {
+                    DateTime? releaseDate = (releaseYear == 0) ? null : new DateTime().AddYears(releaseYear) as DateTime?;
+                    movie = new Movie()
+                    {
+                        Title = title,
+                        Plot = plot,
+                        ReleaseDate = releaseDate,
+                        Porn = false
+                    };
+                    repository.AddMovie(movie);
+                    Logger.Log("New Movie found: " + movie.Title);
                 }
 
-                movie = existingMovie;
-            }
-            else
-            {
-                DateTime? releaseDate = (releaseYear == 0) ? null : new DateTime().AddYears(releaseYear) as DateTime?;
-                movie = new Movie()
-                            {
-                                Title = title,
-                                Plot = plot,
-                                ReleaseDate = releaseDate,
-                                Porn = false
-                            };
-                repository.AddMovie(movie);
-                Logger.Log("New Movie found: " + movie.Title);
-            }
-
-            RentalOption rentalOption;
-            var existingOption = repository.GetRentalOption(movie.Id, vendorId, highDef);
-            if (existingOption != null)
-            {
-                rentalOption = existingOption;
-                rentalOption.Price = price;
-                rentalOption.SubscriptionBased = subscriptionBased;
-                rentalOption.Url = movieUrl;
-                rentalOption.CoverUrl = coverUrl;
-                rentalOption.LastSeen = DateTime.Now;
-            }
-            else
-            {
-                rentalOption = new RentalOption()
-                                   {
-                                       Movie = movie,
-                                       Vendor = repository.GetVendor(vendorId),
-                                       Price = price,
-                                       Url = movieUrl,
-                                       CoverUrl = coverUrl,
-                                       SubscriptionBased = subscriptionBased,
-                                       HighDefinition = highDef,
-                                       Added = DateTime.Now,
-                                       LastSeen = DateTime.Now
-                                   };
-                repository.AddRentalOption(rentalOption);
-                Logger.Log("New RentalOption found for movie: " + movie.Title);
+                RentalOption rentalOption;
+                var existingOption = repository.GetRentalOption(movie.Id, vendorId, highDef);
+                if (existingOption != null)
+                {
+                    rentalOption = existingOption;
+                    rentalOption.Price = price;
+                    rentalOption.SubscriptionBased = subscriptionBased;
+                    rentalOption.Url = movieUrl;
+                    rentalOption.CoverUrl = coverUrl;
+                    rentalOption.LastSeen = DateTime.Now;
+                }
+                else
+                {
+                    rentalOption = new RentalOption()
+                    {
+                        Movie = movie,
+                        Vendor = repository.GetVendor(vendorId),
+                        Price = price,
+                        Url = movieUrl,
+                        CoverUrl = coverUrl,
+                        SubscriptionBased = subscriptionBased,
+                        HighDefinition = highDef,
+                        Added = DateTime.Now,
+                        LastSeen = DateTime.Now
+                    };
+                    repository.AddRentalOption(rentalOption);
+                    Logger.Log("New RentalOption found for movie: " + movie.Title);
+                }
             }
         }
 
