@@ -1,7 +1,21 @@
-﻿body { background-color: #ececec; margin: 0px; font-family: 'Cabin', sans-serif; font-size: 1em; color: #909090; line-height: 1.5em; }
-h1 { font-family: 'Cabin', sans-serif; color: #000;   }
+﻿body {
+     background-color: #ececec;
+    background-image: url(/Content/images/tile.gif);
+     margin: 0px; 
+     font-family: 'Cabin', sans-serif; 
+     font-size: 1em; 
+     color: #4A4A4A; 
+     line-height: 1.5em;
+}
+
+h1, h2, h3, h4, h5, h6  
+{
+    font-family: 'Droid-sans', sans-serif; 
+    color: #243448;   
+}
+
 .wrapper {
-	width: 950px; 
+	width: 900px; 
 	margin: auto; 
 }
 			
@@ -22,14 +36,24 @@ header nav li {
     margin: 0 20px 0 0;
 }
 			
-.block { 
+.block  
+{
+    margin-top: 30px;
 	padding: 30px;
 	background-color: #fff;
-	border: 1px solid #999; 
+	border: 1px solid #999;
+    overflow: auto;
+    /*border-radius: 0.5em;
+    box-shadow: 1px 1px 1px #000;*/
 }
 
 .cover {
 	float: left;
+}
+
+.quick-search input {
+    font-size: 1.6em;
+    border-radius: 0.5em;
 }
 
 .search-results .result {
@@ -43,8 +67,8 @@ header nav li {
 }
 
 .details .cover {
-    float: left;
-    padding: 0 20px 20px 0;
+    float: right;
+    padding-left: 50px;
     width: 150px;
 }
 
