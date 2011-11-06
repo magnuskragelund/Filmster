@@ -2,12 +2,16 @@
     ViewBag.Title = "Home Page";
 }
 
-<h2>@ViewBag.Message</h2>
-<p>
-    Filmster samler alle Video on Demand tjenerster til rådighed og Danmark, og giver dig det bedste overblik over priser, tilgængelighed og sSoftware.
-</p>
-@Html.Partial("_SearchForm")
-
+<section class="block">
+    <h2>Alle Video On Demand film der kan streames i Danmark</h2>
+    <p>
+        Filmster samler alle Video on Demand tjenerster til rådighed og Danmark, og giver dig det bedste overblik over priser, tilgængelighed og Software.
+        <br />Søg blandt mere end 5.000 film fordelt imellem 8 udbydere. 
+    </p>
+</section>
+<section class="block quick-search">
+    @Html.Partial("_SearchForm")
+</section>
 <script>
     $(function () {
         $("#queryTextbox").autocomplete("/Home/autocomplete", {

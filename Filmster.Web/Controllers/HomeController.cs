@@ -68,7 +68,7 @@ namespace Filmster.Web.Controllers
 
         public JsonResult AutoComplete(string q)
         {
-            var data = _repo.Query(q);
+            var data = _repo.Query(q, true);
             return Json(data.Select(m => new { m.Title, Url = (Url.RouteUrl(m.RouteValues())) }), JsonRequestBehavior.AllowGet);
         }
 

@@ -13,7 +13,7 @@ namespace Filmster.Data
         Vendor GetVendor(int id);
         RentalOption GetRentalOption(int movieId, int vendorId, bool highDefinition);
         void AddRentalOption(RentalOption rentalOption);
-        List<Movie> Query(string query);
+        List<Movie> Query(string query, bool titleOnly = false);
         void Save();
         void Undo();
     }

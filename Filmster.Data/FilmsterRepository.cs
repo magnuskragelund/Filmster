@@ -73,28 +73,33 @@ namespace Filmster.Data
             _context.RentalOptions.Add(rentalOption);
         }
 
-        public List<Movie> Query(string q)
+        public List<Movie> Query(string q, bool titleOnly = false)
         {
+            if(titleOnly)
+            {
+                return _context.Movies
+                    .Where(m => m.Title.Contains(q))
+                    .Take(50).ToList();
+            }
+            var fields = new List<string> {"title"};
+             
             Directory directory = FSDirectory.Open(new System.IO.DirectoryInfo(_luceneIndexPath));
             Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_29);
 
-            MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_29, new[] { "plot", "title" }, analyzer);
+            MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_29, fields.ToArray(), analyzer);
             Query query = parser.Parse(q);
             IndexSearcher searcher = new IndexSearcher(directory);
             Hits hits = searcher.Search(query);
 
             var movies = new List<Movie>();
 
-            for(var i = 0; i < hits.Length(); i++)
+            for(var i = 0; i < hits.Length() && i < 50; i++)
             {
                 var document = hits.Doc(i);
                 movies.Add(GetMovie(int.Parse(document.Get("id"))));
             }
 
             return movies;
-            //return _context.Movies
-            //    .Where(m => m.Title.Contains(query))
-            //    .Take(20).ToList();
         }
 
         public void Save()
