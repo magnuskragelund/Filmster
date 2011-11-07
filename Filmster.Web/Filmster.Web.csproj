@@ -79,6 +79,14 @@
   <ItemGroup>
     <Content Include="App_Readme\glimpse.mvc3.readme.txt" />
     <Content Include="App_Readme\glimpse.readme.txt" />
+    <Content Include="Content\images\logos\headweb.png" />
+    <Content Include="Content\images\logos\itunes.png" />
+    <Content Include="Content\images\logos\sf-anytime.png" />
+    <Content Include="Content\images\logos\sputnik.png" />
+    <Content Include="Content\images\logos\viaplay.png" />
+    <Content Include="Content\images\logos\voddler.png" />
+    <Content Include="Content\images\logos\yousee-tv.png" />
+    <Content Include="Content\images\tile.gif" />
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\jquery-1.5.1.js" />
