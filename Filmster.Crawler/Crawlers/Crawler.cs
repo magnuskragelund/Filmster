@@ -75,13 +75,13 @@ namespace Filmster.Crawlers
             title = title.Replace(": ", " - ");
             title = title.Replace(" II ", " 2 ");
             title = title.Replace(" III ", " 3 ");
-            title = title.Replace(" IIII ", " 4 ");
-            title = title.Replace(" IIIII ", " 5 ");
+            title = title.Replace(" IV ", " 4 ");
+            title = title.Replace(" V ", " 5 ");
             if (title.EndsWith(" I", StringComparison.InvariantCulture)) title = title.Replace(" I", " 1");
             if (title.EndsWith(" II", StringComparison.InvariantCulture)) title = title.Replace(" II", " 2");
             if (title.EndsWith(" III", StringComparison.InvariantCulture)) title = title.Replace(" III", " 3");
-            if (title.EndsWith(" IIII", StringComparison.InvariantCulture)) title = title.Replace(" IIII", " 4");
-            if (title.EndsWith(" IIIII", StringComparison.InvariantCulture)) title = title.Replace(" IIIII", " 5");
+            if (title.EndsWith(" IV", StringComparison.InvariantCulture)) title = title.Replace(" IV", " 4");
+            if (title.EndsWith(" V", StringComparison.InvariantCulture)) title = title.Replace(" V", " 5");
             if (title.EndsWith(", the", StringComparison.InvariantCultureIgnoreCase)) title = string.Format("The " + title.Replace(",the ", ""));
 
             lock(_lock)
