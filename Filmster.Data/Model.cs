@@ -56,6 +56,7 @@ namespace Filmster.Data
                                            new Vendor() { Id = 5, Name = "SF-Anytime", Url = "http://sfanytime.com"},
                                            new Vendor() { Id = 6, Name = "YouSee TV", Url = "http://yousee.tv"},
                                            new Vendor() { Id = 7, Name = "Apple iTunes", Url = "http://itunes.com"},
+                                           new Vendor() { Id = 8, Name = "CDON", Url = "http://cdon.dk"},
                                        };
 
             foreach (var vendor in vendors)

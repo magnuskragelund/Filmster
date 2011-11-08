@@ -13,6 +13,11 @@ namespace Filmster.Crawlers
     {
         private string _crawlstart = "http://itunes.apple.com/dk/genre/films/id33";
 
+        public ItunesCrawler()
+        {
+            AllowUpdatePlot = false;
+        }
+
         public void Start()
         {
             var moviesToLoad = new List<string>();

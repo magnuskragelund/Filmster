@@ -12,6 +12,11 @@ namespace Filmster.Crawlers
     {
         private const string _crawlstart = "http://www.voddler.com/en/movie/browse/premium/alphabetical/all/online/{0}/24";
 
+        public VoddlerCrawler()
+        {
+            AllowUpdatePlot = false;
+        }
+
         public void Start()
         {
             var page = 0;
