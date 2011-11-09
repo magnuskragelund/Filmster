@@ -2,7 +2,8 @@
 @model Movie
 
 @{
-    ViewBag.Title = "Se " + @Model.Title + " online for kun " + @Model.RentalOptions.OrderBy(r => r.Price).First().Price + "kr,- med filmster";
+    ViewBag.Title = "Se " + @Model.Title + " online for kun " + @Model.RentalOptions.OrderBy(r => r.Price).First().Price + " kr. med filmster";
+    ViewBag.Description = "Få et hurtigt overblik over hvor du kan se " + @Model.Title + " via Video On Demand streaming.";
 }
 
 <section class="block details">
@@ -13,6 +14,10 @@
 </section>
 
 <section class="block">
+    <h3>Her kan du streame "@Model.Title"</h3>
+    <p>
+    Find den udbyder og pris som passer dig bedst. På listen ser du alle de sites hvor du kan leje filmen online.
+    </p>
         <table>
             <tr>
                 <th>Udlejer</th>
@@ -58,8 +63,9 @@
          case 7:
              imageName = "itunes.png";
              break;
-
-
+         case 8:
+             imageName = "cdon.png";
+             break;
      }
      <img src="/Content/images/logos/@imageName" height="30" alt="@vendor.Name" />
 }

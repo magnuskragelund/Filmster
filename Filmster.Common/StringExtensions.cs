@@ -99,6 +99,18 @@ namespace Filmster.Common
             return text.Substring(startIndex, endIndex - startIndex);
         }
 
+        public static string TrySubstringByStringToString(this string text, string startToken, string endToken, bool includeTokens)
+        {
+            try
+            {
+                return TrySubstringByStringToString(text, startToken, endToken, includeTokens);
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+        }
+
         /// <summary>
         /// Strips all html tags from the passed in string
         /// </summary>

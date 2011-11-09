@@ -79,6 +79,7 @@
   <ItemGroup>
     <Content Include="App_Readme\glimpse.mvc3.readme.txt" />
     <Content Include="App_Readme\glimpse.readme.txt" />
+    <Content Include="Content\images\logos\cdon.png" />
     <Content Include="Content\images\logos\headweb.png" />
     <Content Include="Content\images\logos\itunes.png" />
     <Content Include="Content\images\logos\sf-anytime.png" />
@@ -114,7 +115,17 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Content\LuceneIndex\segments.gen">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Content\LuceneIndex\segments_2">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Content\LuceneIndex\_0.cfs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

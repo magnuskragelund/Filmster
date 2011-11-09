@@ -14,14 +14,14 @@ namespace Filmster.Crawler
             ThreadPool.SetMaxThreads(40, 40);
             Database.SetInitializer(new FilmsterInitializer());
 
-            new CdonCrawler().Start();
-            new VoddlerCrawler().Start();
-            new HeadwebCrawler().Start();
-            new ItunesCrawler().Start();
-            new ViaPlayCrawler().Start();
-            new SFAnytimeCrawler().Start();
-            //new YouSeeCrawler().Start();
-            //new SputnikCrawler().Start();
+            //new CdonCrawler().Start();
+            //new VoddlerCrawler().Start();
+            //new HeadwebCrawler().Start();
+            //new ItunesCrawler().Start();
+            //new ViaPlayCrawler().Start();
+            //new SFAnytimeCrawler().Start();
+            new YouSeeCrawler().Start();
+            new SputnikCrawler().Start();
             //new FilmstribenCrawler().Start();
         }
     }
