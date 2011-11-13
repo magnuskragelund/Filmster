@@ -20,6 +20,7 @@ namespace Filmster.Crawlers
 
         public void Start()
         {
+            Logger.Log("Starting iTunes Crawler");
             var moviesToLoad = new List<string>();
 
             var index = GetDocument(_crawlstart);

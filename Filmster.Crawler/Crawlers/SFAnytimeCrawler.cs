@@ -84,7 +84,7 @@ namespace Filmster.Crawlers
                 }
 
                 int.TryParse(doc.SelectNodes("//div[@class='thumbDetailTextDuration']")[0].InnerText.RemoveNonNumericChars(), out releaseYear);
-                float.TryParse(doc.SelectSingleNode("//div[@class='thumbWhiteBuyRent ']").InnerText.RemoveNonNumericChars(), out price);
+                float.TryParse(doc.SelectSingleNode("//div[@class='thumbWhiteBuyRent ']//span[@class='thumbRentText']").InnerText.RemoveNonNumericChars(), out price);
 
                 ResolveRentalOption(repository, movieUrl, coverUrl, vendorId, title, plot, releaseYear, porn, highDef, price);
                 repository.Save();

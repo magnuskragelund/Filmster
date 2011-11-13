@@ -97,7 +97,7 @@ namespace Filmster.Crawlers
 
                 int.TryParse(doc.InnerText.TrySubstringByStringToString("Indspilnings&aring;r:", "&nbsp;", false).RemoveNonNumericChars(), out releaseYear);
                 float.TryParse(
-                        doc.SelectSingleNode("//div[@class='price']").InnerText.RemoveNonNumericChars(), NumberStyles.Any, new CultureInfo("en-US").NumberFormat,
+                        doc.SelectSingleNode("//div[@class='price']").InnerText.Replace(" kr", ""), NumberStyles.Any, new CultureInfo("en-US").NumberFormat,
                         out price);
 
 

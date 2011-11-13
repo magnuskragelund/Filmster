@@ -50,6 +50,11 @@ namespace Filmster.Data
             return _context.Movies.Where(m => m.Id == id).SingleOrDefault();
         }
 
+        public List<Movie> GetActiveMovies()
+        {
+            return _context.Movies.Where(m => m.RentalOptions.Count > 0).ToList();
+        }
+
         public List<Movie> GetMoviesByTitleFistChar(string firstChar)
         {
             return _context.Movies
@@ -90,7 +95,7 @@ namespace Filmster.Data
             if(titleOnly)
             {
                 return _context.Movies
-                    .Where(m => m.Title.Contains(q))
+                    .Where(m => m.Title.Contains(q) && m.RentalOptions.Count > 0)
                     .Take(50).ToList();
             }
             
@@ -109,10 +114,16 @@ namespace Filmster.Data
 
             var movies = new List<Movie>();
 
-            for(var i = 0; i < hits.Length() && i < 50; i++)
+            var i = 0;
+            while (movies.Count < 50 && i < hits.Length())
             {
                 var document = hits.Doc(i);
-                movies.Add(GetMovie(int.Parse(document.Get("id"))));
+                var movie = GetMovie(int.Parse(document.Get("id")));
+                if(movie != null && movie.RentalOptions != null && movie.RentalOptions.Count > 0)
+                {    
+                    movies.Add(movie);
+                }
+                i++;
             }
 
             return movies;
