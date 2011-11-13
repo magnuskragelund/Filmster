@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Globalization;
 using System.Threading;
 using Filmster.Crawlers;
 using Filmster.Data;
@@ -14,14 +13,14 @@ namespace Filmster.Crawler
             ThreadPool.SetMaxThreads(40, 40);
             Database.SetInitializer(new FilmsterInitializer());
 
+            new ItunesCrawler().Start();
             //new CdonCrawler().Start();
             //new VoddlerCrawler().Start();
             //new HeadwebCrawler().Start();
-            //new ItunesCrawler().Start();
             //new ViaPlayCrawler().Start();
             //new SFAnytimeCrawler().Start();
-            new YouSeeCrawler().Start();
-            new SputnikCrawler().Start();
+            //new YouSeeCrawler().Start();
+            //new SputnikCrawler().Start();
             //new FilmstribenCrawler().Start();
         }
     }
@@ -37,6 +36,7 @@ namespace Filmster.Crawler
 
         public static void LogVerbose(string str)
         {
+            return;
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine(str);
             Console.ResetColor();

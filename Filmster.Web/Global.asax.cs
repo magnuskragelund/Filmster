@@ -1,6 +1,4 @@
-﻿using System;
-using System.Data.Entity;
-using System.Web;
+﻿using System.Data.Entity;
 using System.Web.Mvc;
 using System.Web.Routing;
 using Filmster.Data;
@@ -21,23 +19,23 @@ namespace Filmster.Web
             routes.MapRoute(
                 null,
                 "{title}/{id}",
-                new { controller = "Home", action = "Details"},
+                new { controller = "Filmster", action = "Details"},
                 new {id = @"\d+" });
 
             routes.MapRoute(
                 null,
                 "soeg/",
-                new { controller = "Home", action = "Search" });
+                new { controller = "Filmster", action = "Search" });
 
             routes.MapRoute(
                 null,
                 "katalog/{id}",
-                new { controller = "Home", action = "Catalog" });
+                new { controller = "Filmster", action = "Catalog" });
 
             routes.MapRoute(
                 null, // Route name
                 "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+                new { controller = "Filmster", action = "Index", id = UrlParameter.Optional } // Parameter defaults
             );
 
         }

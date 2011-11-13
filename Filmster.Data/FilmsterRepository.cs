@@ -21,9 +21,21 @@ namespace Filmster.Data
             _context = new FilmsterMovies();
         }
 
-        public Movie GetMovie(string title, DateTime? releaseDate)
+        public Movie FindMovie(string title, DateTime? releaseDate)
         {
             var movies = _context.Movies.Where(m => m.Title == title);
+
+            if(!movies.Any())
+            {
+                if(title.StartsWith("The ", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    movies = _context.Movies.Where(m => m.Title == title.Replace("The ", ""));
+                }
+                else
+                {
+                    movies = _context.Movies.Where(m => m.Title == "The " + title);
+                }
+            }
 
             if(releaseDate != null)
             {
@@ -81,12 +93,16 @@ namespace Filmster.Data
                     .Where(m => m.Title.Contains(q))
                     .Take(50).ToList();
             }
+            
             var fields = new List<string> {"title"};
              
             Directory directory = FSDirectory.Open(new System.IO.DirectoryInfo(_luceneIndexPath));
             Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_29);
 
             MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_29, fields.ToArray(), analyzer);
+            
+            parser.SetAllowLeadingWildcard(true);
+            
             Query query = parser.Parse(q);
             IndexSearcher searcher = new IndexSearcher(directory);
             Hits hits = searcher.Search(query);

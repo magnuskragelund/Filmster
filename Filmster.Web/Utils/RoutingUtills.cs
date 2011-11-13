@@ -11,7 +11,7 @@ namespace Filmster.Web.Utils
         {
             return new RouteValueDictionary
                        {
-                           {"controller", "Home"},
+                           {"controller", "Filmster"},
                            {"action", "Details"},
                            {"title", TitleToUrl(movie.Title)},
                            {"id", movie.Id}

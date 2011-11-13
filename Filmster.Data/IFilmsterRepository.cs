@@ -5,7 +5,7 @@ namespace Filmster.Data
 {
     public interface IFilmsterRepository
     {
-        Movie GetMovie(string title, DateTime? releaseDate);
+        Movie FindMovie(string title, DateTime? releaseDate);
         Movie GetMovie(int id);
         List<Movie> GetMoviesByTitleFistChar(string firstChar);
         void AddMovie(Movie movie);

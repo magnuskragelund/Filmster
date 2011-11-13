@@ -96,8 +96,8 @@ header nav li {
 	background-color: #fff;
 	border: 1px solid #999;
     overflow: auto;
-    /*border-radius: 0.5em;
-    box-shadow: 1px 1px 1px #000;*/
+    border-radius: 0.5em;
+    box-shadow: 1px 1px 1px #ccc;
 }
 
 .cover {
@@ -106,7 +106,18 @@ header nav li {
 
 .search-results .result {
     clear: both;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
+    overflow: auto;
+}
+
+.search-results .result h3
+{
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+.search-results .result .legend {
+    font-size: .8em;
 }
 
 .search-results .cover {
@@ -117,7 +128,7 @@ header nav li {
 .details .cover {
     float: right;
     margin-left: 50px;
-    width: 150px;
+    width: 120px;
     border: 5px solid;
 }
 
@@ -139,6 +150,12 @@ header nav li {
     margin-left: 0;
 	padding-left: 0em;
 }
+.ac_results ul li {
+    padding-left: 1em;
+    padding: .6em 0 .6em 1em;
+    font-size: 1.2em;
+}
+
 
 
 /* Catalog

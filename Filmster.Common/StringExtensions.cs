@@ -103,7 +103,7 @@ namespace Filmster.Common
         {
             try
             {
-                return TrySubstringByStringToString(text, startToken, endToken, includeTokens);
+                return SubstringByStringToString(text, startToken, endToken, includeTokens);
             }
             catch (Exception)
             {

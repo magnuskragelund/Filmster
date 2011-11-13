@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 using Filmster.Crawler;
@@ -72,6 +73,7 @@ namespace Filmster.Crawlers
             
             // some normalizing
             plot = HttpUtility.HtmlDecode(plot);
+            title = Regex.Replace(title, @" \(\d{4}\)", "");
             title = title.Replace(": ", " - ");
             title = title.Replace(" II ", " 2 ");
             title = title.Replace(" III ", " 3 ");
@@ -82,11 +84,16 @@ namespace Filmster.Crawlers
             if (title.EndsWith(" III", StringComparison.InvariantCulture)) title = title.Replace(" III", " 3");
             if (title.EndsWith(" IV", StringComparison.InvariantCulture)) title = title.Replace(" IV", " 4");
             if (title.EndsWith(" V", StringComparison.InvariantCulture)) title = title.Replace(" V", " 5");
-            if (title.EndsWith(", the", StringComparison.InvariantCultureIgnoreCase)) title = string.Format("The " + title.Replace(",the ", ""));
+            if (title.EndsWith(", the", StringComparison.InvariantCultureIgnoreCase)) title = string.Format("The " + title.Replace(", the", ""));
+
+            if(string.IsNullOrWhiteSpace(title))
+            {
+                throw new ArgumentException("Movie title is null");
+            }
 
             lock(_lock)
             {
-                var existingMovie = repository.GetMovie(title, null);
+                var existingMovie = repository.FindMovie(title, null);
                 if (existingMovie != null)
                 {
                     if (AllowUpdatePlot)
