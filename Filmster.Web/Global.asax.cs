@@ -18,6 +18,16 @@ namespace Filmster.Web
 
             routes.MapRoute(
                 null,
+                "robots.txt",
+                new
+                    {
+                        controller = "Filmster",
+                        action = "RobotsText"
+                    }
+                );
+
+            routes.MapRoute(
+                null,
                 "{title}/{id}",
                 new { controller = "Filmster", action = "Details"},
                 new {id = @"\d+" });

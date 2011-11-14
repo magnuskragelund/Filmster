@@ -81,7 +81,6 @@
     <Content Include="Content\images\logos\yousee-tv.png" />
     <Content Include="Content\images\tile.gif" />
     <Content Include="Global.asax" />
-    <Content Include="robots.txt" />
     <Content Include="Scripts\jquery-1.5.1.js" />
     <Content Include="Scripts\jquery-1.5.1.min.js" />
     <Content Include="Scripts\jquery.autocomplete.js" />

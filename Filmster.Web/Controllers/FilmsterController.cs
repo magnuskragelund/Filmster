@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -74,6 +77,24 @@ namespace Filmster.Web.Controllers
         public ActionResult About()
         {
             return View();
+        }
+
+        public FileContentResult RobotsText()
+        {
+            var content = "User-agent: *" + Environment.NewLine;
+
+            if (string.Equals(ConfigurationManager.AppSettings["Environment"], "production", StringComparison.InvariantCultureIgnoreCase))
+            {
+                content += "Disallow: /elmah.axd" + Environment.NewLine;
+            }
+            else
+            {
+                content += "Disallow: /" + Environment.NewLine;
+            }
+
+            return File(
+                    Encoding.UTF8.GetBytes(content),
+                    "text/plain");
         }
 
         private void EnforceCanoncalUrl(RouteValueDictionary routeValues)
