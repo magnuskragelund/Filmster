@@ -61,8 +61,6 @@ namespace Filmster.Web
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-
-            Database.SetInitializer(new FilmsterInitializer());
         }        
     }
 }

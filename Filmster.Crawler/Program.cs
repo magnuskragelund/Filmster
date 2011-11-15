@@ -34,9 +34,7 @@ namespace Filmster.Crawler
             Logger.Log("Initiating Crawl");
             ThreadPool.SetMinThreads(40, 40);
             ThreadPool.SetMaxThreads(120, 120);
-            Database.SetInitializer(new FilmsterInitializer());
-
-            //new CdonCrawler().Start();
+            new CdonCrawler().Start();
             //new ItunesCrawler().Start();
             //new VoddlerCrawler().Start();
             //new HeadwebCrawler().Start();

@@ -13,12 +13,12 @@ namespace Filmster.Data
 {
     public class FilmsterRepository : IFilmsterRepository
     {
-        private FilmsterMovies _context;
+        private FilmsterEntities _context;
         private string _luceneIndexPath = ConfigurationManager.AppSettings["LuceneIndexPath"];
 
         public FilmsterRepository()
         {
-            _context = new FilmsterMovies();
+            _context = new FilmsterEntities();
         }
 
         public Movie FindMovie(string title, DateTime? releaseDate)
@@ -65,12 +65,12 @@ namespace Filmster.Data
 
         public void AddMovie(Movie movie)
         {
-            _context.Movies.Add(movie);
+            _context.Movies.AddObject(movie);
         }
 
         public void AddVendor(Vendor vendor)
         {
-            _context.Vendors.Add(vendor);
+            _context.Vendors.AddObject(vendor);
         }
 
         public Vendor GetVendor(int id)
@@ -87,7 +87,7 @@ namespace Filmster.Data
 
         public void AddRentalOption(RentalOption rentalOption)
         {
-            _context.RentalOptions.Add(rentalOption);
+            _context.RentalOptions.AddObject(rentalOption);
         }
 
         public List<Movie> Query(string q, bool titleOnly = false)
