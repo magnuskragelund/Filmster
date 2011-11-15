@@ -4,7 +4,11 @@
 @model List<Movie>
 
 @{
-    ViewBag.Title = "Søgning på \"" + @ViewBag.query + "\"";
+    var emptyQuery = string.IsNullOrWhiteSpace(ViewBag.Query);
+    
+    ViewBag.Title = emptyQuery 
+        ? "Søg blandt mere end 6.000 titler" 
+        : "Søgning på \"" + @ViewBag.query + "\"";
 }
 
 <section class="block">
@@ -12,7 +16,7 @@
     @Html.Partial("_SearchForm", ViewBag.Query as string)
     </p>
 </section>
-@if (!String.IsNullOrWhiteSpace(ViewBag.Query))
+@if (!emptyQuery)
 {
     <section class="block">
         <h2>Film som passer på søgningen "@ViewBag.Query"</h2>

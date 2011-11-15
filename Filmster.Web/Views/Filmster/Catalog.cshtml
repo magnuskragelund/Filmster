@@ -2,7 +2,8 @@
 @model Filmster.Web.Models.CatalogViewModel
 
 @{
-    ViewBag.Title = "Filmliste";
+    ViewBag.Title = "Filmliste - alle titler der starter med \"" + @Model.SelectedValue + "\"";
+    ViewBag.Description = "Alfabetisk liste over alle film der kan lejes online";
 }
 
 <section class="block">
