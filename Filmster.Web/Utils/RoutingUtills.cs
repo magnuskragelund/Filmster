@@ -24,6 +24,7 @@ namespace Filmster.Web.Utils
                 .Replace("æ", "ae")
                 .Replace("ø", "oe")
                 .Replace("å", "aa")
+                .Replace(" - ", "-")
                 .Replace(" ", "-")
                 .Replace("&", "and");
 
