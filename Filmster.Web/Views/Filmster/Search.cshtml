@@ -20,7 +20,7 @@
 {
     <section class="block">
         <h2>Film som passer på søgningen "@ViewBag.Query"</h2>
-        <div class="search-results"> 
+        <div class="movie-preview search-results"> 
             @foreach (var movie in Model)
             {
                 Html.RenderPartial("_MoviePreview", movie);

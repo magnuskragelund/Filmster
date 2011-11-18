@@ -20,43 +20,12 @@
     </p>*@
 </section>
 <section class="block">
-    <div id="random-movies" class="search-results">
+    <h2>Film fra kataloget</h2>
+    <div class="movie-preview">
         @foreach (var movie in Model)
         {
             Html.RenderPartial("_MoviePreview", movie);
         }
     </div>
 </section>
-<script>
-    $(function () {
-
-        $('#random-movies').mbScrollable({
-                width: 800,
-                elementsInPage: 1,
-                autoscroll: true
-            });
-
-        $("#queryTextbox").autocomplete("/Filmster/autocomplete", {
-            parse: function (items) {
-                var parsed = [];
-                for (var i = 0; i < items.length; i++) {
-                    var item = items[i];
-                    if (item) {
-                        parsed[parsed.length] = {
-                            data: item,
-                            value: item.Title,
-                            result: item.Title
-                        };
-                    }
-                }
-                return parsed;
-            },
-            formatItem: function (item) {
-                return item.Title;
-            },
-            selectFirst: false
-        }).result(function (event, item) {
-            location.href = item.Url;
-        });
-    });
-</script>
+<script src="/Scripts/filmster.js" type="text/javascript"></script>

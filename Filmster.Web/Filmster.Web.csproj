@@ -80,6 +80,7 @@
     <Content Include="Content\images\logos\voddler.png" />
     <Content Include="Content\images\logos\yousee-tv.png" />
     <Content Include="Content\images\tile.gif" />
+    <Content Include="Scripts\filmster.js" />
     <Content Include="Scripts\mbScrollable.js" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.5.1.js" />
