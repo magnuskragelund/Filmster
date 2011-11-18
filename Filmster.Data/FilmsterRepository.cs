@@ -55,6 +55,14 @@ namespace Filmster.Data
             return _context.Movies.Where(m => m.RentalOptions.Count > 0).ToList();
         }
 
+        public List<Movie> GetRandomMovies(int take, int minRentalOptionCount)
+        {
+            Random rand = new Random();
+            int toSkip = rand.Next(0, _context.Movies.Where(m => m.RentalOptions.Count > minRentalOptionCount).Count());
+
+            return _context.Movies.Where(m => m.Id > toSkip && m.RentalOptions.Count > minRentalOptionCount).Take(take).ToList();
+        }
+
         public List<Movie> GetMoviesByTitleFistChar(string firstChar)
         {
             return _context.Movies

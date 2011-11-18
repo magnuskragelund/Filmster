@@ -8,6 +8,7 @@ namespace Filmster.Data
         Movie FindMovie(string title, DateTime? releaseDate);
         Movie GetMovie(int id);
         List<Movie> GetActiveMovies();
+        List<Movie> GetRandomMovies(int take, int minRentalOptionCount);
         List<Movie> GetMoviesByTitleFistChar(string firstChar);
         void AddMovie(Movie movie);
         void AddVendor(Vendor vendor);

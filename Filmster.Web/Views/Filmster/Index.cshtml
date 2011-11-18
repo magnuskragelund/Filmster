@@ -1,23 +1,41 @@
-﻿@{
+﻿@using Filmster.Data
+@model List<Movie>
+
+@{
     ViewBag.Title = "Filmster samler alle film der kan streames i Danmark på ét sted";
     ViewBag.Description = "Filmster samler alle Video on Demand tjenerster til rådighed og Danmark, og giver dig det bedste overblik over priser, tilgængelighed og Software.";
 }
 <section class="block quick-search">
-    @Html.Partial("_SearchForm")
+    @Html.Partial("_SearchForm", "")
 </section>
 
 <section class="block">
     <h2>Få et hurtigt overblik når du vil leje film online</h2>
     <p>
         Filmster samler alle Video on Demand tjenester på det danske marked, og giver dig det bedste overblik over priser, tilgængelighed og Software, når du vil streame film.
-        <br />Søg blandt mere end 6.000 film fordelt imellem 8 udbydere.
+        <br />Søg blandt mere end 6.000 film.
     </p>
     @*<p>
         Hvis du ikke har prøvet at streame film online før, kan du læse mere om hvordan man gør, eller prøve at se nogle af de gratis fil, der er til rådighed.
     </p>*@
 </section>
+<section class="block">
+    <div id="random-movies" class="search-results">
+        @foreach (var movie in Model)
+        {
+            Html.RenderPartial("_MoviePreview", movie);
+        }
+    </div>
+</section>
 <script>
     $(function () {
+
+        $('#random-movies').mbScrollable({
+                width: 800,
+                elementsInPage: 1,
+                autoscroll: true
+            });
+
         $("#queryTextbox").autocomplete("/Filmster/autocomplete", {
             parse: function (items) {
                 var parsed = [];
