@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Movies" EntityType="Model.Store.Movies" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="RentalOptions" EntityType="Model.Store.RentalOptions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Vendors" EntityType="Model.Store.Vendors" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="RentalOption_Movie" Association="Model.Store.RentalOption_Movie">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="RentalOptions" EntitySet="RentalOptions" />
+          </AssociationSet>
+          <AssociationSet Name="RentalOption_Vendor" Association="Model.Store.RentalOption_Vendor">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="RentalOptions" EntitySet="RentalOptions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Movies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Plot" Type="nvarchar(max)" />
+          <Property Name="ReleaseDate" Type="datetime" />
+          <Property Name="Porn" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RentalOptions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Price" Type="real" Nullable="false" />
+          <Property Name="HighDefinition" Type="bit" Nullable="false" />
+          <Property Name="Url" Type="nvarchar(max)" />
+          <Property Name="CoverUrl" Type="nvarchar(max)" />
+          <Property Name="SubscriptionBased" Type="bit" Nullable="false" />
+          <Property Name="Added" Type="datetime" Nullable="false" />
+          <Property Name="LastSeen" Type="datetime" Nullable="false" />
+          <Property Name="Movie_Id" Type="int" />
+          <Property Name="Vendor_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Vendors">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Url" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="RentalOption_Movie">
+          <End Role="Movies" Type="Model.Store.Movies" Multiplicity="0..1" />
+          <End Role="RentalOptions" Type="Model.Store.RentalOptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RentalOptions">
+              <PropertyRef Name="Movie_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RentalOption_Vendor">
+          <End Role="Vendors" Type="Model.Store.Vendors" Multiplicity="0..1" />
+          <End Role="RentalOptions" Type="Model.Store.RentalOptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RentalOptions">
+              <PropertyRef Name="Vendor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="FilmsterEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Movies" EntityType="Model.Movie" />
+          <EntitySet Name="RentalOptions" EntityType="Model.RentalOption" />
+          <EntitySet Name="Vendors" EntityType="Model.Vendor" />
+          <AssociationSet Name="RentalOption_Movie" Association="Model.RentalOption_Movie">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="RentalOptions" EntitySet="RentalOptions" />
+          </AssociationSet>
+          <AssociationSet Name="RentalOption_Vendor" Association="Model.RentalOption_Vendor">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="RentalOptions" EntitySet="RentalOptions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Plot" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ReleaseDate" Type="DateTime" />
+          <Property Name="Porn" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="RentalOptions" Relationship="Model.RentalOption_Movie" FromRole="Movies" ToRole="RentalOptions" />
+        </EntityType>
+        <EntityType Name="RentalOption">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Price" Type="Single" Nullable="false" />
+          <Property Name="HighDefinition" Type="Boolean" Nullable="false" />
+          <Property Name="Url" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CoverUrl" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="SubscriptionBased" Type="Boolean" Nullable="false" />
+          <Property Name="Added" Type="DateTime" Nullable="false" />
+          <Property Name="LastSeen" Type="DateTime" Nullable="false" />
+          <Property Name="Movie_Id" Type="Int32" />
+          <Property Name="Vendor_Id" Type="Int32" />
+          <NavigationProperty Name="Movie" Relationship="Model.RentalOption_Movie" FromRole="RentalOptions" ToRole="Movies" />
+          <NavigationProperty Name="Vendor" Relationship="Model.RentalOption_Vendor" FromRole="RentalOptions" ToRole="Vendors" />
+        </EntityType>
+        <EntityType Name="Vendor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Url" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="RentalOptions" Relationship="Model.RentalOption_Vendor" FromRole="Vendors" ToRole="RentalOptions" />
+        </EntityType>
+        <Association Name="RentalOption_Movie">
+          <End Role="Movies" Type="Model.Movie" Multiplicity="0..1" />
+          <End Role="RentalOptions" Type="Model.RentalOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RentalOptions">
+              <PropertyRef Name="Movie_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RentalOption_Vendor">
+          <End Role="Vendors" Type="Model.Vendor" Multiplicity="0..1" />
+          <End Role="RentalOptions" Type="Model.RentalOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RentalOptions">
+              <PropertyRef Name="Vendor_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="FilmsterEntities">
+          <EntitySetMapping Name="Movies"><EntityTypeMapping TypeName="Model.Movie"><MappingFragment StoreEntitySet="Movies">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+            <ScalarProperty Name="Plot" ColumnName="Plot" />
+            <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+            <ScalarProperty Name="Porn" ColumnName="Porn" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="RentalOptions"><EntityTypeMapping TypeName="Model.RentalOption"><MappingFragment StoreEntitySet="RentalOptions">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Price" ColumnName="Price" />
+            <ScalarProperty Name="HighDefinition" ColumnName="HighDefinition" />
+            <ScalarProperty Name="Url" ColumnName="Url" />
+            <ScalarProperty Name="CoverUrl" ColumnName="CoverUrl" />
+            <ScalarProperty Name="SubscriptionBased" ColumnName="SubscriptionBased" />
+            <ScalarProperty Name="Added" ColumnName="Added" />
+            <ScalarProperty Name="LastSeen" ColumnName="LastSeen" />
+            <ScalarProperty Name="Movie_Id" ColumnName="Movie_Id" />
+            <ScalarProperty Name="Vendor_Id" ColumnName="Vendor_Id" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Vendors"><EntityTypeMapping TypeName="Model.Vendor"><MappingFragment StoreEntitySet="Vendors">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Url" ColumnName="Url" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Filmster">
+        <EntityTypeShape EntityType="Model.Movie" Width="1.5" PointX="0.75" PointY="1.625" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.RentalOption" Width="1.5" PointX="3" PointY="1" Height="3.3263964843749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Vendor" Width="1.5" PointX="0.75" PointY="5.75" Height="1.7879850260416657" IsExpanded="true" />
+        <AssociationConnector Association="Model.RentalOption_Movie" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.7112939453125" />
+          <ConnectorPoint PointX="3" PointY="2.7112939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.RentalOption_Vendor" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="6.6439925130208328" />
+          <ConnectorPoint PointX="3.75" PointY="6.6439925130208328" />
+          <ConnectorPoint PointX="3.75" PointY="4.326396484375" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
