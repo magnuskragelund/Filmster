@@ -2,6 +2,6 @@
 
 @using (Html.BeginForm("Search", "Filmster", FormMethod.Get, new { @class = "search" }))
 {
-    <input type="text" placeholder="Søg efter en film" id="queryTextbox" value="@Model" name="q" autocomplete="off"/>
+    <input type="text" tabindex="1" placeholder="Søg efter en film" id="queryTextbox" value="@Model" name="q" autocomplete="off"/>
     <input type="submit" value="Søg!"/>
 }
