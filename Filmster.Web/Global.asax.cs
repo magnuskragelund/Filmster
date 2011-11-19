@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Canonicalize;
 using Filmster.Data;
 
 namespace Filmster.Web
@@ -15,6 +16,8 @@ namespace Filmster.Web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.Canonicalize().NoWww().Lowercase().NoTrailingSlash();
 
             routes.MapRoute(
                 null,
