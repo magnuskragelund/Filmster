@@ -107,7 +107,7 @@ namespace Filmster.Data
                     .Take(50).ToList();
             }
             
-            var fields = new List<string> {"title"};
+            var fields = new List<string> {"title", "plot"};
              
             Directory directory = FSDirectory.Open(new System.IO.DirectoryInfo(_luceneIndexPath));
             Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_29);

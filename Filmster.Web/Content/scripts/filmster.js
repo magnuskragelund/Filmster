@@ -1,6 +1,6 @@
 ﻿/// <reference path="~/Content/scripts/jquery-1.5.1.js">
 $(function () {
-    $('.movie-preview').mbScrollable({
+    $('.movie-scroller').mbScrollable({
         width: 800,
         elementsInPage: 1,
         autoscroll: true
