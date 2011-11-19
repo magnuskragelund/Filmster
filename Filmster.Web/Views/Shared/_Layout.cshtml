@@ -1,16 +1,18 @@
 ﻿@using System.Configuration
+@{
+    Bundles.Reference("Content/scripts");
+    Bundles.Reference("Content/styles");
+}
 <!DOCTYPE html>
 <html lang="da">
 <head>
     <meta charset="utf-8" />
     <title>@ViewBag.Title</title>
     <meta name="description" content="@ViewBag.Description"/>
-    <link href="@Url.Content("~/Content/site.css")" rel="stylesheet" type="text/css" />
-    <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css'>
-    <script src="@Url.Content("~/Scripts/jquery-1.5.1.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/jquery.autocomplete.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/mbScrollable.js")" type="text/javascript"></script>
+    @Bundles.RenderStylesheets()
+    <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css' />
+    @Bundles.RenderScripts()
     @if (ConfigurationManager.AppSettings["Environment"] == "production")
     {
         <script type="text/javascript">
@@ -25,10 +27,28 @@
                  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
              })();
 
-        </script>   
+        </script>
     }
 </head>
 <body>
+        <div id="fb-root"></div>
+        <script type="text/javascript">
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) { return; }
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=311129245565133";
+                fjs.parentNode.insertBefore(js, fjs);
+            } (document, 'script', 'facebook-jssdk'));
+
+            window.___gcfg = { lang: 'da' };
+
+            (function () {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/plusone.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+            })();
+        </script>
 		<header class="topbar">
 			<div class="wrapper">
             <div class="me"><a href="/">filmster</a></div>
@@ -43,6 +63,11 @@
 			</div>
 		</header>
 		<div class="wrapper">
+            <menu class="social">
+                <div class="g-plusone" data-size="medium" data-href="http://filmster.dk"></div>
+                <div class="fb-like" data-href="http://filmster.dk" data-send="false" data-layout="button_count" data-show-faces="false" data-font="arial"></div>
+                <a class="twitter-share-button" href="https://twitter.com/share" data-url="http://filmster.dk" data-count="none" data-via="magnuskragelund">Tweet</a><script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+            </menu>
             @RenderBody()
             <footer>
                 Filmster.dk - Ris, ros og forslag til forbedringer modtages meget gerne på <a href="mailto:magnuskragelund@gmail.com">magnuskragelund@gmail.com</a> eller <a href="http://twitter.com/magnuskragelund">@Html.Raw("@magnuskragelund")</a>

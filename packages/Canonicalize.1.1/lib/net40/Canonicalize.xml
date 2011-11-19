@@ -1,0 +1,296 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Canonicalize</name>
+    </assembly>
+    <members>
+        <member name="T:Canonicalize.CanonicalizeRouteBuilder">
+            <summary>
+            Exposes a fluent API with chainable methods for configuring a <see cref="T:Canonicalize.CanonicalizeRoute"/>.
+            </summary>
+        </member>
+        <member name="M:Canonicalize.CanonicalizeRouteBuilder.#ctor(Canonicalize.CanonicalizeRoute)">
+            <summary>
+            Initializes a <see cref="T:Canonicalize.CanonicalizeRouteBuilder"/> for configuration of a specific <see cref="T:Canonicalize.CanonicalizeRoute"/>.
+            </summary>
+            <param name="route">The route to be configured using the fluent API.</param>
+        </member>
+        <member name="M:Canonicalize.CanonicalizeRouteBuilder.Strategy(Canonicalize.IUrlStrategy)">
+            <summary>
+            Adds a new canonicalization strategy to the <see cref="T:Canonicalize.CanonicalizeRoute"/>.
+            </summary>
+            <param name="strategy">The canonicalization strategy to be added.</param>
+            <returns>itself, allowing additional method calls to be chained.</returns>
+        </member>
+        <member name="M:Canonicalize.CanonicalizeRouteBuilderExtensions.Host(Canonicalize.CanonicalizeRouteBuilder,System.String)">
+            <summary>
+            Adds <see cref="T:Canonicalize.Strategies.HostStrategy"/> to the strategy collection.
+            </summary>
+            <param name="builder">Reponsible for building the <see cref="T:Canonicalize.CanonicalizeRoute"/>.</param>
+            <param name="host">Canonical DNS host name or IP address.</param>
+            <returns>itself, allowing additional method calls to be chained.</returns>
+        </member>
+        <member name="M:Canonicalize.CanonicalizeRouteBuilderExtensions.Lowercase(Canonicalize.CanonicalizeRouteBuilder)">
+            <summary>
+            Adds <see cref="T:Canonicalize.Strategies.LowercaseStrategy"/> to the strategy collection.
+            </summary>
+            <param name="builder">Reponsible for building the <see cref="T:Canonicalize.CanonicalizeRoute"/>.</param>
+            <returns>itself, allowing additional method calls to be chained.</returns>
+        </member>
+        <member name="M:Canonicalize.CanonicalizeRouteBuilderExtensions.Map(Canonicalize.CanonicalizeRouteBuilder,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Adds <see cref="T:Canonicalize.Strategies.MapStrategy"/> to the strategy collection.
+            </summary>
+            <param name="builder">Reponsible for building the <see cref="T:Canonicalize.CanonicalizeRoute"/>.</param>
+            <param name="dictionary">Mapping between old paths (keys) and new paths (values).</param>
+            <returns>itself, allowing additional method calls to be chained.</returns>
+        </member>
+        <member name="M:Canonicalize.CanonicalizeRouteBuilderExtensions.NoTrailingSlash(Canonicalize.CanonicalizeRouteBuilder)">
+            <summary>
+            Adds <see cref="T:Canonicalize.Strategies.NoTrailingSlashStrategy"/> to the strategy collection.
+            </summary>
+            <param name="builder">Reponsible for building the <see cref="T:Canonicalize.CanonicalizeRoute"/>.</param>
+            <returns>itself, allowing additional method calls to be chained.</returns>
+        </member>
+        <member name="M:Canonicalize.CanonicalizeRouteBuilderExtensions.NoWww(Canonicalize.CanonicalizeRouteBuilder)">
+            <summary>
+            Adds <see cref="T:Canonicalize.Strategies.NoWwwStrategy"/> to the strategy collection.
+            </summary>
+            <param name="builder">Reponsible for building the <see cref="T:Canonicalize.CanonicalizeRoute"/>.</param>
+            <returns>itself, allowing additional method calls to be chained.</returns>
+        </member>
+        <member name="M:Canonicalize.CanonicalizeRouteBuilderExtensions.Pattern(Canonicalize.CanonicalizeRouteBuilder,System.String,System.String)">
+            <summary>
+            Adds <see cref="T:Canonicalize.Strategies.PatternStrategy"/> to the strategy collection.
+            </summary>
+            <param name="builder">Reponsible for building the <see cref="T:Canonicalize.CanonicalizeRoute"/>.</param>
+            <param name="regex">The regular expression applied to the path.</param>
+            <param name="replacement">Replacement string applied on match.</param>
+            <returns>itself, allowing additional method calls to be chained.</returns>
+        </member>
+        <member name="M:Canonicalize.CanonicalizeRouteBuilderExtensions.TrailingSlash(Canonicalize.CanonicalizeRouteBuilder)">
+            <summary>
+            Adds <see cref="T:Canonicalize.Strategies.TrailingSlashStrategy"/> to the strategy collection.
+            </summary>
+            <param name="builder">Reponsible for building the <see cref="T:Canonicalize.CanonicalizeRoute"/>.</param>
+            <returns>itself, allowing additional method calls to be chained.</returns>
+        </member>
+        <member name="M:Canonicalize.CanonicalizeRouteBuilderExtensions.Www(Canonicalize.CanonicalizeRouteBuilder)">
+            <summary>
+            Adds <see cref="T:Canonicalize.Strategies.NoWwwStrategy"/> to the strategy collection.
+            </summary>
+            <param name="builder">Reponsible for building the <see cref="T:Canonicalize.CanonicalizeRoute"/>.</param>
+            <returns>itself, allowing additional method calls to be chained.</returns>
+        </member>
+        <member name="T:Canonicalize.Strategies.PatternStrategy">
+            <summary>
+            URL canonicalization strategy using a pattern described as a regular expression to modify the path.
+            </summary>
+        </member>
+        <member name="T:Canonicalize.IUrlStrategy">
+            <summary>
+            Defines the contract of a URL canonicalization strategy.
+            </summary>
+        </member>
+        <member name="M:Canonicalize.IUrlStrategy.Apply(System.UriBuilder)">
+            <summary>
+            Applies the canonicalization strategy to a URL. Changes can be made using the public setters on <see cref="T:System.UriBuilder"/>.
+            If the URL is already in its canonical form the URL is not changed.
+            </summary>
+            <param name="uri">The URL to be canonicalized.</param>
+        </member>
+        <member name="M:Canonicalize.Strategies.PatternStrategy.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a <see cref="T:Canonicalize.Strategies.PatternStrategy"/> with a specific regular expression and replacement string.
+            </summary>
+            <param name="regex">The regular expression applied to the path.</param>
+            <param name="replacement">Replacement string applied on match.</param>
+        </member>
+        <member name="M:Canonicalize.Strategies.PatternStrategy.Apply(System.UriBuilder)">
+            <summary>
+            Matches the path of the URL against the pattern and assigns the replacement string (with substitutions) if matching.
+            </summary>
+            <param name="uri">The URL to be canonicalized.</param>
+        </member>
+        <member name="T:Canonicalize.Strategies.TrailingSlashStrategy">
+            <summary>
+            URL canonicalization strategy ensuring a slash as the last character of the path for non-file URLs.
+            </summary>
+        </member>
+        <member name="M:Canonicalize.Strategies.TrailingSlashStrategy.Apply(System.UriBuilder)">
+            <summary>
+            Adds a forward slash (/) to the end of the part segment of the URL, if not already present.
+            No slash is added if the URL contains a period (.) indicating a file extension.
+            </summary>
+            <param name="uri">The URL to be canonicalized.</param>
+        </member>
+        <member name="T:Canonicalize.RouteCollectionExtensions">
+            <summary>
+            Adds an extension method on <see cref="T:System.Web.Routing.RouteCollection"/> enabling the fluent API.
+            </summary>
+        </member>
+        <member name="M:Canonicalize.RouteCollectionExtensions.Canonicalize(System.Web.Routing.RouteCollection)">
+            <summary>
+            Adds a <see cref="T:Canonicalize.CanonicalizeRoute"/> to the route collection and returns a <see cref="T:Canonicalize.CanonicalizeRouteBuilder"/> for fluent configuration.
+            </summary>
+            <param name="routes">The collection to which the <see cref="T:Canonicalize.CanonicalizeRoute"/> is to be added.</param>
+            <returns>Entry object for fluent URL canonicaliztion configuration.</returns>
+        </member>
+        <member name="T:Canonicalize.RedirectHandler">
+            <summary>
+            Implements <see cref="T:System.Web.Routing.IRouteHandler"/> and <see cref="T:System.Web.IHttpHandler"/> to send a permanent redirect (HTTP status code 301).
+            </summary>
+        </member>
+        <member name="M:Canonicalize.RedirectHandler.#ctor(System.Uri)">
+            <summary>
+            Initializes a <see cref="T:Canonicalize.RedirectHandler"/> with a provided redurict URL.
+            </summary>
+            <param name="location">The URL to which the request should be redirected.</param>
+        </member>
+        <member name="M:Canonicalize.RedirectHandler.GetHttpHandler(System.Web.Routing.RequestContext)">
+            <summary>
+            Provides the object that processes the request.
+            </summary>
+            <param name="requestContext"></param>
+            <returns>Itself.</returns>
+        </member>
+        <member name="M:Canonicalize.RedirectHandler.ProcessRequest(System.Web.HttpContext)">
+            <summary>
+            Redirects a HTTP request by setting the status code and the Location header.
+            </summary>
+            <param name="context">An <see cref="T:System.Web.HttpContext"/> object that provides references to the intrinsic server objects (for example, Request, Response, Session, and Server) used to service HTTP requests.</param>
+        </member>
+        <member name="P:Canonicalize.RedirectHandler.IsReusable">
+            <summary>
+            Gets a value indicating whether another request can use the IHttpHandler instance.
+            </summary>
+        </member>
+        <member name="T:Canonicalize.CanonicalizeRoute">
+            <summary>
+            Applies a number of canonicalization strategies to the requested URL and redirects if applicable.
+            </summary>
+        </member>
+        <member name="M:Canonicalize.CanonicalizeRoute.#ctor">
+            <summary>
+            Initializes a <see cref="T:Canonicalize.CanonicalizeRoute"/> with an empty strategy collection.
+            </summary>
+        </member>
+        <member name="M:Canonicalize.CanonicalizeRoute.#ctor(Canonicalize.IUrlStrategy[])">
+            <summary>
+            Initializes a <see cref="T:Canonicalize.CanonicalizeRoute"/> with a specified set of strategies.
+            </summary>
+            <param name="strategies">Strategies to be initially added to the <see cref="P:Canonicalize.CanonicalizeRoute.Strategies"/> collection.</param>
+        </member>
+        <member name="M:Canonicalize.CanonicalizeRoute.GetRouteData(System.Web.HttpContextBase)">
+            <summary>
+            Applies each <see cref="P:Canonicalize.CanonicalizeRoute.Strategies"/> in turn. Only if the result differs from the originally requested URL a redirect is returned.
+            </summary>
+            <param name="httpContext">An object that encapsulates information about the HTTP request.</param>
+            <returns>Route data with a <see cref="T:Canonicalize.RedirectHandler"/> if any strategies were triggered, otherwise null.</returns>
+        </member>
+        <member name="M:Canonicalize.CanonicalizeRoute.GetVirtualPath(System.Web.Routing.RequestContext,System.Web.Routing.RouteValueDictionary)">
+            <summary>
+            Returns null, allowing other routes to provide the canonical URL for the requested route values.
+            </summary>
+            <param name="requestContext">An object that encapsulates information about the requested route.</param>
+            <param name="values">An object that contains the parameters for a route.</param>
+            <returns>Always null.</returns>
+        </member>
+        <member name="P:Canonicalize.CanonicalizeRoute.Strategies">
+            <summary>
+            Gets the collection of strategies to apply to incoming URLs.
+            </summary>
+        </member>
+        <member name="T:Canonicalize.Strategies.WwwStrategy">
+            <summary>
+            URL canonicalization strategy ensuring a host name including the www domain prefix.
+            </summary>
+        </member>
+        <member name="M:Canonicalize.Strategies.WwwStrategy.Apply(System.UriBuilder)">
+            <summary>
+            Adds "www." to the beginning of the host name, if not present.
+            </summary>
+            <param name="uri">The URL to be canonicalized.</param>
+        </member>
+        <member name="T:Canonicalize.Strategies.LowercaseStrategy">
+            <summary>
+            URL canonicalization strategy enforcing that all characters in the path are lower case.
+            </summary>
+        </member>
+        <member name="M:Canonicalize.Strategies.LowercaseStrategy.Apply(System.UriBuilder)">
+            <summary>
+            Converts any upper case characters in the path segment of the URL to their lower case equivalent.
+            </summary>
+            <param name="uri">The URL to be canonicalized.</param>
+        </member>
+        <member name="T:Canonicalize.Strategies.NoWwwStrategy">
+            <summary>
+            URL canonicalization strategy removing the www domain prefix if present.
+            </summary>
+        </member>
+        <member name="M:Canonicalize.Strategies.NoWwwStrategy.Apply(System.UriBuilder)">
+            <summary>
+            Removes a prefix of "www." from the host name if present.
+            </summary>
+            <param name="uri">The URL to be canonicalized.</param>
+        </member>
+        <member name="T:Canonicalize.Strategies.HostStrategy">
+            <summary>
+            URL canonicalization strategy enforcing use of a specific DNS host name or IP address.
+            </summary>
+        </member>
+        <member name="M:Canonicalize.Strategies.HostStrategy.#ctor(System.String)">
+            <summary>
+            Initializes a <see cref="T:Canonicalize.Strategies.HostStrategy"/> with a specific DNS host name or IP address.
+            </summary>
+            <param name="host">Canonical DNS host name or IP address.</param>
+        </member>
+        <member name="M:Canonicalize.Strategies.HostStrategy.Apply(System.UriBuilder)">
+            <summary>
+            Replaces the host part of the URL with the canonical host.
+            </summary>
+            <param name="uri">The URL to be canonicalized.</param>
+        </member>
+        <member name="T:Canonicalize.Strategies.MapStrategy">
+            <summary>
+            URL canonicalization strategy using a map/dictionary data structure to map old paths to new ones.
+            </summary>
+        </member>
+        <member name="M:Canonicalize.Strategies.MapStrategy.#ctor(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Initializes a <see cref="T:Canonicalize.Strategies.MapStrategy"/> with a specific backing dictionary.
+            </summary>
+            <param name="dictionary">Mapping between old paths (keys) and new paths (values).</param>
+        </member>
+        <member name="M:Canonicalize.Strategies.MapStrategy.Apply(System.UriBuilder)">
+            <summary>
+            Makes a lookup in the backing dictionary for the path and replaces it if matched.
+            </summary>
+            <param name="uri">The URL to be canonicalized.</param>
+        </member>
+        <member name="T:Canonicalize.Strategies.NoTrailingSlashStrategy">
+            <summary>
+            URL canonicalization strategy removing trailing slash characters from the end of the path.
+            </summary>
+        </member>
+        <member name="M:Canonicalize.Strategies.NoTrailingSlashStrategy.Apply(System.UriBuilder)">
+            <summary>
+            Removes any forward slashes (/) from the end of the part segment of the URL.
+            </summary>
+            <param name="uri">The URL to be canonicalized.</param>
+        </member>
+        <member name="T:Canonicalize.HttpRequestBaseExtensions">
+            <summary>
+            Adds extension methods on <see cref="T:System.Web.HttpRequestBase"/>.
+            </summary>
+        </member>
+        <member name="M:Canonicalize.HttpRequestBaseExtensions.GetOriginalUrl(System.Web.HttpRequestBase)">
+            <summary>
+            Gets the original URL requested by the client, without artifacts from proxies or load balancers.
+            In particular HTTP headers Host, X-Forwarded-Host, X-Forwarded-Proto are applied on top of <see cref="P:System.Web.HttpRequestBase.Url"/>.
+            </summary>
+            <param name="request">The request for which the original URL should be computed.</param>
+            <returns>The original URL requested by the client.</returns>
+        </member>
+    </members>
+</doc>
