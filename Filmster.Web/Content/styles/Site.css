@@ -57,6 +57,16 @@ header nav ul {
     float: right;
 }
 
+header nav li {
+    display: inline;
+    margin: 0 20px 0 0;
+}
+
+header nav li:last-child
+{
+    margin-right: 0px;
+}
+
 header nav a {
     font-weight: bold;
     background: #F9512B;
@@ -82,11 +92,6 @@ header .me {
 header .me a {
     text-decoration: none;
     color: #000;
-}
-
-header nav li {
-    display: inline;
-    margin: 0 20px 0 0;
 }
 			
 .block  
@@ -175,4 +180,17 @@ header nav li {
 .catalog ol.alphabet li {
     display: inline;
     margin: 0 10px 0 0;
+}
+
+.social {
+    text-align: right;
+    margin-bottom: -20px;
+    overflow: hidden;
+    height: 20px;
+}
+
+.social .fb-like {
+    position: relative;
+    margin-left: -16px;
+    top: -4px;
 }

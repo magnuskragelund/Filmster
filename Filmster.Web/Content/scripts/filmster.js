@@ -1,4 +1,5 @@
-﻿$(function () {
+﻿/// <reference path="~/Content/scripts/jquery-1.5.1.js">
+$(function () {
     $('.movie-preview').mbScrollable({
         width: 800,
         elementsInPage: 1,
