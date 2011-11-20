@@ -50,6 +50,11 @@ namespace Filmster.Data
             return _context.Movies.Where(m => m.Id == id).SingleOrDefault();
         }
 
+        public List<Movie> GetMovies()
+        {
+            return _context.Movies.ToList();
+        }
+
         public List<Movie> GetActiveMovies()
         {
             return _context.Movies.Where(m => m.RentalOptions.Count > 0).ToList();
