@@ -37,6 +37,7 @@ namespace Filmster.Web.Controllers
         {
             var m = _repo.GetMovie (id);
             EnforceCanoncalUrl(m.RouteValues());
+            ViewBag.OtherMovies = _repo.GetRandomMovies(5, 1);
             return View(m);
         }
 

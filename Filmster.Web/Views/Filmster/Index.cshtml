@@ -20,10 +20,5 @@
 </section>
 <section class="block">
     <h2>Film fra kataloget</h2>
-    <div class="movie-preview movie-scroller">
-        @foreach (var movie in Model)
-        {
-            Html.RenderPartial("_MoviePreview", movie);
-        }
-    </div>
+    @Html.Partial("_ScrollingMovies", Model);
 </section>

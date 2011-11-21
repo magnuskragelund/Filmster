@@ -41,6 +41,11 @@
         </p>
  </section>
 
+ <section class="block">
+    <h2>Andre film fra kataloget</h2>
+    @Html.Partial("_ScrollingMovies", ViewBag.OtherMovies as List<Movie>);
+</section>
+
  @helper VendorLogo (Vendor vendor)
 {
      var imageName = "";
