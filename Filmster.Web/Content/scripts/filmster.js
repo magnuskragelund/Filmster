@@ -30,4 +30,8 @@ $(function () {
     }).result(function (event, item) {
         location.href = item.Url;
     });
+
+    $('.rent-movie').click(function (e) {
+        _gaq.push(['_trackEvent', 'Film', 'Lej', $(e.currentTarget).attr('data-moviename')]);
+    });
 });

@@ -1,0 +1,8 @@
+﻿@using Filmster.Data
+@model List<Movie>
+<div class="movie-preview movie-scroller">
+    @foreach (var movie in Model)
+    {
+        Html.RenderPartial("_MoviePreview", movie);
+    }
+</div>

@@ -7,6 +7,7 @@ namespace Filmster.Data
     {
         Movie FindMovie(string title, DateTime? releaseDate);
         Movie GetMovie(int id);
+        List<Movie> GetMovies();
         List<Movie> GetActiveMovies();
         List<Movie> GetRandomMovies(int take, int minRentalOptionCount);
         List<Movie> GetMoviesByTitleFistChar(string firstChar);

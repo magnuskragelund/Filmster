@@ -2,8 +2,8 @@
 @model Movie
 
 @{
-    ViewBag.Title = "Se \"" + @Model.Title + "\" online for kun " + @Model.RentalOptions.OrderBy(r => r.Price).First().Price + " kr. med filmster";
-    ViewBag.Description = "Få et hurtigt overblik over hvor du kan se " + @Model.Title + " via Video On Demand streaming.";
+    ViewBag.Title = "Se »" + @Model.Title + "« online nemt og billigt via filmster";
+    ViewBag.Description = "Få et hurtigt overblik over hvor du kan leje \"" + @Model.Title + "\" på nettet";
 }
 
 <section class="block details">
@@ -16,7 +16,7 @@
 <section class="block">
     <h3>Her kan du streame "@Model.Title"</h3>
     <p>
-        Find den udbyder og pris som passer dig bedst. På listen ser du alle de sites hvor du kan leje "@Model.Title" online. 
+        Find den udbyder og pris som passer dig bedst. På listen ser du alle de sites hvor du kan leje "@Model.Title" på nettet. 
     </p>
         <table>
             <tr>
@@ -31,15 +31,20 @@
                     <td>@VendorLogo(rentalOption.Vendor)</td>
                     <td>@Html.Raw((rentalOption.HighDefinition ? "<b>Ja<b/>" : "Nej"))</td>
                     <td>@rentalOption.Price,-</td>
-                    <td><a href="@rentalOption.Url" rel="nofollow">Lej »</a></td>
+                    <td><a class="rent-movie" href="@rentalOption.Url" data-vendorname="@rentalOption.Vendor.Name" data-moviename="@Model.Title" rel="nofollow">Lej »</a></td>
                 </tr>
             }
         </table>
         <p>
-            Hvis prisen er mere end 50 kr. 
-            er det typisk prisen for at købe fillmen, så den er din for altid, eller prisen for et abonnement, hvor flere film er inkluderet i prisen.
+            <small>Hvis prisen er mere end 50 kr. 
+            er det typisk prisen for at købe fillmen, så den er din for altid, eller prisen for et abonnement, hvor flere film er inkluderet i prisen.</small>
         </p>
  </section>
+
+ <section class="block">
+    <h2>Andre film fra kataloget</h2>
+    @Html.Partial("_ScrollingMovies", ViewBag.OtherMovies as List<Movie>);
+</section>
 
  @helper VendorLogo (Vendor vendor)
 {
