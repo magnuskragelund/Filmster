@@ -149,11 +149,14 @@ header .me a {
 }
 
 .search input[type='text'] {
-    width: 750px;
+    width: 740px;
 }
 
 .ac_results {
+    width: 742px!important;
     background: #fff;
+    border: 1px solid #CCC;
+    border-top: none;
 }
 .ac_results .ac_over {
     background: #efefef;
@@ -186,11 +189,16 @@ header .me a {
     text-align: right;
     margin-bottom: -20px;
     overflow: hidden;
-    height: 20px;
+    height: 22px;
 }
 
 .social .fb-like {
     position: relative;
     margin-left: -16px;
     top: -4px;
+}
+
+a.rent-movie {
+    font-weight: bold;
+    font-size: 1.2em;
 }
