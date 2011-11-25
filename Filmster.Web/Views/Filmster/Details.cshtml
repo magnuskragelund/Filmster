@@ -6,15 +6,9 @@
     ViewBag.Description = "Få et hurtigt overblik over hvor du kan leje \"" + @Model.Title + "\" på nettet";
 }
 
-<section class="block details">
-    <h2>@Model.Title</h2>
-    <img class="cover" src="@Model.RentalOptions.First().CoverUrl" alt="@Model.Title"/>
-    <p>@Model.Plot</p>
-    
-</section>
 
 <section class="block">
-    <h3>Her kan du streame "@Model.Title"</h3>
+    <h1>Her kan du leje "@Model.Title" online</h1>
     <p>
         Find den udbyder og pris som passer dig bedst. På listen ser du alle de sites hvor du kan leje "@Model.Title" på nettet. 
     </p>
@@ -31,7 +25,7 @@
                     <td>@VendorLogo(rentalOption.Vendor)</td>
                     <td>@Html.Raw((rentalOption.HighDefinition ? "<b>Ja<b/>" : "Nej"))</td>
                     <td>@rentalOption.Price,-</td>
-                    <td><a class="rent-movie" href="@rentalOption.Url" data-vendorname="@rentalOption.Vendor.Name" data-moviename="@Model.Title" rel="nofollow">Lej »</a></td>
+                    <td><a class="rent-movie" href="@rentalOption.Url" data-vendorname="@rentalOption.Vendor.Name" data-moviename="@Model.Title" rel="nofollow" title="Lej filmen hos @rentalOption.Vendor.Name">Lej »</a></td>
                 </tr>
             }
         </table>
@@ -40,7 +34,15 @@
             er det typisk prisen for at købe fillmen, så den er din for altid, eller prisen for et abonnement, hvor flere film er inkluderet i prisen.</small>
         </p>
  </section>
-
+ <section class="block details">
+    <h1>@Model.Title</h2>
+    <img class="cover" src="@Model.RentalOptions.First().CoverUrl" alt="@Model.Title"/>
+    <p><b>Beskrivelse: </b>@Model.Plot</p>
+    <p>
+        Se hvor du kan leje filmen i tabllen neden under.
+    </p>
+    
+</section>
  <section class="block">
     <h2>Andre film fra kataloget</h2>
     @Html.Partial("_ScrollingMovies", ViewBag.OtherMovies as List<Movie>);

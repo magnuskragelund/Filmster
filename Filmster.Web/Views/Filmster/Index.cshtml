@@ -4,10 +4,6 @@
     ViewBag.Title = "Filmster samler alle film der kan streames i Danmark på ét sted";
     ViewBag.Description = "Filmster samler alle Video on Demand tjenerster til rådighed og Danmark, og giver dig det bedste overblik over priser, tilgængelighed og Software.";
 }
-<section class="block quick-search">
-    @Html.Partial("_SearchForm", "")
-</section>
-
 <section class="block">
     <h2>Giver et hurtigt overblik når du vil leje film online</h2>
     <p>
@@ -17,6 +13,9 @@
     @*<p>
         Hvis du ikke har prøvet at streame film online før, kan du læse mere om hvordan man gør, eller prøve at se nogle af de gratis fil, der er til rådighed.
     </p>*@
+</section>
+<section class="block quick-search">
+    @Html.Partial("_SearchForm", "")
 </section>
 <section class="block">
     <h2>Film fra kataloget</h2>
