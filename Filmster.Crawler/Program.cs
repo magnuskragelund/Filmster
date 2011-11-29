@@ -21,11 +21,11 @@ namespace Filmster.Crawler
             if(args.Length > 0 && args[0] == "-index")
             {
                 Index();
-                Crawl();
             }
             else
             {
                 Crawl();
+                Index();
             }
         }
 
@@ -34,14 +34,16 @@ namespace Filmster.Crawler
             Logger.Log("Initiating Crawl");
             ThreadPool.SetMinThreads(40, 40);
             ThreadPool.SetMaxThreads(120, 120);
+            
+            new Film2HomeCrawler().Start();
             new CdonCrawler().Start();
-            //new ItunesCrawler().Start();
-            //new VoddlerCrawler().Start();
-            //new HeadwebCrawler().Start();
-            //new ViaPlayCrawler().Start();
+            new ItunesCrawler().Start();
+            new VoddlerCrawler().Start();
+            new HeadwebCrawler().Start();
+            new ViaPlayCrawler().Start();
             new SFAnytimeCrawler().Start();
-            //new YouSeeCrawler().Start();
-            //new SputnikCrawler().Start();
+            new YouSeeCrawler().Start();
+            new SputnikCrawler().Start();
             //new FilmstribenCrawler().Start();
         }
 
