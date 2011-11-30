@@ -22,17 +22,21 @@
             @foreach (var rentalOption in Model.RentalOptions.OrderBy(r => r.Price))
             {
                 <tr>
-                    <td>@VendorLogo(rentalOption.Vendor)</td>
+                    @*<td>@VendorLogo(rentalOption.Vendor)</td>*@
+                    <td>@rentalOption.Vendor.Name</td>
                     <td>@Html.Raw((rentalOption.HighDefinition ? "<b>Ja<b/>" : "Nej"))</td>
                     <td>@rentalOption.Price,-</td>
-                    <td><a class="rent-movie" href="@rentalOption.Url" data-vendorname="@rentalOption.Vendor.Name" data-moviename="@Model.Title" rel="nofollow" title="Lej filmen hos @rentalOption.Vendor.Name">Lej »</a></td>
+                    <td class="rent-column"><a href="@rentalOption.Url" data-vendorname="@rentalOption.Vendor.Name" data-moviename="@Model.Title" rel="nofollow" title="Lej filmen hos @rentalOption.Vendor.Name">Lej hos @rentalOption.Vendor.Name »</a></td>
                 </tr>
             }
         </table>
-        <p>
-            <small>Hvis prisen er mere end 50 kr. 
-            er det typisk prisen for at købe fillmen, så den er din for altid, eller prisen for et abonnement, hvor flere film er inkluderet i prisen.</small>
-        </p>
+        @if (Model.RentalOptions.Any(r => r.Price >= 50))
+        {
+            <p>
+                <small>Hvis prisen er mere end 50 kr. 
+                er det typisk prisen for at købe fillmen, så den er din for altid, eller prisen for et abonnement, hvor flere film er inkluderet i prisen.</small>
+            </p>
+        }
  </section>
  <section class="block details">
     <h1>@Model.Title</h2>
@@ -43,40 +47,50 @@
     </p>
     
 </section>
- <section class="block">
+<section class="block">
+<script type="text/javascript"><!--
+    google_ad_client = "ca-pub-6957238932191351";
+    google_ad_slot = "4344023367";
+    google_ad_width = 728;
+    google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></section>
+<section class="block">
     <h2>Andre film fra kataloget</h2>
     @Html.Partial("_ScrollingMovies", ViewBag.OtherMovies as List<Movie>);
 </section>
 
- @helper VendorLogo (Vendor vendor)
-{
-     var imageName = "";
-     switch (vendor.Id)
+ @helper VendorLogo(Vendor vendor)
      {
-         case 1:
-             imageName = "viaplay.png";
-             break;
-         case 2:
-             imageName = "sputnik.png";
-             break;
-         case 3:
-             imageName = "voddler.png";
-             break;
-         case 4:
-             imageName = "headweb.png";
-             break;
-         case 5:
-             imageName = "sf-anytime.png";
-             break;
-         case 6:
-             imageName = "yousee-tv.png";
-             break;
-         case 7:
-             imageName = "itunes.png";
-             break;
-         case 8:
-             imageName = "cdon.png";
-             break;
-     }
+    var imageName = "";
+    switch (vendor.Id)
+    {
+        case 1:
+            imageName = "viaplay.png";
+            break;
+        case 2:
+            imageName = "sputnik.png";
+            break;
+        case 3:
+            imageName = "voddler.png";
+            break;
+        case 4:
+            imageName = "headweb.png";
+            break;
+        case 5:
+            imageName = "sf-anytime.png";
+            break;
+        case 6:
+            imageName = "yousee-tv.png";
+            break;
+        case 7:
+            imageName = "itunes.png";
+            break;
+        case 8:
+            imageName = "cdon.png";
+            break;
+    }
      <img src="/Content/images/logos/@imageName" height="30" alt="@vendor.Name" title="@vendor.Name" />
 }

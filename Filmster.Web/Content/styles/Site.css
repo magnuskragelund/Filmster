@@ -34,6 +34,10 @@ th {
     text-align: left;
 }
 
+tr {
+   height: 33px; 
+}
+
 footer {
     font-size: 0.8em;
     text-align: center;
@@ -198,7 +202,11 @@ header .me a {
     top: -4px;
 }
 
-a.rent-movie {
+.rent-column {
+    width: 230px;
+}
+
+.rent-column a {
     font-weight: bold;
     font-size: 1.2em;
 }
