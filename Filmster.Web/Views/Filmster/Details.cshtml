@@ -38,15 +38,13 @@
             </p>
         }
  </section>
- <section class="block details">
-    <h1>@Model.Title</h2>
-    <img class="cover" src="@Model.RentalOptions.First().CoverUrl" alt="@Model.Title"/>
-    <p><b>Beskrivelse: </b>@Model.Plot</p>
-    <p>
-        Se hvor du kan leje filmen i tabellen øverst på siden.
-    </p>
-    
+
+<section class="block details">
+    <h2>@Model.Title</h2>
+    <img class="cover" src="/CoverHandler.ashx?id=@Model.Id&w=270" alt="@Model.Title"/>
+    <p>@Model.Plot</p>
 </section>
+
 <section class="block">
 <script type="text/javascript"><!--
     google_ad_client = "ca-pub-6957238932191351";

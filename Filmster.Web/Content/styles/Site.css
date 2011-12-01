@@ -148,7 +148,7 @@ header .me a {
 .details .cover {
     float: right;
     margin-left: 30px;
-    width: 170px;
+    width: 230px;
     border: 3px solid #C4C4C4
 }
 
@@ -210,3 +210,31 @@ header .me a {
     font-weight: bold;
     font-size: 1.2em;
 }
+
+.coverflow {
+    padding-right: 0px;
+}
+.coverflow p {
+    margin-top: 4px;
+}
+
+.coverflow .movie {
+    width: 150px;
+    height: 280px;
+    display: inline;
+    float: left;
+    margin-right: 22px;
+    font-size: 0.8em;
+    line-height: 1.3em;
+}
+
+.coverflow .covermask {
+    width: 150px;
+    height: 210px;
+    overflow: hidden;
+}
+
+.coverflow .movie img {
+    width: 150px;
+}
+

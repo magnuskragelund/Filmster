@@ -29,7 +29,7 @@ namespace Filmster.Web.Controllers
 
         public ActionResult Index()
         {
-            var randomMovies = _repo.GetRandomMovies(5, 3);
+            var randomMovies = _repo.GetRandomMovies(50, 5);
             return View(randomMovies);
         }
 

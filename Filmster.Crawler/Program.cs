@@ -18,14 +18,25 @@ namespace Filmster.Crawler
     {
         private static void Main(string[] args)
         {
-            if(args.Length > 0 && args[0] == "-index")
+            try
             {
-                Index();
-                Crawl();
+                if (args.Length > 0 && args[0] == "-index")
+                {
+                    Logger.Log("Starting crawl only");
+                    Index();
+                }
+                else
+                {
+                    Logger.Log("Starting crawl and index");
+                    Crawl();
+                    Index();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Crawl();
+                Logger.LogException("Main", ex);
+                Logger.Log("Crawler encountered an error and is closing");
+                throw;
             }
         }
 
@@ -34,12 +45,12 @@ namespace Filmster.Crawler
             Logger.Log("Initiating Crawl");
             ThreadPool.SetMinThreads(40, 40);
             ThreadPool.SetMaxThreads(120, 120);
+            new SFAnytimeCrawler().Start();
             new CdonCrawler().Start();
             //new ItunesCrawler().Start();
             //new VoddlerCrawler().Start();
             //new HeadwebCrawler().Start();
             //new ViaPlayCrawler().Start();
-            new SFAnytimeCrawler().Start();
             //new YouSeeCrawler().Start();
             //new SputnikCrawler().Start();
             //new FilmstribenCrawler().Start();
