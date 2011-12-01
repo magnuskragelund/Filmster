@@ -22,7 +22,7 @@ namespace Filmster.Crawler
             {
                 if (args.Length > 0 && args[0] == "-index")
                 {
-                    Logger.Log("Starting crawl only");
+                    Logger.Log("Starting index only");
                     Index();
                 }
                 else
