@@ -1,5 +1,4 @@
-﻿@using Filmster.Common
-@using Filmster.Data
+﻿@using Filmster.Data
 @using Filmster.Web.Utils
 @model Movie
 
@@ -11,6 +10,6 @@
 <article class="movie">
     <img class="cover" src="@Model.RentalOptions.First().CoverUrl" alt="@Model.Title"/>
     <h3>@Html.RouteLink(Model.Title, Model.RouteValues())</h3>
-    <div class="plot">@Model.Plot.ShortenString(".", 350)...</div>
+    <div class="plot">@Model.Plot.Substring(0, Math.Min(Model.Plot.Length, 350))...</div>
     <div class="legend">@vendors@(placeCount > 1 ? " bedste pris:" : ", pris") @Model.RentalOptions.OrderBy(r => r.Price).First().Price kr.</div>
 </article>
