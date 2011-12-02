@@ -31,9 +31,15 @@ namespace Filmster.Web
 
             routes.MapRoute(
                 null,
+                "lej/{rentalOptionId}",
+                new { controller = "Filmster", action = "Rent" },
+                new { rentalOptionId = @"\d+" });
+
+            routes.MapRoute(
+                null,
                 "{title}/{id}",
-                new { controller = "Filmster", action = "Details"},
-                new {id = @"\d+" });
+                new { controller = "Filmster", action = "Details" },
+                new { id = @"\d+" });
 
             routes.MapRoute(
                 null,

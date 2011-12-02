@@ -8,7 +8,7 @@
 }
 
 <article class="movie">
-    <img class="cover" src="@Model.RentalOptions.First().CoverUrl" alt="@Model.Title"/>
+    <img class="cover" src="/CoverHandler.ashx?id=@Model.Id&w=150" alt="@Model.Title"/>
     <h3>@Html.RouteLink(Model.Title, Model.RouteValues())</h3>
     <div class="plot">@Model.Plot.Substring(0, Math.Min(Model.Plot.Length, 350))...</div>
     <div class="legend">@vendors@(placeCount > 1 ? " bedste pris:" : ", pris") @Model.RentalOptions.OrderBy(r => r.Price).First().Price kr.</div>
