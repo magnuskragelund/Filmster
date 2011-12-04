@@ -44,6 +44,16 @@ footer {
     margin-top: 10px;
 }
 
+input[type='submit'], input[type='button'] {
+    background: white;
+    border: 1px solid #999;
+    border-radius: 0.2em;
+}
+
+input[type='submit']:hover , input[type='button']:hover {
+    background: #f9b72d;
+}
+
 .wrapper {
 	width: 900px; 
 	margin: auto; 

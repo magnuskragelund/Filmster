@@ -24,6 +24,7 @@
     @foreach (var movie in Model)
     {
         <div class="movie">
+            <a href="@Url.Action("Details", movie.RouteValues())">
             <div class="covermask">
                 <img class="cover" src="/CoverHandler.ashx?id=@movie.Id" alt="@movie.Title Cover" />
             </div>
@@ -31,6 +32,7 @@
                 <b>@Html.RouteLink(@movie.Title, movie.RouteValues())</b><br />
                 @movie.RentalOptions.OrderBy(r => r.Price).First().Price kr.
             </p>
+            </a>
         </div>
     }
 </section>
