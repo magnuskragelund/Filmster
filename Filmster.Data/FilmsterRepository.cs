@@ -68,6 +68,11 @@ namespace Filmster.Data
             return _context.Movies.Where(m => m.Id > toSkip && m.RentalOptions.Count > minRentalOptionCount).Take(take).ToList();
         }
 
+        public List<Movie> GetPopularMovies(int take)
+        {
+            return _context.Movies.OrderByDescending(m => m.Impressions + m.RentalOptions.Sum(r => r.Impressions)).Take(take).ToList();
+        }
+
         public List<Movie> GetMoviesByTitleFistChar(string firstChar)
         {
             return _context.Movies
@@ -91,6 +96,11 @@ namespace Filmster.Data
             return _context.Vendors.Where(v => v.Id == id).SingleOrDefault();
         }
 
+        public RentalOption GetRentalOption(int rentalOptionId)
+        {
+            return _context.RentalOptions.Where(r => r.Id == rentalOptionId).FirstOrDefault();
+        }
+
         public RentalOption GetRentalOption(int movieId, int vendorId, bool highDefinition)
         {
             return _context.RentalOptions
@@ -101,6 +111,16 @@ namespace Filmster.Data
         public void AddRentalOption(RentalOption rentalOption)
         {
             _context.RentalOptions.AddObject(rentalOption);
+        }
+
+        public void AddImpression(Movie movie)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddImpression(RentalOption rentalOption)
+        {
+            throw new NotImplementedException();
         }
 
         public List<Movie> Query(string q, bool titleOnly = false)
@@ -142,10 +162,10 @@ namespace Filmster.Data
             return movies;
         }
 
-        public void Save()
+        public void Save(bool dispose = true)
         {
             _context.SaveChanges();
-            _context.Dispose();
+            if(dispose) _context.Dispose();
         }
 
         public void Undo()

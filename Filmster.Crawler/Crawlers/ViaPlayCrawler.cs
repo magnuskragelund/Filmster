@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using Filmster.Common;
 using Filmster.Crawler;
 using Filmster.Data;
+using Filmster.Utilities;
 using HtmlAgilityPack;
 
 namespace Filmster.Crawlers

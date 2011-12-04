@@ -92,6 +92,9 @@
   <ItemGroup>
     <Compile Include="CassetteConfiguration.cs" />
     <Compile Include="Controllers\FilmsterController.cs" />
+    <Compile Include="CoverHandler.ashx.cs">
+      <DependentUpon>CoverHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -139,10 +142,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Filmster.Common\Filmster.Common.csproj">
-      <Project>{BB56E619-EC6F-4FD1-A544-DBA825C91DA1}</Project>
-      <Name>Filmster.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Filmster.Data\Filmster.Data.csproj">
       <Project>{A67FBF31-EDC6-4455-AF48-EDEE6C07F97A}</Project>
       <Name>Filmster.Data</Name>
@@ -165,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_ScrollingMovies.cshtml" />
+    <Content Include="CoverHandler.ashx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

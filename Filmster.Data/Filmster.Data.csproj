@@ -66,6 +66,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Filmster.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="App.Config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

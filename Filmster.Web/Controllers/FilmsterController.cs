@@ -29,15 +29,17 @@ namespace Filmster.Web.Controllers
 
         public ActionResult Index()
         {
-            var randomMovies = _repo.GetRandomMovies(5, 3);
+            var randomMovies = _repo.GetPopularMovies(50);
             return View(randomMovies);
         }
 
         public ActionResult Details(int id)
         {
-            var m = _repo.GetMovie (id);
+            var m = _repo.GetMovie(id);
             EnforceCanoncalUrl(m.RouteValues());
-            ViewBag.OtherMovies = _repo.GetRandomMovies(5, 1);
+            ViewBag.OtherMovies = _repo.GetPopularMovies(5);
+            m.Impressions++;
+            _repo.Save(false);
             return View(m);
         }
 
@@ -68,6 +70,14 @@ namespace Filmster.Web.Controllers
                                 };
 
             return View(viewModel);
+        }
+
+        public RedirectResult Rent(int rentalOptionId)
+        {
+            var rentalOption = _repo.GetRentalOption(rentalOptionId);
+            rentalOption.Impressions++;
+            _repo.Save(false);
+            return Redirect(rentalOption.Url);
         }
 
         public JsonResult AutoComplete(string q)

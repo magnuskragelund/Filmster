@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Threading;
-using Filmster.Common;
 using Filmster.Crawler;
 using Filmster.Data;
+using Filmster.Utilities;
 using HtmlAgilityPack;
 
 namespace Filmster.Crawlers

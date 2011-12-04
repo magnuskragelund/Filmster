@@ -169,11 +169,13 @@ namespace Filmster.Data
         /// </summary>
         /// <param name="id">Initial value of the Id property.</param>
         /// <param name="porn">Initial value of the Porn property.</param>
-        public static Movie CreateMovie(global::System.Int32 id, global::System.Boolean porn)
+        /// <param name="impressions">Initial value of the Impressions property.</param>
+        public static Movie CreateMovie(global::System.Int32 id, global::System.Boolean porn, global::System.Int32 impressions)
         {
             Movie movie = new Movie();
             movie.Id = id;
             movie.Porn = porn;
+            movie.Impressions = impressions;
             return movie;
         }
 
@@ -302,6 +304,30 @@ namespace Filmster.Data
         private global::System.Boolean _Porn;
         partial void OnPornChanging(global::System.Boolean value);
         partial void OnPornChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Impressions
+        {
+            get
+            {
+                return _Impressions;
+            }
+            set
+            {
+                OnImpressionsChanging(value);
+                ReportPropertyChanging("Impressions");
+                _Impressions = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Impressions");
+                OnImpressionsChanged();
+            }
+        }
+        private global::System.Int32 _Impressions;
+        partial void OnImpressionsChanging(global::System.Int32 value);
+        partial void OnImpressionsChanged();
 
         #endregion
     
@@ -351,7 +377,8 @@ namespace Filmster.Data
         /// <param name="subscriptionBased">Initial value of the SubscriptionBased property.</param>
         /// <param name="added">Initial value of the Added property.</param>
         /// <param name="lastSeen">Initial value of the LastSeen property.</param>
-        public static RentalOption CreateRentalOption(global::System.Int32 id, global::System.Single price, global::System.Boolean highDefinition, global::System.Boolean subscriptionBased, global::System.DateTime added, global::System.DateTime lastSeen)
+        /// <param name="impressions">Initial value of the Impressions property.</param>
+        public static RentalOption CreateRentalOption(global::System.Int32 id, global::System.Single price, global::System.Boolean highDefinition, global::System.Boolean subscriptionBased, global::System.DateTime added, global::System.DateTime lastSeen, global::System.Int32 impressions)
         {
             RentalOption rentalOption = new RentalOption();
             rentalOption.Id = id;
@@ -360,6 +387,7 @@ namespace Filmster.Data
             rentalOption.SubscriptionBased = subscriptionBased;
             rentalOption.Added = added;
             rentalOption.LastSeen = lastSeen;
+            rentalOption.Impressions = impressions;
             return rentalOption;
         }
 
@@ -608,6 +636,30 @@ namespace Filmster.Data
         private Nullable<global::System.Int32> _Vendor_Id;
         partial void OnVendor_IdChanging(Nullable<global::System.Int32> value);
         partial void OnVendor_IdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Impressions
+        {
+            get
+            {
+                return _Impressions;
+            }
+            set
+            {
+                OnImpressionsChanging(value);
+                ReportPropertyChanging("Impressions");
+                _Impressions = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Impressions");
+                OnImpressionsChanged();
+            }
+        }
+        private global::System.Int32 _Impressions;
+        partial void OnImpressionsChanging(global::System.Int32 value);
+        partial void OnImpressionsChanged();
 
         #endregion
     

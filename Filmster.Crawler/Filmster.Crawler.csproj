@@ -81,6 +81,8 @@
     <Compile Include="Crawlers\SputnikCrawler.cs" />
     <Compile Include="Crawlers\ViaPlayCrawler.cs" />
     <Compile Include="Crawlers\VoddlerCrawler.cs" />
+    <Compile Include="Utilities\HtmlUtils.cs" />
+    <Compile Include="Utilities\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -89,10 +91,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Filmster.Common\Filmster.Common.csproj">
-      <Project>{BB56E619-EC6F-4FD1-A544-DBA825C91DA1}</Project>
-      <Name>Filmster.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Filmster.Data\Filmster.Data.csproj">
       <Project>{A67FBF31-EDC6-4455-AF48-EDEE6C07F97A}</Project>
       <Name>Filmster.Data</Name>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="Movies" EntityType="Model.Store.Movies" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="RentalOptions" EntityType="Model.Store.RentalOptions" store:Type="Tables" Schema="dbo" />
@@ -27,6 +27,7 @@
           <Property Name="Plot" Type="nvarchar(max)" />
           <Property Name="ReleaseDate" Type="datetime" />
           <Property Name="Porn" Type="bit" Nullable="false" />
+          <Property Name="Impressions" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="RentalOptions">
           <Key>
@@ -42,6 +43,7 @@
           <Property Name="LastSeen" Type="datetime" Nullable="false" />
           <Property Name="Movie_Id" Type="int" />
           <Property Name="Vendor_Id" Type="int" />
+          <Property Name="Impressions" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Vendors">
           <Key>
@@ -75,8 +77,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -103,6 +104,7 @@
           <Property Name="ReleaseDate" Type="DateTime" />
           <Property Name="Porn" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="RentalOptions" Relationship="Model.RentalOption_Movie" FromRole="Movies" ToRole="RentalOptions" />
+          <Property Type="Int32" Name="Impressions" Nullable="false" />
         </EntityType>
         <EntityType Name="RentalOption">
           <Key>
@@ -120,6 +122,7 @@
           <Property Name="Vendor_Id" Type="Int32" />
           <NavigationProperty Name="Movie" Relationship="Model.RentalOption_Movie" FromRole="RentalOptions" ToRole="Movies" />
           <NavigationProperty Name="Vendor" Relationship="Model.RentalOption_Vendor" FromRole="RentalOptions" ToRole="Vendors" />
+          <Property Type="Int32" Name="Impressions" Nullable="false" />
         </EntityType>
         <EntityType Name="Vendor">
           <Key>
@@ -161,14 +164,16 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="FilmsterEntities">
           <EntitySetMapping Name="Movies"><EntityTypeMapping TypeName="Model.Movie"><MappingFragment StoreEntitySet="Movies">
-            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Impressions" ColumnName="Impressions" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
             <ScalarProperty Name="Title" ColumnName="Title" />
             <ScalarProperty Name="Plot" ColumnName="Plot" />
             <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
             <ScalarProperty Name="Porn" ColumnName="Porn" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="RentalOptions"><EntityTypeMapping TypeName="Model.RentalOption"><MappingFragment StoreEntitySet="RentalOptions">
-            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Impressions" ColumnName="Impressions" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
             <ScalarProperty Name="Price" ColumnName="Price" />
             <ScalarProperty Name="HighDefinition" ColumnName="HighDefinition" />
             <ScalarProperty Name="Url" ColumnName="Url" />

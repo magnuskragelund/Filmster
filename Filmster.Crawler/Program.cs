@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.IO;
@@ -18,15 +20,29 @@ namespace Filmster.Crawler
     {
         private static void Main(string[] args)
         {
-            if(args.Length > 0 && args[0] == "-index")
+            Logger.Log("Time: " + DateTime.Now);
+            try
             {
-                Index();
-                Crawl();
+                if (args.Length > 0 && args[0] == "-index")
+                {
+                    Logger.Log("Starting index only");
+                    Index();
+                }
+                else
+                {
+                    Logger.Log("Starting crawl and index");
+                    Crawl();
+                    Index();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Crawl();
+                Logger.LogException("Main", ex);
+                Logger.Log("Crawler encountered an error and is closing");
+                throw;
             }
+            Logger.Log("Time: " + DateTime.Now);
+            Logger.Dump();
         }
 
         public static void Crawl()
@@ -35,13 +51,13 @@ namespace Filmster.Crawler
             ThreadPool.SetMinThreads(40, 40);
             ThreadPool.SetMaxThreads(120, 120);
             new CdonCrawler().Start();
-            //new ItunesCrawler().Start();
-            //new VoddlerCrawler().Start();
-            //new HeadwebCrawler().Start();
-            //new ViaPlayCrawler().Start();
+            new ItunesCrawler().Start();
+            new VoddlerCrawler().Start();
+            new HeadwebCrawler().Start();
+            new ViaPlayCrawler().Start();
+            new YouSeeCrawler().Start();
+            new SputnikCrawler().Start();
             new SFAnytimeCrawler().Start();
-            //new YouSeeCrawler().Start();
-            //new SputnikCrawler().Start();
             //new FilmstribenCrawler().Start();
         }
 
@@ -93,8 +109,10 @@ namespace Filmster.Crawler
 
     public class Logger
     {
+        private static List<KeyValuePair<string, string>> _log = new List<KeyValuePair<string, string>>();
         public static void Log(string str)
         {
+            _log.Add(new KeyValuePair<string, string>("Log", str));
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(str);
             Console.ResetColor();
@@ -102,6 +120,7 @@ namespace Filmster.Crawler
 
         public static void LogVerbose(string str)
         {
+            _log.Add(new KeyValuePair<string, string>("Verbose", str));
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine(str);
             Console.ResetColor();
@@ -109,10 +128,17 @@ namespace Filmster.Crawler
 
         public static void LogException(string str, Exception exception)
         {
+            _log.Add(new KeyValuePair<string, string>("Error", str + " - " + exception));
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(str);
             Console.WriteLine(exception);
             Console.ResetColor();
+        }
+
+        public static void Dump()
+        {
+            var path = ConfigurationManager.AppSettings["LogFile"];
+            File.WriteAllLines(path, _log.Where(x => x.Key != "Verbose").Select(x => x.Value));
         }
     }
 
