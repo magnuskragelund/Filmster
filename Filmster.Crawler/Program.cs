@@ -83,7 +83,7 @@ namespace Filmster.Crawler
                 Logger.Log("Creating new index");
                 var i = 0;
                 IndexWriter writer = new IndexWriter(directory, analyzer);
-                var moviesToIndex = repository.GetActiveMovies();
+                var moviesToIndex = repository.GetActiveMovies().ToList();
                 foreach (var movie in moviesToIndex)
                 {
                     Document doc = new Document();

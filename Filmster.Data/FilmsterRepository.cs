@@ -23,7 +23,7 @@ namespace Filmster.Data
 
         public Movie FindMovie(string title, DateTime? releaseDate)
         {
-            var movies = _context.Movies.Where(m => m.Title == title);
+            var movies = GetActiveMovies().Where(m => m.Title == title);
 
             if(!movies.Any())
             {
@@ -50,32 +50,27 @@ namespace Filmster.Data
             return _context.Movies.Where(m => m.Id == id).SingleOrDefault();
         }
 
-        public List<Movie> GetMovies()
+        public List<Movie> GetAllMovies()
         {
             return _context.Movies.ToList();
         }
 
-        public List<Movie> GetActiveMovies()
+        public IQueryable<Movie> GetActiveMovies()
         {
-            return _context.Movies.Where(m => m.RentalOptions.Count > 0).ToList();
-        }
-
-        public List<Movie> GetRandomMovies(int take, int minRentalOptionCount)
-        {
-            Random rand = new Random();
-            int toSkip = rand.Next(0, _context.Movies.Where(m => m.RentalOptions.Count > minRentalOptionCount).Count());
-
-            return _context.Movies.Where(m => m.Id > toSkip && m.RentalOptions.Count > minRentalOptionCount).Take(take).ToList();
+            var blockingDate = DateTime.Now.AddDays(-4);
+            return _context.Movies
+                .Where(m => !m.Porn)
+                .Where(m => m.RentalOptions.Where(r => r.LastSeen > blockingDate).Count() > 0);
         }
 
         public List<Movie> GetPopularMovies(int take)
         {
-            return _context.Movies.OrderByDescending(m => m.Impressions + m.RentalOptions.Sum(r => r.Impressions)).Take(take).ToList();
+            return GetActiveMovies().OrderByDescending(m => m.Impressions + m.RentalOptions.Sum(r => r.Impressions)).Take(take).ToList();
         }
 
         public List<Movie> GetMoviesByTitleFistChar(string firstChar)
         {
-            return _context.Movies
+            return GetActiveMovies()
                 .Where(m => m.Title.Substring(0, 1) == firstChar)
                 .OrderBy(m => m.Title)
                 .ToList();
@@ -111,16 +106,6 @@ namespace Filmster.Data
         public void AddRentalOption(RentalOption rentalOption)
         {
             _context.RentalOptions.AddObject(rentalOption);
-        }
-
-        public void AddImpression(Movie movie)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddImpression(RentalOption rentalOption)
-        {
-            throw new NotImplementedException();
         }
 
         public List<Movie> Query(string q, bool titleOnly = false)
