@@ -30,7 +30,9 @@ namespace Filmster.Crawlers
             {
                 var genreDoc = GetDocument(genreLink.Attributes["href"].Value);
 
-                var movieLinks = genreDoc.DocumentNode.SelectNodes("//div[contains(@class, 'column')]//a");
+                var movieLinks = genreDoc.DocumentNode.SelectNodes("//div[contains(@class, 'column')]//a[contains(@href, 'movie')]");
+
+                if(movieLinks == null) continue;
 
                 foreach (var movieLink in movieLinks)
                 {
@@ -68,8 +70,8 @@ namespace Filmster.Crawlers
                 var coverUrl = doc.SelectSingleNode("//div[@class='lockup product movie video']//div[@class='artwork']//img").Attributes["src"].Value;
                 var porn = false;
 
-                int.TryParse(doc.SelectSingleNode("//li[@class='release-date']").InnerHtml.SubstringByStringToString("Released: </span>", "</li", false).RemoveNonNumericChars(), out releaseYear);
-                float.TryParse(doc.SelectSingleNode("//span[@class='price']").InnerText.Replace("Kr", ""), NumberStyles.Any, new CultureInfo("en-US").NumberFormat, out price);
+                int.TryParse(doc.SelectSingleNode("//li[@class='release-date']").InnerHtml.SubstringByStringToString("Released: </span>", "copyright", false).RemoveNonNumericChars(), out releaseYear);
+                float.TryParse(doc.SelectSingleNode("//span[@class='price']").InnerText.Replace("Kr", "").Replace("kr", ""), NumberStyles.Any, new CultureInfo("en-US").NumberFormat, out price);
 
                 ResolveRentalOption(repository, movieUrl, coverUrl, vendorId, title, plot, releaseYear, porn, highDef, price);
                 repository.Save();

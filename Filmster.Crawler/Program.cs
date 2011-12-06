@@ -50,8 +50,8 @@ namespace Filmster.Crawler
             Logger.Log("Initiating Crawl");
             ThreadPool.SetMinThreads(40, 40);
             ThreadPool.SetMaxThreads(120, 120);
-            new CdonCrawler().Start();
             new ItunesCrawler().Start();
+            new CdonCrawler().Start();
             new VoddlerCrawler().Start();
             new HeadwebCrawler().Start();
             new ViaPlayCrawler().Start();
@@ -83,7 +83,7 @@ namespace Filmster.Crawler
                 Logger.Log("Creating new index");
                 var i = 0;
                 IndexWriter writer = new IndexWriter(directory, analyzer);
-                var moviesToIndex = repository.GetActiveMovies();
+                var moviesToIndex = repository.GetActiveMovies().ToList();
                 foreach (var movie in moviesToIndex)
                 {
                     Document doc = new Document();

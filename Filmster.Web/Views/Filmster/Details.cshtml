@@ -9,7 +9,7 @@
 
 <section class="block">
     <h1>Her kan du leje "@Model.Title" online</h1>
-    <p>
+    <p> 
         Find den udbyder og pris som passer dig bedst. På listen ser du alle de sites hvor du kan se "@Model.Title" på nettet. 
     </p>
         <table>
@@ -26,7 +26,7 @@
                     <td>@rentalOption.Vendor.Name</td>
                     <td>@Html.Raw((rentalOption.HighDefinition ? "<b>Ja<b/>" : "Nej"))</td>
                     <td>@rentalOption.Price,-</td>
-                    <td class="rent-column"><a href="@rentalOption.Url" data-vendorname="@rentalOption.Vendor.Name" data-moviename="@Model.Title" rel="nofollow" title="Lej filmen hos @rentalOption.Vendor.Name">Lej hos @rentalOption.Vendor.Name »</a></td>
+                    <td class="rent-column"><a href="/lej/@rentalOption.Id" data-vendorname="@rentalOption.Vendor.Name" data-moviename="@Model.Title" rel="nofollow" title="Lej filmen hos @rentalOption.Vendor.Name">Lej hos @rentalOption.Vendor.Name »</a></td>
                 </tr>
             }
         </table>
@@ -38,15 +38,13 @@
             </p>
         }
  </section>
- <section class="block details">
-    <h1>@Model.Title</h2>
-    <img class="cover" src="@Model.RentalOptions.First().CoverUrl" alt="@Model.Title"/>
-    <p><b>Beskrivelse: </b>@Model.Plot</p>
-    <p>
-        Se hvor du kan leje filmen i tabellen øverst på siden.
-    </p>
-    
+
+<section class="block details">
+    <h2>@Model.Title</h2>
+    <img class="cover" src="/CoverHandler.ashx?id=@Model.Id&w=270" alt="@Model.Title"/>
+    <p>@Model.Plot</p>
 </section>
+
 <section class="block">
 <script type="text/javascript"><!--
     google_ad_client = "ca-pub-6957238932191351";
