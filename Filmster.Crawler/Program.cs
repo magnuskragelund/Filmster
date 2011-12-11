@@ -50,6 +50,7 @@ namespace Filmster.Crawler
             Logger.Log("Initiating Crawl");
             ThreadPool.SetMinThreads(40, 40);
             ThreadPool.SetMaxThreads(120, 120);
+            new SFAnytimeCrawler().Start();
             new ItunesCrawler().Start();
             new CdonCrawler().Start();
             new VoddlerCrawler().Start();
@@ -57,7 +58,6 @@ namespace Filmster.Crawler
             new ViaPlayCrawler().Start();
             new YouSeeCrawler().Start();
             new SputnikCrawler().Start();
-            new SFAnytimeCrawler().Start();
             //new FilmstribenCrawler().Start();
         }
 

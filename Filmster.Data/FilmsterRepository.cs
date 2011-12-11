@@ -122,7 +122,7 @@ namespace Filmster.Data
         {
             if(titleOnly)
             {
-                return _context.Movies
+                return GetActiveMovies()
                     .Where(m => m.Title.Contains(q) && m.RentalOptions.Count > 0)
                     .Take(50).ToList();
             }

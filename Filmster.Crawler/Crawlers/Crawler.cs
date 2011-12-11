@@ -99,6 +99,7 @@ namespace Filmster.Crawlers
                     if (AllowUpdatePlot)
                     {
                         existingMovie.Plot = plot;
+                        existingMovie.Porn = porn;
                     }
 
                     movie = existingMovie;
@@ -107,11 +108,11 @@ namespace Filmster.Crawlers
                 {
                     DateTime? releaseDate = (releaseYear == 0) ? null : new DateTime().AddYears(releaseYear) as DateTime?;
                     movie = new Movie()
-                    {
-                        Title = title,
-                        Plot = plot,
-                        ReleaseDate = releaseDate,
-                        Porn = false
+                                {
+                                    Title = title,
+                                    Plot = plot,
+                                    ReleaseDate = releaseDate,
+                                    Porn = porn
                     };
                     repository.AddMovie(movie);
                     Logger.Log("New Movie found: " + movie.Title);
