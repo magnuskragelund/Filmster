@@ -28,8 +28,8 @@ namespace Filmster.Crawlers
 
             Logger.Log("Starting CDON Crawler");
 
-            while (resultContainsMovies)
-            //while (page == 0)
+            //while (resultContainsMovies)
+                while (page == 0)
             {
                 page++;
 
@@ -78,16 +78,17 @@ namespace Filmster.Crawlers
 
                 var title = doc.SelectSingleNode("//h1").InnerText;
                 var plot = string.Empty;
-                try
-                {
-                     plot = doc.SelectSingleNode("//div[@id='product_info_full']").InnerText.Trim().Replace("« Skjul teksten", "");
-                }
-                catch (Exception)
-                {
-                    plot = doc.SelectSingleNode("//div[@class='description-container']").InnerText.Trim();
-                }
-                
-                var coverUrl = doc.SelectSingleNode("//a[@id='big_product_img2']").Attributes["href"].Value;
+                plot = doc.SelectSingleNode("//div[@class='description-container']").InnerText.Trim();
+                //try
+                //{
+                //    plot = doc.SelectSingleNode("//div[@class='description-container']").InnerText.Trim();
+                //}
+                //catch (Exception)
+                //{
+                //    plot = doc.SelectSingleNode("//div[@class='description-container']").InnerText.Trim();
+                //}
+
+                var coverUrl = doc.SelectSingleNode("//div[@class='product-image-container']/a").Attributes["href"].Value;
 
                 if (title.Contains(" (HD)"))
                 {
@@ -95,7 +96,7 @@ namespace Filmster.Crawlers
                     title = title.Replace(" (HD)", "");
                 }
 
-                int.TryParse(doc.InnerText.TrySubstringByStringToString("Indspilnings&aring;r:", "&nbsp;", false).RemoveNonNumericChars(), out releaseYear);
+                int.TryParse(doc.InnerText.TrySubstringByStringToString("Releasedato:", "&nbsp;", false).RemoveNonNumericChars(), out releaseYear);
                 float.TryParse(
                         doc.SelectSingleNode("//div[@class='price']").InnerText.Replace(" kr", ""), NumberStyles.Any, new CultureInfo("en-US").NumberFormat,
                         out price);

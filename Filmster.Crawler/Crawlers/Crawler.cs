@@ -86,6 +86,11 @@ namespace Filmster.Crawlers
             if (title.EndsWith(" V", StringComparison.InvariantCulture)) title = title.Replace(" V", " 5");
             if (title.EndsWith(", the", StringComparison.InvariantCultureIgnoreCase)) title = string.Format("The " + title.Replace(", the", ""));
 
+            if(releaseYear < 1800 || releaseYear > DateTime.Now.Year + 3)
+            {
+                releaseYear = 0;
+            }
+
             if(string.IsNullOrWhiteSpace(title))
             {
                 throw new ArgumentException("Movie title is null");
