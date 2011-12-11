@@ -23,7 +23,11 @@ namespace Filmster.Crawlers
 
             foreach (HtmlNode htmlNode in list)
             {
-                moviesToLoad.Add("http://sfanytime.com" + htmlNode.Attributes["href"].Value);
+                var url = "http://sfanytime.com" + htmlNode.Attributes["href"].Value;
+                if(!moviesToLoad.Contains(url))
+                {
+                    moviesToLoad.Add("http://sfanytime.com" + htmlNode.Attributes["href"].Value);                    
+                }
             }
 
 

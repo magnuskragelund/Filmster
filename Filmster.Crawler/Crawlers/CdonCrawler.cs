@@ -28,8 +28,8 @@ namespace Filmster.Crawlers
 
             Logger.Log("Starting CDON Crawler");
 
-            //while (resultContainsMovies)
-                while (page == 0)
+            while (resultContainsMovies)
+                //while (page == 0)
             {
                 page++;
 
@@ -79,14 +79,7 @@ namespace Filmster.Crawlers
                 var title = doc.SelectSingleNode("//h1").InnerText;
                 var plot = string.Empty;
                 plot = doc.SelectSingleNode("//div[@class='description-container']").InnerText.Trim();
-                //try
-                //{
-                //    plot = doc.SelectSingleNode("//div[@class='description-container']").InnerText.Trim();
-                //}
-                //catch (Exception)
-                //{
-                //    plot = doc.SelectSingleNode("//div[@class='description-container']").InnerText.Trim();
-                //}
+
 
                 var coverUrl = doc.SelectSingleNode("//div[@class='product-image-container']/a").Attributes["href"].Value;
 
