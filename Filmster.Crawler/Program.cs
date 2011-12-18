@@ -54,11 +54,11 @@ namespace Filmster.Crawler
             new CdonCrawler().Start();
             new Film2HomeCrawler().Start();
             new SFAnytimeCrawler().Start();
-            new VoddlerCrawler().Start();
             new HeadwebCrawler().Start();
             new ViaPlayCrawler().Start();
             new YouSeeCrawler().Start();
             new SputnikCrawler().Start();
+            new VoddlerCrawler().Start();
             //new FilmstribenCrawler().Start();
         }
 

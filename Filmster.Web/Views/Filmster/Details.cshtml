@@ -3,14 +3,14 @@
 
 @{
     ViewBag.Title = "Se »" + @Model.Title + "« online nemt og billigt via filmster";
-    ViewBag.Description = "Få et hurtigt overblik over hvor du kan leje \"" + @Model.Title + "\" på nettet";
+    ViewBag.Description = "Filmster samler alle steder hvor du kan leje \"" + @Model.Title + "\" online. Sammenlign priser og find den udlejer der passer dig bedst.";
 }
 
 
 <section class="block">
     <h1>Her kan du leje "@Model.Title" online</h1>
     <p> 
-        Find den udbyder og pris som passer dig bedst. På listen ser du alle de sites hvor du kan se "@Model.Title" på nettet. 
+        Find den udbyder og pris som passer dig bedst. På listen ser du alle de sites hvor du kan se "@Model.Title" via Video On Demand, og se filmen på nettet. 
     </p>
         <table>
             <tr>
@@ -24,7 +24,7 @@
                 <tr>
                     @*<td>@VendorLogo(rentalOption.Vendor)</td>*@
                     <td>@rentalOption.Vendor.Name</td>
-                    <td>@Html.Raw((rentalOption.HighDefinition ? "<b>Ja<b/>" : "Nej"))</td>
+                    <td>@Html.Raw((rentalOption.HighDefinition ? "<b>Ja<b/>" : "-"))</td>
                     <td>@rentalOption.Price,-</td>
                     <td class="rent-column"><a href="/lej/@rentalOption.Id" data-vendorname="@rentalOption.Vendor.Name" data-moviename="@Model.Title" rel="nofollow" title="Lej filmen hos @rentalOption.Vendor.Name">Lej hos @rentalOption.Vendor.Name »</a></td>
                 </tr>
@@ -61,36 +61,3 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
     <h2>Andre film fra kataloget</h2>
     @Html.Partial("_ScrollingMovies", ViewBag.OtherMovies as List<Movie>);
 </section>
-
- @helper VendorLogo(Vendor vendor)
-     {
-    var imageName = "";
-    switch (vendor.Id)
-    {
-        case 1:
-            imageName = "viaplay.png";
-            break;
-        case 2:
-            imageName = "sputnik.png";
-            break;
-        case 3:
-            imageName = "voddler.png";
-            break;
-        case 4:
-            imageName = "headweb.png";
-            break;
-        case 5:
-            imageName = "sf-anytime.png";
-            break;
-        case 6:
-            imageName = "yousee-tv.png";
-            break;
-        case 7:
-            imageName = "itunes.png";
-            break;
-        case 8:
-            imageName = "cdon.png";
-            break;
-    }
-     <img src="/Content/images/logos/@imageName" height="30" alt="@vendor.Name" title="@vendor.Name" />
-}
