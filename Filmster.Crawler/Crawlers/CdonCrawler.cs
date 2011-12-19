@@ -15,11 +15,6 @@ namespace Filmster.Crawlers
         private string _crawlstart =
             "http://downloads.cdon.com/index.phtml?action=nav_page&navigation_id=24704&sortby=titleSort_DK_asc&category=movie&gridview=0&showall=1&page={0}&pagesize=100&country=dk";
 
-        public CdonCrawler()
-        {
-            DocumentEncoding = Encoding.GetEncoding("ISO-8859-1");
-        }
-
         public void Start()
         {
             var page = 0;
@@ -29,7 +24,7 @@ namespace Filmster.Crawlers
             Logger.Log("Starting CDON Crawler");
 
             while (resultContainsMovies)
-                //while (page == 0)
+            //while (page == 0)
             {
                 page++;
 

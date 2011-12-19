@@ -36,6 +36,20 @@ namespace Filmster.Web.Controllers
         public ActionResult Details(int id)
         {
             var m = _repo.GetMovie(id);
+            if(m == null)
+            {
+                m = RoutingUtills.FindAlternateMovieByPath(_repo);
+
+                if(m == null)
+                {
+                    return new HttpNotFoundResult("Movie not found");
+                }
+                else
+                {
+                    Response.RedirectPermanent(Url.RouteUrl(m.RouteValues()));
+                }
+            }
+
             EnforceCanoncalUrl(m.RouteValues());
             ViewBag.OtherMovies = _repo.GetPopularMovies(5);
             m.Impressions++;
@@ -118,6 +132,5 @@ namespace Filmster.Web.Controllers
                 Response.RedirectPermanent(canonicalPathAndQuery);
             }
         }
-
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.Routing;
 using Filmster.Data;
 
@@ -15,6 +17,15 @@ namespace Filmster.Web.Utils
                            {"title", TitleToUrl(movie.Title)},
                            {"id", movie.Id}
                        };
+        }
+
+        public static Movie FindAlternateMovieByPath(IFilmsterRepository repository)
+        {
+            var titleFromPath = HttpContext.Current.Request.Url.PathAndQuery.Split('/')[1];
+            return repository
+                .GetAllMovies()
+                .Where(m => TitleToUrl(m.Title) == titleFromPath)
+                .FirstOrDefault();
         }
 
         private static string TitleToUrl(string title)

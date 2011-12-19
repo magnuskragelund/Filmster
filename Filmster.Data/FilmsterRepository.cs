@@ -50,14 +50,22 @@ namespace Filmster.Data
             return _context.Movies.Where(m => m.Id == id).SingleOrDefault();
         }
 
+        /// <summary>
+        /// Get all movies, active an inactive
+        /// </summary>
+        /// <returns></returns>
         public List<Movie> GetAllMovies()
         {
             return _context.Movies.ToList();
         }
 
+        /// <summary>
+        /// Gets movies that have been deemed active, as IQueryable
+        /// </summary>
+        /// <returns></returns>
         public IQueryable<Movie> GetActiveMovies()
         {
-            var blockingDate = DateTime.Now.AddDays(-4);
+            var blockingDate = DateTime.Now.AddDays(-40);
             return _context.Movies
                 .Where(m => !m.Porn)
                 .Where(m => m.RentalOptions.Where(r => r.LastSeen > blockingDate).Count() > 0);

@@ -75,6 +75,7 @@ namespace Filmster.Crawlers
             plot = HttpUtility.HtmlDecode(plot);
             title = Regex.Replace(title, @" \(\d{4}\)", "");
             title = title.Replace(": ", " - ");
+            title = title.Replace("'", "");
             title = title.Replace(" II ", " 2 ");
             title = title.Replace(" III ", " 3 ");
             title = title.Replace(" IV ", " 4 ");
@@ -97,7 +98,7 @@ namespace Filmster.Crawlers
             }
 
             lock(_lock)
-            {
+            {;
                 var existingMovie = repository.FindMovie(title, null);
                 if (existingMovie != null)
                 {
