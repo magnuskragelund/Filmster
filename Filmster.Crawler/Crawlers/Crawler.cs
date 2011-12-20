@@ -73,6 +73,7 @@ namespace Filmster.Crawlers
             
             // some normalizing
             plot = HttpUtility.HtmlDecode(plot);
+            title = HttpUtility.HtmlDecode(title);
             title = Regex.Replace(title, @" \(\d{4}\)", "");
             title = title.Replace(": ", " - ");
             title = title.Replace("'", "");
