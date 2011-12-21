@@ -91,7 +91,20 @@ namespace Filmster.Web.Controllers
             var rentalOption = _repo.GetRentalOption(rentalOptionId);
             rentalOption.Impressions++;
             _repo.Save(false);
-            return Redirect(rentalOption.Url);
+
+            var url = string.Empty;
+
+            switch (rentalOption.Vendor.Name)
+            {
+                case "CDON":
+                    url = string.Format("http://clk.tradedoubler.com/click?p=120&a=2050910&g=0&url={0}", rentalOption.Url);
+                    break;
+                default:
+                    url = rentalOption.Url;
+                    break;
+            }
+
+            return Redirect(url);
         }
 
         public JsonResult AutoComplete(string q)
