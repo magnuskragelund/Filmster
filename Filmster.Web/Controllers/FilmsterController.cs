@@ -44,10 +44,7 @@ namespace Filmster.Web.Controllers
                 {
                     return new HttpNotFoundResult("Movie not found");
                 }
-                else
-                {
-                    Response.RedirectPermanent(Url.RouteUrl(m.RouteValues()));
-                }
+                Response.RedirectPermanent(Url.RouteUrl(m.RouteValues()));
             }
 
             EnforceCanoncalUrl(m.RouteValues());

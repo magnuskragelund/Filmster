@@ -19,10 +19,9 @@
                 <th>Pris</th>
                 <th>Lej</th>
             </tr>
-            @foreach (var rentalOption in Model.RentalOptions.OrderBy(r => r.Price))
+            @foreach (var rentalOption in Model.RentalOptions.OrderBy(r => r.HighDefinition).ThenBy(r => r.Price).ThenBy(r => r.Vendor.Name))
             {
                 <tr>
-                    @*<td>@VendorLogo(rentalOption.Vendor)</td>*@
                     <td>@rentalOption.Vendor.Name</td>
                     <td>@Html.Raw((rentalOption.HighDefinition ? "<b>Ja<b/>" : "-"))</td>
                     <td>@rentalOption.Price,-</td>
@@ -44,7 +43,6 @@
     <img class="cover" src="/CoverHandler.ashx?id=@Model.Id&w=270" alt="@Model.Title"/>
     <p>@Model.Plot</p>
 </section>
-
 <section class="block">
     <h2>Andre film fra kataloget</h2>
     @Html.Partial("_ScrollingMovies", ViewBag.OtherMovies as List<Movie>)

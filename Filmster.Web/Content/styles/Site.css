@@ -202,7 +202,7 @@ header .me a {
 .social {
     text-align: right;
     margin-bottom: -20px;
-    overflow: hidden;
+    margin-right: -20px;
     height: 22px;
 }
 
