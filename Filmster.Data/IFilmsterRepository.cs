@@ -11,7 +11,7 @@ namespace Filmster.Data
         List<Movie> GetAllMovies();
         IQueryable<Movie> GetActiveMovies();
         List<Movie> GetPopularMovies(int take);
-        //List<Movie> GetLatestMovies(int take);
+        List<Movie> GetLatestMovies(int take);
         List<Movie> GetMoviesByTitleFistChar(string firstChar);
         void AddMovie(Movie movie);
         void AddVendor(Vendor vendor);

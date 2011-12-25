@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Filmster.Crawler;
 using Filmster.Data;
@@ -72,9 +73,8 @@ namespace Filmster.Crawlers
                 float price = 0;
 
                 var title = doc.SelectSingleNode("//h1").InnerText;
-                var plot = string.Empty;
-                plot = doc.SelectSingleNode("//div[@class='description-container']").InnerText.Trim();
-
+                var plot = doc.SelectSingleNode("//div[@class='description-container']").LastChild.InnerText;
+                plot = Regex.Replace(plot, "OBS! Ingen undertekster.", "", RegexOptions.IgnoreCase);
 
                 var coverUrl = doc.SelectSingleNode("//div[@class='product-image-container']/a").Attributes["href"].Value;
 

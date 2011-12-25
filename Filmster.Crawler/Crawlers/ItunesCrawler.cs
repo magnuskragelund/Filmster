@@ -71,7 +71,7 @@ namespace Filmster.Crawlers
                 var porn = false;
 
                 int.TryParse(doc.SelectSingleNode("//li[@class='release-date']").InnerHtml.TrySubstringByStringToString("Released: </span>", "copyright", false).RemoveNonNumericChars(), out releaseYear);
-                float.TryParse(doc.SelectSingleNode("//span[@class='price']").InnerText.Replace("Kr", "").Replace("kr", ""), NumberStyles.Any, new CultureInfo("en-US").NumberFormat, out price);
+                float.TryParse(doc.SelectSingleNode("//span[@class='price']").InnerText.Replace("Kr", "").Replace("kr", ""), NumberStyles.Any, new CultureInfo("da-dk").NumberFormat, out price);
 
                 ResolveRentalOption(repository, movieUrl, coverUrl, vendorId, title, plot, releaseYear, porn, highDef, price);
                 repository.Save();

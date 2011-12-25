@@ -14,6 +14,7 @@ namespace Filmster.Data
     public class FilmsterRepository : IFilmsterRepository
     {
         private FilmsterEntities _context;
+        private const int _daysForRentalOptionToExpire = 10;
         private string _luceneIndexPath = ConfigurationManager.AppSettings["LuceneIndexPath"];
 
         public FilmsterRepository()
@@ -25,9 +26,9 @@ namespace Filmster.Data
         {
             var movies = GetActiveMovies().Where(m => m.Title == title);
 
-            if(!movies.Any())
+            if (!movies.Any())
             {
-                if(title.StartsWith("The ", StringComparison.InvariantCultureIgnoreCase))
+                if (title.StartsWith("The ", StringComparison.InvariantCultureIgnoreCase))
                 {
                     movies = _context.Movies.Where(m => m.Title == title.Replace("The ", ""));
                 }
@@ -37,7 +38,7 @@ namespace Filmster.Data
                 }
             }
 
-            if(releaseDate != null)
+            if (releaseDate != null)
             {
                 movies = movies.Where(m => m.ReleaseDate == releaseDate || m.ReleaseDate == null);
             }
@@ -65,15 +66,28 @@ namespace Filmster.Data
         /// <returns></returns>
         public IQueryable<Movie> GetActiveMovies()
         {
-            var blockingDate = DateTime.Now.AddDays(-40);
+            var blockingDate = DateTime.Now.AddDays(0 - _daysForRentalOptionToExpire);
             return _context.Movies
                 .Where(m => !m.Porn)
                 .Where(m => m.RentalOptions.Where(r => r.LastSeen > blockingDate).Count() > 0);
         }
 
+        private IQueryable<RentalOption> GetActiveRentalOptions()
+        {
+            var blockingDate = DateTime.Now.AddDays(0 - _daysForRentalOptionToExpire);
+            return _context.RentalOptions
+                .Where(r => r.LastSeen > blockingDate
+                && !r.Movie.Porn);
+        }
+
         public List<Movie> GetPopularMovies(int take)
         {
             return GetActiveMovies().OrderByDescending(m => m.Impressions + m.RentalOptions.Sum(r => r.Impressions)).Take(take).ToList();
+        }
+
+        public List<Movie> GetLatestMovies(int take)
+        {
+            return GetActiveMovies().OrderByDescending(r => r.Id).Take(take).ToList();
         }
 
         public List<Movie> GetMoviesByTitleFistChar(string firstChar)
@@ -128,22 +142,22 @@ namespace Filmster.Data
 
         public List<Movie> Query(string q, bool titleOnly = false)
         {
-            if(titleOnly)
+            if (titleOnly)
             {
                 return GetActiveMovies()
                     .Where(m => m.Title.Contains(q) && m.RentalOptions.Count > 0)
                     .Take(50).ToList();
             }
-            
-            var fields = new List<string> {"title", "plot"};
-             
+
+            var fields = new List<string> { "title", "plot" };
+
             Directory directory = FSDirectory.Open(new System.IO.DirectoryInfo(_luceneIndexPath));
             Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_29);
 
             MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_29, fields.ToArray(), analyzer);
-            
+
             parser.SetAllowLeadingWildcard(true);
-            
+
             Query query = parser.Parse(q);
             IndexSearcher searcher = new IndexSearcher(directory);
             Hits hits = searcher.Search(query);
@@ -155,8 +169,8 @@ namespace Filmster.Data
             {
                 var document = hits.Doc(i);
                 var movie = GetMovie(int.Parse(document.Get("id")));
-                if(movie != null && movie.RentalOptions != null && movie.RentalOptions.Count > 0)
-                {    
+                if (movie != null && movie.RentalOptions != null && movie.RentalOptions.Count > 0)
+                {
                     movies.Add(movie);
                 }
                 i++;
@@ -168,7 +182,7 @@ namespace Filmster.Data
         public void Save(bool dispose = true)
         {
             _context.SaveChanges();
-            if(dispose) _context.Dispose();
+            if (dispose) _context.Dispose();
         }
 
         public void Undo()

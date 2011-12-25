@@ -156,6 +156,15 @@ namespace Filmster.Crawlers
             }
         }
 
+        protected void RemoveChildNodes(HtmlNode nodeToClean)
+        {
+            foreach (HtmlNode htmlNode in nodeToClean.ChildNodes)
+            {
+                htmlNode.InnerHtml = "";
+            }
+        }
+
+
         protected void LogCrawlerError(Exception exception)
         {
             Logger.LogException("Crawler failed: ", exception);

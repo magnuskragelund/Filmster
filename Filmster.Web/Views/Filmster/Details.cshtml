@@ -6,9 +6,25 @@
     ViewBag.Description = "Filmster samler alle steder hvor du kan leje \"" + @Model.Title + "\" online. Sammenlign priser og find den udlejer der passer dig bedst.";
 }
 
+<section class="block details">
+    <h1>@Model.Title</h1>
+    <img class="cover" src="/CoverHandler.ashx?id=@Model.Id&w=270" alt="@Model.Title"/>
+    <p>@Model.Plot</p>
+</section>
+
+@if (Model.Id == 1272)
+{
+    <aside class="block">
+        <p><b>Ikke den Klassefesten?</b> Leder du efter Klassefesten med Lene Nystrøm, Anders W. Berthelsen og Nicolaj Kopernikus? 
+        Den kommer først i slutningen af februar. "Synes godt om" <a href="https://www.facebook.com/filmsterdk" >www.facebook.com/filmsterdk</a> på facebook, og få besked når der dukke nye populære film op.</p>
+        <div>
+            <div class="fb-like" data-href="https://www.facebook.com/filmsterdk" data-send="false" data-width="30" data-show-faces="false" data-layout="button_count"></div>
+        </div>
+    </aside>
+}
 
 <section class="block">
-    <h1>Her kan du leje "@Model.Title" online</h1>
+    <h2>Her kan du leje "@Model.Title" på nettet</h2>
     <p> 
         Find den Video on Demand udbyder og pris som passer dig bedst - på listen ser du alle de websites, hvor du kan se "@Model.Title" på nettet. 
     </p>
@@ -25,7 +41,7 @@
                     <td>@rentalOption.Vendor.Name</td>
                     <td>@Html.Raw((rentalOption.HighDefinition ? "<b>Ja<b/>" : "-"))</td>
                     <td>@rentalOption.Price,-</td>
-                    <td class="rent-column"><a href="/lej/@rentalOption.Id" data-vendorname="@rentalOption.Vendor.Name" data-moviename="@Model.Title" rel="nofollow" title="Lej filmen hos @rentalOption.Vendor.Name">Lej hos @rentalOption.Vendor.Name »</a></td>
+                    <td class="rent-column"><a href="/lej/@rentalOption.Id" data-vendorname="@rentalOption.Vendor.Name" data-moviename="@Model.Title" rel="nofollow" title="Lej @rentalOption.Movie.Title hos @rentalOption.Vendor.Name">Lej hos @rentalOption.Vendor.Name »</a></td>
                 </tr>
             }
         </table>
@@ -38,11 +54,6 @@
         }
  </section>
 
-<section class="block details">
-    <h2>@Model.Title</h2>
-    <img class="cover" src="/CoverHandler.ashx?id=@Model.Id&w=270" alt="@Model.Title"/>
-    <p>@Model.Plot</p>
-</section>
 <section class="block">
     <h2>Andre film fra kataloget</h2>
     @Html.Partial("_ScrollingMovies", ViewBag.OtherMovies as List<Movie>)
