@@ -9,7 +9,7 @@ namespace Filmster.Web.Models
         public string SelectedValue { get; set; }
         public string[] Alphabet
         {
-            get { return "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,æ,ø,å".Split(','); }
+            get { return "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,æ,ø,å,andre".Split(','); }
         }
     }
 }

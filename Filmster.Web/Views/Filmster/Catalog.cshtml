@@ -6,6 +6,10 @@
     ViewBag.Description = "Alfabetisk liste over alle film der kan lejes online";
 }
 
+<section class="block quick-search">
+    @Html.Partial("_SearchForm", "")
+</section>
+
 <section class="block">
     <h2>Katalog</h2>
     <div class="catalog">

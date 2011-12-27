@@ -98,6 +98,14 @@ namespace Filmster.Data
                 .ToList();
         }
 
+        public List<Movie> GetMoviesByNotTitleFistChar(string[] chars)
+        {
+            return GetActiveMovies()
+                .Where(m => !chars.Contains(m.Title.Substring(0, 1)))
+                .OrderBy(m => m.Title)
+                .ToList();
+        }
+
         public void AddMovie(Movie movie)
         {
             _context.Movies.AddObject(movie);

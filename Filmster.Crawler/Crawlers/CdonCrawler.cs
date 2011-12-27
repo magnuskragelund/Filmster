@@ -24,37 +24,45 @@ namespace Filmster.Crawlers
 
             Logger.Log("Starting CDON Crawler");
 
-            while (resultContainsMovies)
-            //while (page == 0)
+            try
             {
-                page++;
-
-                var doc = GetDocument(string.Format(_crawlstart, page));
-
-                HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//table[@class='product-list']//td[@class='title']//a[contains(@style, 'float:left')]");
-
-                if (list == null || list.Count < 1)
+                while (resultContainsMovies)
+                //while (page == 0)
                 {
-                    resultContainsMovies = false;
-                    break;
+                    page++;
+
+                    var doc = GetDocument(string.Format(_crawlstart, page));
+
+                    HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//table[@class='product-list']//td[@class='title']//a[contains(@style, 'float:left')]");
+
+                    if (list == null || list.Count < 1)
+                    {
+                        resultContainsMovies = false;
+                        break;
+                    }
+
+                    foreach (HtmlNode htmlNode in list)
+                    {
+                        moviesToLoad.Add("http://downloads.cdon.com" + htmlNode.Attributes["href"].Value);
+                    }
                 }
 
-                foreach (HtmlNode htmlNode in list)
+                StartedThreads = moviesToLoad.Count;
+
+                Logger.Log("Found movies: " + StartedThreads);
+
+                foreach (var movie in moviesToLoad)
                 {
-                    moviesToLoad.Add("http://downloads.cdon.com" + htmlNode.Attributes["href"].Value);
+                    ThreadPool.QueueUserWorkItem(LoadMovie, movie);
                 }
+
+                DoneEvent.WaitOne();
             }
-
-            StartedThreads = moviesToLoad.Count;
-
-            Logger.Log("Found movies: " + StartedThreads);
-
-            foreach (var movie in moviesToLoad)
+            catch (Exception ex)
             {
-                ThreadPool.QueueUserWorkItem(LoadMovie, movie);
+                Logger.LogException("CDON failed to load index", ex);
             }
 
-            DoneEvent.WaitOne();
             Logger.Log("Ending CDON crawler");
         }
 

@@ -33,5 +33,6 @@ $(function () {
 
     $('.rent-column a').click(function (e) {
         _gaq.push(['_trackEvent', 'Film', 'Lej', $(e.currentTarget).attr('data-moviename')]);
+        _gaq.push(['_trackEvent', 'Film', 'Udbyder', $(e.currentTarget).attr('data-vendorname')]);
     });
 });

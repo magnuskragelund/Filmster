@@ -13,6 +13,7 @@ namespace Filmster.Data
         List<Movie> GetPopularMovies(int take);
         List<Movie> GetLatestMovies(int take);
         List<Movie> GetMoviesByTitleFistChar(string firstChar);
+        List<Movie> GetMoviesByNotTitleFistChar(string[] chars);
         void AddMovie(Movie movie);
         void AddVendor(Vendor vendor);
         Vendor GetVendor(int id);

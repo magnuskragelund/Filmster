@@ -57,16 +57,13 @@ namespace Filmster.Web.Controllers
         public ActionResult Search()
         {
             var query = HttpUtility.UrlDecode(Request.QueryString["q"]);
-            List<Movie> result;
+            
             if(string.IsNullOrEmpty(query))
             {
-                result = new List<Movie>();
-                query = string.Empty;
+                Response.RedirectPermanent("/");
             }
-            else
-            {
-                result = _repo.Query(query);
-            }
+            
+            var result = _repo.Query(query);
             ViewBag.Query = query;
 
             return View(result);
@@ -74,11 +71,18 @@ namespace Filmster.Web.Controllers
 
         public ActionResult Catalog(string id)
         {
-            var viewModel = new CatalogViewModel
-                                {
-                                    Movies = _repo.GetMoviesByTitleFistChar(id),
-                                    SelectedValue = id
-                                };
+            var viewModel = new CatalogViewModel();
+
+            if(id == "andre")
+            {
+                viewModel.Movies = _repo.GetMoviesByNotTitleFistChar(viewModel.Alphabet);
+            }
+            else
+            {
+                viewModel.Movies = _repo.GetMoviesByTitleFistChar(id);
+            }
+
+            viewModel.SelectedValue = id;
 
             return View(viewModel);
         }
