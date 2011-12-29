@@ -2,13 +2,16 @@
 @model Movie
 
 @{
-    ViewBag.Title = "Se »" + @Model.Title + "« online nemt og billigt via filmster";
-    ViewBag.Description = "Filmster samler alle steder hvor du kan leje \"" + @Model.Title + "\" online. Sammenlign priser og find den udlejer der passer dig bedst.";
+    ViewBag.Title = "Lej »" + @Model.Title + "« online";
+    ViewBag.Description = "filmster samler alle steder hvor du kan leje \"" + @Model.Title + "\" online. Sammenlign priser og find den udlejer der passer dig bedst.";
 }
 
 <section class="block details">
-    <h1>@Model.Title</h1>
-    <img class="cover" src="/CoverHandler.ashx?id=@Model.Id&w=270" alt="@Model.Title"/>
+    <h1>Lej "@Model.Title" på nettet</h1>
+    <p>
+        filmster.dk viser alle de steder, hvor du kan se @Model.Title on demand.
+    </p>
+    <img class="cover" src="/CoverHandler.ashx?id=@Model.Id&w=180" alt="@Model.Title"/>
     <p>@Model.Plot</p>
 </section>
 
@@ -24,9 +27,9 @@
 }
 
 <section class="block">
-    <h2>Her kan du leje "@Model.Title" på nettet</h2>
+    <h2>Her kan du leje "@Model.Title" online</h2>
     <p> 
-        Find den Video on Demand udbyder og pris som passer dig bedst - på listen ser du alle de websites, hvor du kan se "@Model.Title" på nettet. 
+        Find den Video on Demand udbyder og pris som passer dig bedst - på listen ser du alle de websites, hvor du kan leje "@Model.Title" på nettet. 
     </p>
         <table>
             <tr>
@@ -49,12 +52,7 @@
         {
             <p>
                 <small>Hvis prisen er mere end 50 kr. 
-                er det typisk prisen for at købe fillmen, så den er din for altid, eller prisen for et abonnement, hvor flere film er inkluderet i prisen.</small>
+                er det typisk prisen for at købe fillmen, så den er din for altid, eller prisen for et abonnement, hvor flere film er inkluderet.</small>
             </p>
         }
  </section>
-
-<section class="block">
-    <h2>Andre film fra kataloget</h2>
-    @Html.Partial("_ScrollingMovies", ViewBag.OtherMovies as List<Movie>)
-</section>

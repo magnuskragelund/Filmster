@@ -100,6 +100,7 @@
     </Compile>
     <Compile Include="Models\CatalogViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\FilmsterViewPage.cs" />
     <Compile Include="Utils\RoutingUtills.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -163,7 +164,6 @@
     <Content Include="Views\Shared\_MoviePreview.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\_ScrollingMovies.cshtml" />
     <Content Include="CoverHandler.ashx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

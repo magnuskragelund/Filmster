@@ -1,4 +1,4 @@
-﻿
+﻿@using Filmster.Web.Utils
 @using System.Configuration
 @{
     Bundles.Reference("Content/scripts");
@@ -10,6 +10,13 @@
     <meta charset="utf-8" />
     <title>@ViewBag.Title</title>
     <meta name="description" content="@ViewBag.Description"/>
+    <meta property="og:title" content="@ViewBag.Title"/>
+    <meta property="og:url" content="@string.Format("http://filmster.dk{0}", Request.Url.AbsolutePath)"/>
+    <meta property="og:site_name" content="filmster.dk"/>
+    <meta property="fb:app_id" content="311129245565133"/>
+    <meta property="og:description" content="@ViewBag.Description"/>
+    <meta property="og:locale" content="da_DK"/>
+    <meta property="og:type" content="website"/>
     @Bundles.RenderStylesheets()
     <link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css' />
     <link href='http://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css' />
@@ -57,8 +64,24 @@
                 <div class="fb-like" data-href="https://www.facebook.com/filmsterdk" data-send="true" data-width="30" data-show-faces="false" data-layout="button_count"></div>
             </menu>
             @RenderBody()
+            <aside class="boxes">
+                <div class="block box left">
+                    <h3>Kommentér</h3>
+                    <div class="fb-comments" data-href="@string.Format("http://filmster.dk{0}", Request.Url.PathAndQuery)" data-num-posts="2" data-width="375"></div>
+                </div>
+
+                <div class="block box right">
+                    <h3>Top 5 mest populære film</h3>
+                    <ol>
+                        @foreach (Filmster.Data.Movie movie in ViewBag.Top5Movies)
+                        {
+                            <li>@Html.RouteLink(@movie.Title, movie.RouteValues())</li>
+                        }
+                    </ol>
+                </div>
+            </aside>
             <footer>
-                filmster.dk - ris, ros og forslag til forbedringer modtages meget gerne på <a href="http://facebook.com/filmsterdk">facebook.com/filmsterdk</a> eller <a href="http://twitter.com/magnuskragelund">@Html.Raw("@magnuskragelund")</a>
+                filmster.dk samler alle Video On Demand tilbud i Danmark så du nemt kan finde den film du leder efter <a href="http://facebook.com/filmsterdk">facebook.com/filmsterdk</a>
             </footer>
 		</div>
 	</body>
