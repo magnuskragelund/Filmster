@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Siden blev ikke fundet - 404";
+    Response.StatusCode = 404;
+}
+
+<section class="block">
+    <h1>Øv - filmen du leder efter er ikke længere i vores katalog</h1>
+    <p>
+        Somme tider bliver film fjernet fra vores katalog, sansynligvis fordi de ikke længere kan lejes hos de danske Video On Demand udlejere.
+    </p>
+</section>
+
+<section class="block quick-search">
+    @Html.Partial("_SearchForm", "")
+</section>

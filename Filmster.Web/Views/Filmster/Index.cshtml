@@ -20,6 +20,7 @@
 <section class="block coverflow">
     @foreach (var movie in Model)
     {
+        var cheepestVendor = movie.RentalOptions.OrderBy(r => r.Price).First();
         <div class="movie">
             <a href="@Url.Action("Details", movie.RouteValues())">
             <div class="covermask">
@@ -27,7 +28,7 @@
             </div>
             <p>
                 <b>@Html.RouteLink(@movie.Title, movie.RouteValues())</b><br />
-                @movie.RentalOptions.OrderBy(r => r.Price).First().Price kr.
+                @cheepestVendor.Price kr. hos @cheepestVendor.Vendor.Name
             </p>
             </a>
         </div>

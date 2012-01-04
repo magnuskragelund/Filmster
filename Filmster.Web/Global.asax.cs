@@ -57,6 +57,11 @@ namespace Filmster.Web
                 new { controller = "Filmster", action = "Catalog" });
 
             routes.MapRoute(
+                null,
+                "{id}",
+                new { controller = "Blog", action = "Post" });
+
+            routes.MapRoute(
                 null, // Route name
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Filmster", action = "Index", id = UrlParameter.Optional } // Parameter defaults

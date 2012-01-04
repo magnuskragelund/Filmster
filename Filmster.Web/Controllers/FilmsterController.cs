@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
@@ -48,7 +47,6 @@ namespace Filmster.Web.Controllers
             }
 
             EnforceCanoncalUrl(m.RouteValues());
-            ViewBag.OtherMovies = _repo.GetPopularMovies(5);
             m.Impressions++;
             _repo.Save(false);
             return View(m);

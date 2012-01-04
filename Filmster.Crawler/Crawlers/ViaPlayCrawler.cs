@@ -11,7 +11,7 @@ namespace Filmster.Crawlers
     internal class ViaPlayCrawler : Crawlers.Crawler
     {
         private string _crawlstart =
-            "http://beta.viaplay.dk/film/alle/250/alphabetical";
+            "http://viaplay.dk/film/alle/250/alphabetical/4229412858";
 
         public void Start()
         {
@@ -67,7 +67,7 @@ namespace Filmster.Crawlers
                 //    out price);
                 
                 var id = doc.SelectSingleNode("//div[@id='productSelect']").Attributes["data-product-id"].Value;
-                var overlay = GetDocument("http://beta.viaplay.dk/ahah/overlay?productId=" + id).DocumentNode;
+                var overlay = GetDocument("http://viaplay.dk/ahah/overlay?productId=" + id).DocumentNode;
                 var rent = overlay.SelectSingleNode("//div[@data-content='movies']//p[@class='alternative']/a");
                 var subscription = overlay.SelectSingleNode("//div[@data-content='movies']//span[@class='price']");
                 var subscriptionBased = false;
@@ -75,7 +75,7 @@ namespace Filmster.Crawlers
                 if(rent.InnerText.Contains("lej denne film"))
                 {
                     // for rent
-                    movieUrl = "http://beta.viaplay.dk" + rent.Attributes["href"].Value;
+                    movieUrl = "http://viaplay.dk" + rent.Attributes["href"].Value;
                     float.TryParse(
                         rent.InnerHtml.RemoveNonNumericChars(),
                         out price);
@@ -89,14 +89,10 @@ namespace Filmster.Crawlers
                     subscriptionBased = true;
                 }
 
-
-
                 ResolveRentalOption(repository, movieUrl, coverUrl, vendorId, title, plot, releaseYear, false, highDef, price, subscriptionBased);
                 repository.Save();
 
                 Logger.LogVerbose(title.Trim());
-
-
             }
             catch (Exception ex)
             {

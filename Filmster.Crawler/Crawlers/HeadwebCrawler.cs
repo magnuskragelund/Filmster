@@ -79,10 +79,19 @@ namespace Filmster.Crawlers
                 highDef = (doc.SelectSingleNode("//div[@class='bigcover']/div[contains(@class, 'hd')]") != null);
 
                 int.TryParse(doc.SelectNodes("//div[(@class='movie_info lineSpacingNormal')]/span")[1].InnerText.RemoveNonNumericChars(), out releaseYear);
-                float.TryParse(
-                    doc.InnerHtml.SubstringByStringToString("'Btn_RentMovie':'LEJ", " kr", false).RemoveNonNumericChars(),
-                    out price);
 
+                if (doc.InnerHtml.Contains("LEJ"))
+                {
+                    float.TryParse(
+                        doc.InnerHtml.SubstringByStringToString("'Btn_RentMovie':'LEJ", " kr", false).RemoveNonNumericChars(),
+                        out price);
+                }
+                else
+                {
+                    Logger.Log("Unparsable price, skipping movie");
+                    return;
+                }
+                
                 ResolveRentalOption(repository, movieUrl, coverUrl, vendorId, title, plot, releaseYear, false, highDef, price);
                 repository.Save();
 

@@ -21,7 +21,7 @@ namespace Filmster.Crawlers
         private object _lock = new object();
 
         private readonly HtmlWeb _htmlWeb = new HtmlWeb();
-
+        
         internal HtmlDocument GetDocument(string url)
         {
             try
@@ -30,6 +30,12 @@ namespace Filmster.Crawlers
                 _htmlWeb.AutoDetectEncoding = false;
                 _htmlWeb.OverrideEncoding = DocumentEncoding;
                 HtmlDocument doc = _htmlWeb.Load(url);
+                
+                if(_htmlWeb.StatusCode == HttpStatusCode.NotFound)
+                {
+                    throw new Exception("Status code 404 for Url: " + url);
+                }
+                
                 return doc;
             }
             catch (Exception e)
@@ -69,6 +75,8 @@ namespace Filmster.Crawlers
 
         internal void ResolveRentalOption(IFilmsterRepository repository ,string movieUrl, string coverUrl, int vendorId, string title, string plot, int releaseYear, bool porn, bool highDef, float price, bool subscriptionBased = false)
         {
+            if (porn) return;
+
             Movie movie;
             
             // some normalizing

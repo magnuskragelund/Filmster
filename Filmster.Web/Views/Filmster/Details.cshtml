@@ -2,14 +2,14 @@
 @model Movie
 
 @{
-    ViewBag.Title = "Lej »" + @Model.Title + "« online";
+    ViewBag.Title = "Her kan du leje " + @Model.Title + " online";
     ViewBag.Description = "filmster samler alle steder hvor du kan leje \"" + @Model.Title + "\" online. Sammenlign priser og find den udlejer der passer dig bedst.";
 }
 
 <section class="block details">
-    <h1>Lej "@Model.Title" på nettet</h1>
+    <h1>Lej filmen "@Model.Title" online</h1>
     <p>
-        filmster.dk viser alle de steder, hvor du kan se @Model.Title on demand.
+        På listen nedenfor ser du alle de websites, hvor du kan leje "@Model.Title" på nettet.
     </p>
     <img class="cover" src="/CoverHandler.ashx?id=@Model.Id&w=180" alt="@Model.Title"/>
     <p>@Model.Plot</p>
@@ -27,10 +27,8 @@
 }
 
 <section class="block">
-    <h2>Her kan du leje "@Model.Title" online</h2>
-    <p> 
-        Find den Video on Demand udbyder og pris som passer dig bedst - på listen ser du alle de websites, hvor du kan leje "@Model.Title" på nettet. 
-    </p>
+    <h2>Her kan du leje "@Model.Title" på nettet</h2>
+    <p>Du kan se @Model.Title on demand hos udlejerne nedenfor. Vælg den udlejer som passer dig bedst:</p>
         <table>
             <tr>
                 <th>Udlejer</th>
