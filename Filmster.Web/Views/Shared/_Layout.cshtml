@@ -53,7 +53,8 @@
 			    <nav>
                     <ul>
                         <li>@Html.ActionLink("Lej film online", "Index", "Filmster")</li>
-                        <li>@Html.ActionLink("Filmkatalog", "Catalog", new { id = "a" }, "Filmster")</li>
+                        <li>@Html.ActionLink("Filmkatalog", "Catalog", "Filmster", new { id = "a" }, null)</li>
+                        <li>@Html.ActionLink("Hvad er VOD", "Post", "Blog", new { id = "hvad-er-vod" }, null)</li>
                         <li>@Html.ActionLink("Om filmster", "About", "Filmster")</li>
                     </ul>
                 </nav>

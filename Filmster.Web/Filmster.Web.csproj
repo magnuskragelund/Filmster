@@ -167,7 +167,9 @@
   <ItemGroup>
     <Content Include="CoverHandler.ashx" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Views\Blog\hvad-er-vod.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Blog\404.cshtml" />
   </ItemGroup>
