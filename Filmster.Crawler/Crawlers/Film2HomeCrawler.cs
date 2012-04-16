@@ -73,7 +73,7 @@ namespace Filmster.Crawlers
                 var titleNode = doc.SelectSingleNode("//h1");
                 var title = culture.TextInfo.ToTitleCase(titleNode.InnerText.Trim());
                 var plot = doc.SelectSingleNode("//div[@id='content-columns']/div[@class='column-double first-column']/p").InnerText.Trim();
-                var coverUrl = "http://film2home.dk" + doc.SelectSingleNode("//img[@class='packshot defaultimg']").Attributes["src"].Value;
+                var coverUrl = "http://www.film2home.dk" + doc.SelectSingleNode("//img[@class='packshot defaultimg']").Attributes["src"].Value;
 
                 if (title.Contains(" (Hd)"))
                 {
