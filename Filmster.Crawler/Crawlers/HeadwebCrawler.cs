@@ -20,14 +20,14 @@ namespace Filmster.Crawlers
 
         public void Start()
         {
-            var page = 1;
+            var page = 0;
             var resultContainsMovies = true;
             var moviesToLoad = new List<string>();
 
             Logger.Log("Starting Headweb Crawler");
             
             while (resultContainsMovies)
-                //while (page == 1)
+            //while (page == 1)
             {
                 page++;
 
