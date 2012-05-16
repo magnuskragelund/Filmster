@@ -14,7 +14,7 @@ namespace Filmster.Crawlers
     internal class CdonCrawler : Crawler
     {
         private string _crawlstart =
-            "http://downloads.cdon.com/index.phtml?action=nav_page&navigation_id=24704&sortby=titleSort_DK_asc&category=movie&gridview=0&showall=1&page={0}&pagesize=100&country=dk";
+            "http://cdon.dk/film/video-on-demand/vis_alle_film/default?179902-display=1&179902-page-size=50&179902-sort-order=139&179902-page={0}";
 
         public void Start()
         {
@@ -33,7 +33,7 @@ namespace Filmster.Crawlers
 
                     var doc = GetDocument(string.Format(_crawlstart, page));
 
-                    HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//table[@class='product-list']//td[@class='title']//a[contains(@style, 'float:left')]");
+                    HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//table[@class='product-list']//td[@class='title']/a");
 
                     if (list == null || list.Count < 1)
                     {
@@ -43,7 +43,7 @@ namespace Filmster.Crawlers
 
                     foreach (HtmlNode htmlNode in list)
                     {
-                        moviesToLoad.Add("http://downloads.cdon.com" + htmlNode.Attributes["href"].Value);
+                        moviesToLoad.Add("http://cdon.dk" + htmlNode.Attributes["href"].Value);
                     }
                 }
 
@@ -84,7 +84,15 @@ namespace Filmster.Crawlers
                 var plot = doc.SelectSingleNode("//div[@class='description-container']").LastChild.InnerText;
                 plot = Regex.Replace(plot, "OBS! Ingen undertekster.", "", RegexOptions.IgnoreCase);
 
-                var coverUrl = doc.SelectSingleNode("//div[@class='product-image-container']/a").Attributes["href"].Value;
+                string coverUrl;
+                if (doc.SelectSingleNode("//div[@class='product-image-container']/a") != null)
+                {
+                    coverUrl = doc.SelectSingleNode("//div[@class='product-image-container']/a").Attributes["href"].Value;
+                }
+                else
+                {
+                    coverUrl = doc.SelectSingleNode("//div[@class='product-image-container']/img").Attributes["src"].Value;
+                }
 
                 if (title.Contains(" (HD)"))
                 {
