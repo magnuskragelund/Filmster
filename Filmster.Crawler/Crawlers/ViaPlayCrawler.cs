@@ -67,7 +67,7 @@ namespace Filmster.Crawlers
                 //    out price);
                 
                 var id = doc.SelectSingleNode("//div[@id='productSelect']").Attributes["data-product-id"].Value;
-                var overlay = GetDocument("http://viaplay.dk/ahah/overlay?productId=" + id).DocumentNode;
+                var overlay = GetDocument("http://viaplay.dk/ahah/overlay?isBoxPackage=false&channel9=false&productId=" + id).DocumentNode;
                 var rent = overlay.SelectSingleNode("//div[@data-content='movies']//p[@class='alternative']/a");
                 var subscription = overlay.SelectSingleNode("//div[@data-content='movies']//span[@class='price']");
                 var subscriptionBased = false;
@@ -83,9 +83,7 @@ namespace Filmster.Crawlers
                 else
                 {
                     // subscriptionbased
-                    float.TryParse(
-                        subscription.InnerHtml.RemoveNonNumericChars(),
-                        out price);
+                    price = 99;
                     subscriptionBased = true;
                 }
 
