@@ -11,7 +11,7 @@ namespace Filmster.Crawlers
 {
     internal class Film2HomeCrawler : Crawler
     {
-        private const string _crawlstart = "http://www.film2home.dk/dk/Online/Find-din-film.aspx?sort=9&p={0}";
+        private const string _crawlstart = "http://www.film2home.dk/dk/Find-din-film.aspx?sort=9&p={0}";
         private CultureInfo culture = new CultureInfo("da-DK");
 
         public void Start()
@@ -27,13 +27,13 @@ namespace Filmster.Crawlers
                 var doc = GetDocument(string.Format(_crawlstart, page));
                 page++;
 
-                HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//div[@class='movie-listing']//li[@class!='last']");
+                HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//div[@class='hoverThis']");
 
                 if(list != null && list.Count > 0)
                 {
                     foreach (HtmlNode htmlNode in list)
                     {
-                        if (htmlNode.SelectSingleNode("a/span[@class='rent']") != null)
+                        if (htmlNode.SelectSingleNode("a") != null)
                         {
                             moviesToLoad.Add("http://www.film2home.dk" + htmlNode.SelectSingleNode("a").Attributes["href"].Value);
                         }
