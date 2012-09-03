@@ -24,10 +24,23 @@ namespace Filmster.Data
 
         public Movie FindMovie(string title, DateTime? releaseDate)
         {
+            var movies = _context.Movies.Where(m => m.Title.Equals(title, StringComparison.InvariantCultureIgnoreCase));
+            
+            if (releaseDate != null)
+            {
+                movies = movies.Where(m => m.ReleaseDate == releaseDate || m.ReleaseDate == null);
+            }
+
+            return movies.FirstOrDefault();
+        }
+
+        public Movie FindActiveMovie(string title, DateTime? releaseDate)
+        {
             var movies = GetActiveMovies().Where(m => m.Title == title);
 
             if (!movies.Any())
             {
+                // todo.. what's up with the "The" thing in here?
                 if (title.StartsWith("The ", StringComparison.InvariantCultureIgnoreCase))
                 {
                     movies = _context.Movies.Where(m => m.Title == title.Replace("The ", ""));

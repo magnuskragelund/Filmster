@@ -7,6 +7,7 @@ namespace Filmster.Data
     public interface IFilmsterRepository
     {
         Movie FindMovie(string title, DateTime? releaseDate);
+        Movie FindActiveMovie(string title, DateTime? releaseDate);
         Movie GetMovie(int id);
         List<Movie> GetAllMovies();
         IQueryable<Movie> GetActiveMovies();

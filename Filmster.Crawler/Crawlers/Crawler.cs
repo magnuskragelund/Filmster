@@ -1,3 +1,6 @@
+using Filmster.Crawler;
+using Filmster.Data;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Specialized;
 using System.IO;
@@ -6,9 +9,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
-using Filmster.Crawler;
-using Filmster.Data;
-using HtmlAgilityPack;
 
 namespace Filmster.Crawlers
 {
@@ -80,15 +80,17 @@ namespace Filmster.Crawlers
             Movie movie;
             
             // some normalizing
-            plot = HttpUtility.HtmlDecode(plot);
+            plot = HttpUtility.HtmlDecode(plot).Trim();
             title = HttpUtility.HtmlDecode(title);
-            title = Regex.Replace(title, @" \(\d{4}\)", "");
-            title = title.Replace(": ", " - ");
-            title = title.Replace("'", "");
-            title = title.Replace(" II ", " 2 ");
-            title = title.Replace(" III ", " 3 ");
-            title = title.Replace(" IV ", " 4 ");
-            title = title.Replace(" V ", " 5 ");
+            title = Regex.Replace(title, @" \(\d{4}\)", "")
+                .Replace(": ", " - ")
+                .Replace("'", "")
+                .Replace(" II ", " 2 ")
+                .Replace(" III ", " 3 ")
+                .Replace(" IV ", " 4 ")
+                .Replace(" V ", " 5 ")
+                .Trim();
+            
             if (title.EndsWith(" I", StringComparison.InvariantCulture)) title = title.Replace(" I", " 1");
             if (title.EndsWith(" II", StringComparison.InvariantCulture)) title = title.Replace(" II", " 2");
             if (title.EndsWith(" III", StringComparison.InvariantCulture)) title = title.Replace(" III", " 3");
@@ -99,6 +101,7 @@ namespace Filmster.Crawlers
             if(releaseYear < 1800 || releaseYear > DateTime.Now.Year + 3)
             {
                 releaseYear = 0;
+
             }
 
             if(string.IsNullOrWhiteSpace(title))
@@ -107,7 +110,7 @@ namespace Filmster.Crawlers
             }
 
             lock(_lock)
-            {;
+            {
                 var existingMovie = repository.FindMovie(title, null);
                 if (existingMovie != null)
                 {

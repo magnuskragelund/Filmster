@@ -121,10 +121,12 @@ namespace Filmster.Utilities
             return Regex.Replace(htmlString, @"<(.|\n)*?>", String.Empty);
         }
 
+        /// <summary>
+        /// Removes all digits from the string
+        /// </summary>
         public static string RemoveNonNumericChars(this string text)
         {
             return Regex.Replace(text, "\\D", "");
         }
-
     }
 }
