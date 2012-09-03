@@ -61,7 +61,7 @@ namespace Filmster.Crawlers
                     title = title.Replace(" (HD)", "");
                 }
 
-                int.TryParse(doc.SelectSingleNode("//h2[(@class='genre')]").InnerText.RemoveNonNumericChars(), out releaseYear);
+                int.TryParse(doc.SelectSingleNode("//h2[contains(@class,'genre')]/following-sibling::*/h2[@class='left']").InnerText.RemoveNonNumericChars(), out releaseYear);
                 //float.TryParse(
                 //    doc.InnerHtml.SubstringByStringToString("&price=", "%2c", false),
                 //    out price);
