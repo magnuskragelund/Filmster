@@ -14,7 +14,7 @@ namespace Filmster.Crawlers
     internal class CdonCrawler : Crawler
     {
         private string _crawlstart =
-            "http://cdon.dk/film/video-on-demand/vis_alle_film/default?179902-display=1&179902-page-size=50&179902-sort-order=139&179902-page={0}";
+            "http://cdon.dk/ExtendedProductList?navigationPageId=60696&pageSize=50&sortOrderId=139&pageNbr={0}&blockId=179902&displayType=1";
 
         public void Start()
         {
@@ -33,9 +33,9 @@ namespace Filmster.Crawlers
 
                     var doc = GetDocument(string.Format(_crawlstart, page));
 
-                    HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//table[@class='product-list']//td[@class='title']/a");
+                    HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//a[@class='product-list-link']");
 
-                    if (list == null || list.Count < 1)
+                    if (list == null || list.Count < 2) // for some reason they always return one movie
                     {
                         resultContainsMovies = false;
                         break;
