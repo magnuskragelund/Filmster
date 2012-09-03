@@ -11,7 +11,7 @@ namespace Filmster.Crawlers
 {
     internal class SputnikCrawler : Crawler
     {
-        private string _crawlstart = "http://sputnik.tv2.dk/leje-film/alle/";
+        private string _crawlstart = "http://play.tv2.dk/leje-film/dokumentar-film/";
 
         public SputnikCrawler()
         {
@@ -32,7 +32,7 @@ namespace Filmster.Crawlers
             {
                 var path = htmlNode.Attributes["href"].Value;
                 if (path.Split(new [] { "/" }, StringSplitOptions.RemoveEmptyEntries).Length < 3) continue;
-                moviesToLoad.Add("http://sputnik.tv2.dk" + path);
+                moviesToLoad.Add("http://play.tv2.dk" + path);
             }
 
             StartedThreads = moviesToLoad.Count;
@@ -65,8 +65,8 @@ namespace Filmster.Crawlers
                 float price = 0;
 
                 var title = doc.SelectSingleNode("//div[@id='content']//div[@class='info']//h1").InnerText.Trim();
-                var plot = doc.SelectSingleNode("//div[@id='content']//div[@class='info']//p").InnerText.Trim();
-                var coverUrl = doc.SelectSingleNode("//img[@class='poster']").Attributes["src"].Value;
+                var plot = doc.SelectSingleNode("//div[@class='content']").InnerText.Replace(title, "").Trim();
+                var coverUrl = string.Empty;
                 float.TryParse(doc.InnerText.SubstringByStringToString("\"price\":", ",", false), out price);
 
                 ResolveRentalOption(repository, movieUrl, coverUrl, vendorId, title, plot, releaseYear, porn, false, price);
