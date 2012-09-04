@@ -57,8 +57,8 @@ namespace Filmster.Crawler
             new Film2HomeCrawler().Start();
             new SFAnytimeCrawler().Start();
             new VoddlerCrawler().Start();
-            new HeadwebCrawler().Start();
             new YouSeeCrawler().Start();
+            new HeadwebCrawler().Start();
             //new FilmstribenCrawler().Start();
         }
 
