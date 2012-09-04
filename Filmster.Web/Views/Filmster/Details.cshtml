@@ -2,29 +2,18 @@
 @model Movie
 
 @{
-    ViewBag.Title = "Her kan du leje " + @Model.Title + " online";
+    ViewBag.Title = @Model.Title + " - Lej filmen online";
     ViewBag.Description = "filmster samler alle steder hvor du kan leje \"" + @Model.Title + "\" online. Sammenlign priser og find den udlejer der passer dig bedst.";
 }
 
 <section class="block details">
-    <h1>Lej filmen "@Model.Title" online</h1>
+    <h1>@Model.Title</h1>
     <p>
         På listen nedenfor ser du alle de websites, hvor du kan leje "@Model.Title" på nettet.
     </p>
     <img class="cover" src="/CoverHandler.ashx?id=@Model.Id&w=180" alt="@Model.Title"/>
     <p>@Model.Plot</p>
 </section>
-
-@if (Model.Id == 1272)
-{
-    <aside class="block">
-        <p><b>Ikke den Klassefesten?</b> Leder du efter Klassefesten med Lene Nystrøm, Anders W. Berthelsen og Nicolaj Kopernikus? 
-        Den kommer først i slutningen af februar. "Synes godt om" <a href="https://www.facebook.com/filmsterdk" >www.facebook.com/filmsterdk</a> på facebook, og få besked når der dukke nye populære film op.</p>
-        <div>
-            <div class="fb-like" data-href="https://www.facebook.com/filmsterdk" data-send="false" data-width="30" data-show-faces="false" data-layout="button_count"></div>
-        </div>
-    </aside>
-}
 
 <section class="block">
     <h2>Her kan du leje "@Model.Title" på nettet</h2>
