@@ -33,7 +33,7 @@ namespace Filmster.Crawlers
                 {
                     foreach (HtmlNode htmlNode in list)
                     {
-                        if (htmlNode.SelectSingleNode("a") != null)
+                        if (htmlNode.SelectSingleNode("a") != null && htmlNode.SelectSingleNode("//span[@class='rent']") != null)
                         {
                             moviesToLoad.Add("http://www.film2home.dk" + htmlNode.SelectSingleNode("a").Attributes["href"].Value);
                         }
