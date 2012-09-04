@@ -223,8 +223,8 @@ header .me a {
 
 .social .fb-like {
     position: relative;
-    margin-left: -16px;
     top: -4px;
+    left: 8px
 }
 
 .rent-column {
