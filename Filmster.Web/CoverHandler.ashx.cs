@@ -80,7 +80,7 @@ namespace Filmster.Web
             }
 
 
-            context.Response.ContentType = "image/jpg";
+            context.Response.ContentType = "image/jpeg";
 
             HttpCachePolicy cachePolicy = context.Response.Cache;
             cachePolicy.SetCacheability(HttpCacheability.NoCache);
