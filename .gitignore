@@ -10,8 +10,6 @@
 *[Rr]e[Ss]harper.user
 _ReSharper.*/
 
-
-
 #ignore thumbnails created by windows
 Thumbs.db
 #Ignore files build by Visual Studio
@@ -43,3 +41,6 @@ Deployable/
 [Tt]est[Rr]esult*
 *.[Dd]ot[Ss]ettings.user
 *.[Rr]e[Ss]harper
+
+# NuGet
+/packages/*/*
