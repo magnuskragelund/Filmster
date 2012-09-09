@@ -14,7 +14,7 @@ namespace Filmster.Data
     public class FilmsterRepository : IFilmsterRepository
     {
         private FilmsterEntities _context;
-        private const int _daysForRentalOptionToExpire = 10;
+        private const int _daysForRentalOptionToExpire = 3;
         private string _luceneIndexPath = ConfigurationManager.AppSettings["LuceneIndexPath"];
 
         public FilmsterRepository()
