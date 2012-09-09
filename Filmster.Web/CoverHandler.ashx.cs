@@ -47,7 +47,7 @@ namespace Filmster.Web
             string file = Path.Combine(cacheDirectory, filename);
             if (!File.Exists(file))
             {
-                WebRequest req = WebRequest.Create(movie.RentalOptions.Last().CoverUrl);
+                WebRequest req = WebRequest.Create(movie.RentalOptions.Where(r => r.Vendor.Name != "Viaplay" || movie.RentalOptions.Count == 1).Last().CoverUrl);
                 WebResponse response = req.GetResponse();
                 Stream stream = response.GetResponseStream();
                 Bitmap b = new Bitmap(stream);
