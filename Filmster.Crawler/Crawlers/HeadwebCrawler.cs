@@ -25,9 +25,9 @@ namespace Filmster.Crawlers
             var moviesToLoad = new List<string>();
 
             Logger.Log("Starting Headweb Crawler");
-            
+
             while (resultContainsMovies)
-            //while (page == 1)
+            //while (page < 1)
             {
                 page++;
 
@@ -89,7 +89,7 @@ namespace Filmster.Crawlers
                 else
                 {
                     Logger.Log("Unparsable price, skipping movie");
-                    return;
+                    throw new Exception("Unparsable price");
                 }
                 
                 ResolveRentalOption(repository, movieUrl, coverUrl, vendorId, title, plot, releaseYear, false, highDef, price);
