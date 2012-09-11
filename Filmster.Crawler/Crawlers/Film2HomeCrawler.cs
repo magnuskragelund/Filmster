@@ -86,23 +86,27 @@ namespace Filmster.Crawlers
 
                 float.TryParse(doc.SelectSingleNode("//a[@href='#stream']/strong").InnerText.RemoveNonNumericChars(), out price);
 
+                if (price == 0)
+                {
+                    throw new Exception("Price is zero, movie is purchase only");
+                }
+
                 ResolveRentalOption(repository, movieUrl, coverUrl, vendorId, title, plot, releaseYear, false, highDef, price);
                 repository.Save();
 
                 Logger.LogVerbose(title.Trim());
-
-
             }
             catch (Exception ex)
             {
                 LogCrawlerError(ex);
             }
-
-            if (Interlocked.Decrement(ref StartedThreads) == 0)
+            finally
             {
-                DoneEvent.Set();
+                if (Interlocked.Decrement(ref StartedThreads) == 0)
+                {
+                    DoneEvent.Set();
+                }
             }
-
         }
     }
 }
