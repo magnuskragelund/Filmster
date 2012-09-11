@@ -41,8 +41,11 @@ namespace Filmster.Crawler
                 Logger.Log("Crawler encountered an error and is closing");
                 throw;
             }
-            Logger.Log("Time: " + DateTime.Now);
-            Logger.Dump();
+            finally
+            {
+                Logger.Log("Time: " + DateTime.Now);
+                Logger.Dump();
+            }
         }
 
         public static void Crawl()
@@ -50,15 +53,15 @@ namespace Filmster.Crawler
             Logger.Log("Initiating Crawl");
             ThreadPool.SetMinThreads(40, 40);
             ThreadPool.SetMaxThreads(120, 120);
+            new ItunesCrawler().Start();
+            new HeadwebCrawler().Start();
+            new SFAnytimeCrawler().Start();
+            new Film2HomeCrawler().Start();
             new ViaPlayCrawler().Start();
             new CdonCrawler().Start();
-            new ItunesCrawler().Start();
             new SputnikCrawler().Start();
-            new Film2HomeCrawler().Start();
-            new SFAnytimeCrawler().Start();
             new VoddlerCrawler().Start();
             new YouSeeCrawler().Start();
-            new HeadwebCrawler().Start();
             //new FilmstribenCrawler().Start();
         }
 
