@@ -61,11 +61,8 @@ namespace Filmster.Crawlers
                     title = title.Replace(" (HD)", "");
                 }
 
-                int.TryParse(doc.SelectSingleNode("//h2[contains(@class,'genre')]/following-sibling::*/h2[@class='left']").InnerText.RemoveNonNumericChars(), out releaseYear);
-                //float.TryParse(
-                //    doc.InnerHtml.SubstringByStringToString("&price=", "%2c", false),
-                //    out price);
-                
+                int.TryParse(doc.SelectSingleNode("//li[contains(@class,'year')]").InnerText.RemoveNonNumericChars(), out releaseYear);
+             
                 var id = doc.SelectSingleNode("//div[@id='productSelect']").Attributes["data-product-id"].Value;
                 var overlay = GetDocument("http://viaplay.dk/ahah/overlay?isBoxPackage=false&channel9=false&productId=" + id).DocumentNode;
                 var rent = overlay.SelectSingleNode("//div[@data-content='movies']//p[@class='alternative']/a");
