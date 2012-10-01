@@ -13,8 +13,8 @@ namespace Filmster.Data
 {
     public class FilmsterRepository : IFilmsterRepository
     {
+        public static int RENTAL_OPTION_VALIDATION_PERIOD_IN_DAYS = 3;
         private FilmsterEntities _context;
-        private const int _daysForRentalOptionToExpire = 3;
         private string _luceneIndexPath = ConfigurationManager.AppSettings["LuceneIndexPath"];
 
         public FilmsterRepository()
@@ -79,18 +79,10 @@ namespace Filmster.Data
         /// <returns></returns>
         public IQueryable<Movie> GetActiveMovies()
         {
-            var blockingDate = DateTime.Now.AddDays(0 - _daysForRentalOptionToExpire);
+            var blockingDate = DateTime.Now.AddDays(0 - RENTAL_OPTION_VALIDATION_PERIOD_IN_DAYS);
             return _context.Movies
                 .Where(m => !m.Porn)
                 .Where(m => m.RentalOptions.Where(r => r.LastSeen > blockingDate).Count() > 0);
-        }
-
-        private IQueryable<RentalOption> GetActiveRentalOptions()
-        {
-            var blockingDate = DateTime.Now.AddDays(0 - _daysForRentalOptionToExpire);
-            return _context.RentalOptions
-                .Where(r => r.LastSeen > blockingDate
-                && !r.Movie.Porn);
         }
 
         public List<Movie> GetPopularMovies(int take)

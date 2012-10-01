@@ -25,7 +25,7 @@
                 <th>Pris</th>
                 <th>Lej</th>
             </tr>
-            @foreach (var rentalOption in Model.RentalOptions.OrderBy(r => r.HighDefinition).ThenBy(r => r.Price).ThenBy(r => r.Vendor.Name))
+            @foreach (var rentalOption in Model.ActiveRentalOptions().OrderBy(r => r.HighDefinition).ThenBy(r => r.Price).ThenBy(r => r.Vendor.Name))
             {
                 <tr>
                     <td>@rentalOption.Vendor.Name</td>
