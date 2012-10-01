@@ -11,7 +11,7 @@ namespace Filmster.Crawlers
 {
     internal class SputnikCrawler : Crawler
     {
-        private string _crawlstart = "http://play.tv2.dk/leje-film/dokumentar-film/";
+        private string _crawlstart = "http://play.tv2.dk/lejefilm/";
 
         public SputnikCrawler()
         {
@@ -26,7 +26,7 @@ namespace Filmster.Crawlers
             var moviesToLoad = new List<string>();
             var doc = GetDocument(_crawlstart);
 
-            HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//div[@id='content']//a[contains(@href, '/leje-film/')]");
+            HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//div[@id='content']//a[contains(@href, '/lejefilm/')]");
 
             foreach (HtmlNode htmlNode in list)
             {
