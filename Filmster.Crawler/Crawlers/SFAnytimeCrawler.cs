@@ -10,26 +10,35 @@ namespace Filmster.Crawlers
 {
     internal class SFAnytimeCrawler : Crawlers.Crawler
     {
-        private string _crawlstart = "http://sfanytime.com/Templates/Storefront/Pages/MovieListProxy.aspx?nc=da-DK-0&epslanguage=da-DK&stripes=1,2,3&rtr={0}&ob=&mob=Year+desc";
+        private string _crawlstart = "http://sfanytime.com/Templates/Storefront/Pages/MovieListProxy.aspx?nc=da-DK-0&epslanguage=da-DK&stripes=1,2,3&rtr={0}&sr={1}&ob=&mob=Year+desc";
 
         public void Start()
         {
-            var movieCount = 10000;
+            var movieCount = 100;
             var moviesToLoad = new List<string>();
+            var lastPage = false;
+            var skip = 0;
 
-            var doc = GetDocument(string.Format(_crawlstart, movieCount));
-            
-            HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//a");
-
-            foreach (HtmlNode htmlNode in list)
+            while (!lastPage)
             {
-                var url = "http://sfanytime.com" + htmlNode.Attributes["href"].Value;
-                if(!moviesToLoad.Contains(url))
-                {
-                    moviesToLoad.Add("http://sfanytime.com" + htmlNode.Attributes["href"].Value);                    
-                }
-            }
+                var doc = GetDocument(string.Format(_crawlstart, movieCount, skip));
 
+                HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//div[@class='backet_title']/a");
+
+                foreach (HtmlNode htmlNode in list)
+                {
+                    var url = "http://sfanytime.com" + htmlNode.Attributes["href"].Value;
+                    if (!moviesToLoad.Contains(url))
+                    {
+                        var movie = "http://sfanytime.com" + htmlNode.Attributes["href"].Value;
+                        moviesToLoad.Add(movie);
+                    }
+                }
+
+                skip += movieCount;
+
+                lastPage = list.Count != movieCount;
+            }
 
             StartedThreads = moviesToLoad.Count;
 
