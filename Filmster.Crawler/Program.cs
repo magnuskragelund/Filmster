@@ -55,13 +55,13 @@ namespace Filmster.Crawler
             ThreadPool.SetMaxThreads(120, 120);
             new ItunesCrawler().Start();
             new HeadwebCrawler().Start();
-            new SFAnytimeCrawler().Start();
             new Film2HomeCrawler().Start();
             new ViaPlayCrawler().Start();
             new CdonCrawler().Start();
             new SputnikCrawler().Start();
             new VoddlerCrawler().Start();
             new YouSeeCrawler().Start();
+            new SFAnytimeCrawler().Start();
             //new FilmstribenCrawler().Start();
         }
 
