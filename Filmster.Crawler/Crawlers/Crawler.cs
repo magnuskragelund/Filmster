@@ -21,6 +21,15 @@ namespace Filmster.Crawlers
         private object _lock = new object();
 
         private readonly HtmlWeb _htmlWeb = new HtmlWeb();
+
+        public Crawler()
+        {
+            _htmlWeb.PreRequest = delegate(HttpWebRequest webRequest)
+            {
+                webRequest.Timeout = 2 * 60000;
+                return true;
+            };
+        }
         
         internal HtmlDocument GetDocument(string url)
         {
