@@ -6,6 +6,7 @@ using Filmster.Crawler;
 using Filmster.Data;
 using Filmster.Utilities;
 using HtmlAgilityPack;
+using System.Threading.Tasks;
 
 namespace Filmster.Crawlers
 {
@@ -24,17 +25,23 @@ namespace Filmster.Crawlers
             Logger.Log("Starting SputnikCrawler");
 
             var moviesToLoad = new List<string>();
-            var doc = GetDocument(_crawlstart);
 
-            HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//div[@id='content']//a[contains(@href, '/lejefilm/')]");
+            HtmlNodeCollection movieLists = GetDocument(_crawlstart).DocumentNode.SelectNodes("//ol[@class='content-tabs']//a");
 
-            foreach (HtmlNode htmlNode in list)
-            {
-                var path = htmlNode.Attributes["href"].Value;
-                if (path.Split(new [] { "/" }, StringSplitOptions.RemoveEmptyEntries).Length < 3) continue;
-                moviesToLoad.Add("http://play.tv2.dk" + path);
-            }
+            Parallel.ForEach(movieLists, movieList =>
+                {
+                    var doc = GetDocument("http://play.tv2.dk" + movieList.Attributes["href"].Value);
+                    HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//div[@id='content']//a[contains(@href, '/lejefilm/')]");
 
+                    foreach (HtmlNode htmlNode in list)
+                    {
+                        var path = htmlNode.Attributes["href"].Value;
+                        if (path.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries).Length < 3) continue;
+                        moviesToLoad.Add("http://play.tv2.dk" + path);
+                    }
+                }
+            );
+            
             StartedThreads = moviesToLoad.Count;
 
             Logger.Log("Movies found: " + StartedThreads);
