@@ -56,7 +56,7 @@ namespace Filmster.Crawler
             //new ItunesCrawler().Start();
             //new HeadwebCrawler().Start();
             //new Film2HomeCrawler().Start();
-            //new ViaPlayCrawler().Start();
+            new ViaPlayCrawler().Start();
             //new CdonCrawler().Start();
             //new SputnikCrawler().Start();
             //new VoddlerCrawler().Start();

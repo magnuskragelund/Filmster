@@ -5,6 +5,7 @@ using Filmster.Crawler;
 using Filmster.Data;
 using Filmster.Utilities;
 using HtmlAgilityPack;
+using System.Threading.Tasks;
 
 namespace Filmster.Crawlers
 {
@@ -15,36 +16,23 @@ namespace Filmster.Crawlers
 
         public void Start()
         {
-            var moviesToLoad = new List<string>();
-
             var doc = GetDocument(_crawlstart);
 
             HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//ul[@class='atoz-list']//a[contains(@href, '/film/')]");
 
-
-            foreach (HtmlNode htmlNode in list)
+            Parallel.ForEach(list, htmlNode =>
             {
-                moviesToLoad.Add("http://viaplay.dk" + htmlNode.Attributes["href"].Value);
-            }
-
-            StartedThreads = moviesToLoad.Count;
-
-            foreach (var movie in moviesToLoad)
-            {
-                ThreadPool.QueueUserWorkItem(LoadMovie, movie);
-            }
-
-            DoneEvent.WaitOne();
+                LoadMovie("http://viaplay.dk" + htmlNode.Attributes["href"].Value);
+            });
         }
 
-        public void LoadMovie(object obj)
+        public void LoadMovie(string url)
         {
             try
             {
                 var repository = new FilmsterRepository();
-                var movieUrl = (string)obj;
-
-                var doc = GetDocument(movieUrl).DocumentNode;
+                
+                var doc = GetDocument(url).DocumentNode;
 
                 bool highDef = false;
                 const int vendorId = 1;
@@ -72,7 +60,7 @@ namespace Filmster.Crawlers
                 if(rent.InnerText.Contains("lej denne film"))
                 {
                     // for rent
-                    movieUrl = "http://viaplay.dk" + rent.Attributes["href"].Value;
+                    url = "http://viaplay.dk" + rent.Attributes["href"].Value;
                     float.TryParse(
                         rent.InnerHtml.RemoveNonNumericChars(),
                         out price);
@@ -84,7 +72,7 @@ namespace Filmster.Crawlers
                     subscriptionBased = true;
                 }
 
-                ResolveRentalOption(repository, movieUrl, coverUrl, vendorId, title, plot, releaseYear, false, highDef, price, subscriptionBased);
+                ResolveRentalOption(repository, url, coverUrl, vendorId, title, plot, releaseYear, false, highDef, price, subscriptionBased);
                 repository.Save();
 
                 Logger.LogVerbose(title.Trim());
