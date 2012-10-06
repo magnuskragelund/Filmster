@@ -9,7 +9,7 @@ using HtmlAgilityPack;
 
 namespace Filmster.Crawlers
 {
-    internal class ItunesCrawler : Crawler
+    internal class ItunesCrawler : Crawler, ICrawler
     {
         private string _crawlstart = "http://itunes.apple.com/dk/genre/films/id33";
 

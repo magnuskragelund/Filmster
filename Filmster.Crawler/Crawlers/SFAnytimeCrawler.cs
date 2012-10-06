@@ -8,7 +8,7 @@ using HtmlAgilityPack;
 
 namespace Filmster.Crawlers
 {
-    internal class SFAnytimeCrawler : Crawlers.Crawler
+    internal class SFAnytimeCrawler : Crawler, ICrawler
     {
         private string _crawlstart = "http://sfanytime.com/Templates/Storefront/Pages/MovieListProxy.aspx?nc=da-DK-0&epslanguage=da-DK&stripes=1,2,3&rtr={0}&sr={1}&ob=&mob=Year+desc";
 

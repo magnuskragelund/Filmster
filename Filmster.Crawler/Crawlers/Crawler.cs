@@ -12,7 +12,7 @@ using System.Web;
 
 namespace Filmster.Crawlers
 {
-    internal class Crawler
+    public class Crawler
     {
         internal Encoding DocumentEncoding = Encoding.UTF8;
         internal ManualResetEvent DoneEvent = new ManualResetEvent(false);

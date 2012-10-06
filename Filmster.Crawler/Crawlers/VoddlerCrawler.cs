@@ -8,7 +8,7 @@ using HtmlAgilityPack;
 
 namespace Filmster.Crawlers
 {
-    internal class VoddlerCrawler : Crawler
+    internal class VoddlerCrawler : Crawler, ICrawler
     {
         private const string _crawlstart = "http://www.voddler.com/en/movie/browse/premium/alphabetical/all/online/{0}/24";
 

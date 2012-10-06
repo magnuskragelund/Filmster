@@ -10,7 +10,7 @@ using HtmlAgilityPack;
 
 namespace Filmster.Crawlers
 {
-    internal class YouSeeCrawler : Crawler
+    internal class YouSeeCrawler : Crawler, ICrawler
     {
         private string _crawlstart = "http://yousee.tv/film/liste/genre/alle/{0}/alfabetisk/";
 

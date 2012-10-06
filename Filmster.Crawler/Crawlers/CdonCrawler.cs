@@ -11,7 +11,7 @@ using HtmlAgilityPack;
 
 namespace Filmster.Crawlers
 {
-    internal class CdonCrawler : Crawler
+    internal class CdonCrawler : Crawler, ICrawler
     {
         private string _crawlstart =
             "http://cdon.dk/ExtendedProductList?navigationPageId=60696&pageSize=50&sortOrderId=139&pageNbr={0}&blockId=179902&displayType=1";

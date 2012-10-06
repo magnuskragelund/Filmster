@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Crawlers\CdonCrawler.cs" />
     <Compile Include="Crawlers\Film2HomeCrawler.cs" />
+    <Compile Include="Crawlers\ICrawler.cs" />
     <Compile Include="Crawlers\ItunesCrawler.cs" />
     <Compile Include="Crawlers\YouSeeCrawler.cs" />
     <Compile Include="Crawlers\SFAnytimeCrawler.cs" />

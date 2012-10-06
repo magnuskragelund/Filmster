@@ -8,7 +8,7 @@ using HtmlAgilityPack;
 
 namespace Filmster.Crawlers
 {
-    internal class ViaPlayCrawler : Crawlers.Crawler
+    internal class ViaPlayCrawler : Crawlers.Crawler, ICrawler
     {
         private string _crawlstart =
             "http://viaplay.dk/film/alle/250/alphabetical/4229412858";

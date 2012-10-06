@@ -9,7 +9,7 @@ using HtmlAgilityPack;
 
 namespace Filmster.Crawlers
 {
-    internal class Film2HomeCrawler : Crawler
+    internal class Film2HomeCrawler : Crawler, ICrawler
     {
         private const string _crawlstart = "http://www.film2home.dk/dk/Find-din-film.aspx?sort=9&p={0}";
         private CultureInfo culture = new CultureInfo("da-DK");

@@ -1,17 +1,16 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.Entity;
-using System.IO;
-using System.Threading;
-using Filmster.Crawlers;
+﻿using Filmster.Crawlers;
 using Filmster.Data;
 using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.Store;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Linq;
+using System.Threading;
 using Directory = System.IO.Directory;
 
 namespace Filmster.Crawler
@@ -53,16 +52,31 @@ namespace Filmster.Crawler
             Logger.Log("Initiating Crawl");
             ThreadPool.SetMinThreads(40, 40);
             ThreadPool.SetMaxThreads(120, 120);
-            new ItunesCrawler().Start();
-            new HeadwebCrawler().Start();
-            new Film2HomeCrawler().Start();
-            new ViaPlayCrawler().Start();
-            new CdonCrawler().Start();
-            new SputnikCrawler().Start();
-            new VoddlerCrawler().Start();
-            new YouSeeCrawler().Start();
-            new SFAnytimeCrawler().Start();
+            //new ItunesCrawler().Start();
+            //new HeadwebCrawler().Start();
+            //new Film2HomeCrawler().Start();
+            //new ViaPlayCrawler().Start();
+            //new CdonCrawler().Start();
+            //new SputnikCrawler().Start();
+            //new VoddlerCrawler().Start();
+            //new YouSeeCrawler().Start();
+            //new SFAnytimeCrawler().Start();
             //new FilmstribenCrawler().Start();
+
+            var crawlers = new List<ICrawler>()
+            {
+                new ItunesCrawler(),
+                new HeadwebCrawler(),
+                new Film2HomeCrawler(),
+                new ViaPlayCrawler(),
+                new CdonCrawler(),
+                new SputnikCrawler(),
+                new VoddlerCrawler(),
+                new YouSeeCrawler(),
+                new SFAnytimeCrawler(),
+            };
+
+            Parallel.ForEach<Crawlers.ICrawler>(crawlers, x => x.Start());
         }
 
         public static void Index()

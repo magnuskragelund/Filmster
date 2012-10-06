@@ -8,7 +8,7 @@ using HtmlAgilityPack;
 
 namespace Filmster.Crawlers
 {
-    internal class HeadwebCrawler : Crawler
+    internal class HeadwebCrawler : Crawler, ICrawler
     {
         private string _crawlstart =
             "http://www.headweb.com/da/5906/film?&page={0}";

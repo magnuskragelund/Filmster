@@ -9,7 +9,7 @@ using HtmlAgilityPack;
 
 namespace Filmster.Crawlers
 {
-    internal class SputnikCrawler : Crawler
+    internal class SputnikCrawler : Crawler, ICrawler
     {
         private string _crawlstart = "http://play.tv2.dk/lejefilm/";
 
