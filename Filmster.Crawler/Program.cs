@@ -11,6 +11,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Directory = System.IO.Directory;
 
 namespace Filmster.Crawler
