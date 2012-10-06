@@ -8,6 +8,7 @@ using Filmster.Crawler;
 using Filmster.Data;
 using Filmster.Utilities;
 using HtmlAgilityPack;
+using System.Threading.Tasks;
 
 namespace Filmster.Crawlers
 {
@@ -27,7 +28,6 @@ namespace Filmster.Crawlers
             try
             {
                 while (resultContainsMovies)
-                //while (page == 0)
                 {
                     page++;
 
@@ -41,22 +41,16 @@ namespace Filmster.Crawlers
                         break;
                     }
 
-                    foreach (HtmlNode htmlNode in list)
+                    foreach(var htmlNode in list)
                     {
                         moviesToLoad.Add("http://cdon.dk" + htmlNode.Attributes["href"].Value);
-                    }
+                    };
                 }
 
-                StartedThreads = moviesToLoad.Count;
-
-                Logger.Log("Found movies: " + StartedThreads);
-
-                foreach (var movie in moviesToLoad)
+                Parallel.ForEach(moviesToLoad, movie =>
                 {
-                    ThreadPool.QueueUserWorkItem(LoadMovie, movie);
-                }
-
-                DoneEvent.WaitOne();
+                    LoadMovie(movie);
+                });
             }
             catch (Exception ex)
             {
@@ -66,14 +60,13 @@ namespace Filmster.Crawlers
             Logger.Log("Ending CDON crawler");
         }
 
-        public void LoadMovie(object obj)
+        public void LoadMovie(string url)
         {
             try
             {
                 var repository = new FilmsterRepository();
-                var movieUrl = (string)obj;
 
-                var doc = GetDocument(movieUrl).DocumentNode;
+                var doc = GetDocument(url).DocumentNode;
 
                 bool highDef = false;
                 const int vendorId = 8;
@@ -106,7 +99,7 @@ namespace Filmster.Crawlers
                         out price);
 
 
-                ResolveRentalOption(repository, movieUrl, coverUrl, vendorId, title, plot, releaseYear, false, highDef, price);
+                ResolveRentalOption(repository, url, coverUrl, vendorId, title, plot, releaseYear, false, highDef, price);
                 repository.Save();
 
                 Logger.LogVerbose(title.Trim());
