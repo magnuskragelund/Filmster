@@ -12,9 +12,10 @@ using System.Dynamic;
 
 namespace Filmster.Web.Controllers
 {
+    [RepositoryActionFilter]
     public class FilmsterController : Controller
     {
-        private IFilmsterRepository _repo;
+        public IFilmsterRepository Repository;
 
         public FilmsterController()
             :this(new FilmsterRepository())
@@ -24,21 +25,21 @@ namespace Filmster.Web.Controllers
 
         public FilmsterController(IFilmsterRepository filmsterRepository)
         {
-            _repo = filmsterRepository;
+            Repository = filmsterRepository;
         }
 
         public ActionResult Index()
         {
-            var randomMovies = _repo.GetPopularMovies(50);
+            var randomMovies = Repository.GetPopularMovies(50).ToList();
             return View(randomMovies);
         }
 
         public ActionResult Details(int id)
         {
-            var m = _repo.GetMovie(id);
+            var m = Repository.GetMovie(id);
             if(m == null)
             {
-                m = RoutingUtills.FindAlternateMovieByPath(_repo);
+                m = RoutingUtills.FindAlternateMovieByPath(Repository);
 
                 if(m == null)
                 {
@@ -49,7 +50,7 @@ namespace Filmster.Web.Controllers
 
             EnforceCanoncalUrl(m.RouteValues());
             m.Impressions++;
-            _repo.Save(false);
+            Repository.Save(false);
             return View(m);
         }
 
@@ -62,7 +63,7 @@ namespace Filmster.Web.Controllers
                 Response.RedirectPermanent("/");
             }
             
-            var result = _repo.Query(query);
+            var result = Repository.Query(query);
             ViewBag.Query = query;
 
             return View(result);
@@ -74,11 +75,11 @@ namespace Filmster.Web.Controllers
 
             if(id == "andre")
             {
-                viewModel.Movies = _repo.GetMoviesByNotTitleFistChar(viewModel.Alphabet);
+                viewModel.Movies = Repository.GetMoviesByNotTitleFistChar(viewModel.Alphabet);
             }
             else
             {
-                viewModel.Movies = _repo.GetMoviesByTitleFistChar(id);
+                viewModel.Movies = Repository.GetMoviesByTitleFistChar(id);
             }
 
             viewModel.SelectedValue = id;
@@ -88,9 +89,9 @@ namespace Filmster.Web.Controllers
 
         public RedirectResult Rent(int rentalOptionId)
         {
-            var rentalOption = _repo.GetRentalOption(rentalOptionId);
+            var rentalOption = Repository.GetRentalOption(rentalOptionId);
             rentalOption.Impressions++;
-            _repo.Save(false);
+            Repository.Save(false);
 
             var url = string.Empty;
 
@@ -109,7 +110,7 @@ namespace Filmster.Web.Controllers
 
         public JsonResult AutoComplete(string q)
         {
-            var data = _repo.Query(q, true);
+            var data = Repository.Query(q, true);
             return Json(data.Select(m => new { m.Title, Url = (Url.RouteUrl(m.RouteValues())) }), JsonRequestBehavior.AllowGet);
         }
 
@@ -120,7 +121,7 @@ namespace Filmster.Web.Controllers
 
         public ViewResult Status()
         {
-            return View(_repo.GetVendorStatus());
+            return View(Repository.GetVendorStatus());
         }
 
         public FileContentResult RobotsText()
@@ -149,6 +150,16 @@ namespace Filmster.Web.Controllers
             {
                 Response.RedirectPermanent(canonicalPathAndQuery);
             }
+        }
+    }
+
+    internal class RepositoryActionFilter : ActionFilterAttribute
+    {
+        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            var controller = filterContext.Controller as FilmsterController;
+            controller.Repository.Undo();
+            base.OnActionExecuted(filterContext);
         }
     }
 }

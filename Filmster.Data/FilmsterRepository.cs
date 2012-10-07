@@ -81,6 +81,7 @@ namespace Filmster.Data
         {
             var blockingDate = DateTime.Now.AddDays(0 - RENTAL_OPTION_VALIDATION_PERIOD_IN_DAYS);
             return _context.Movies
+                .Include("RentalOptions").Include("RentalOptions.Vendor")
                 .Where(m => !m.Porn)
                 .Where(m => m.RentalOptions.Where(r => r.LastSeen > blockingDate).Count() > 0);
         }
