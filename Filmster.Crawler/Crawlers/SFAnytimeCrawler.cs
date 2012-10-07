@@ -25,19 +25,23 @@ namespace Filmster.Crawlers
 
                 HtmlNodeCollection list = doc.DocumentNode.SelectNodes("//div[@class='backet_title']/a");
 
-                foreach (HtmlNode htmlNode in list)
+                lastPage = list == null;
+
+                if (list != null)
                 {
-                    var url = "http://sfanytime.com" + htmlNode.Attributes["href"].Value;
-                    if (!moviesToLoad.Contains(url))
+                    foreach (HtmlNode htmlNode in list)
                     {
-                        var movie = "http://sfanytime.com" + htmlNode.Attributes["href"].Value;
-                        moviesToLoad.Add(movie);
+                        var url = "http://sfanytime.com" + htmlNode.Attributes["href"].Value;
+                        if (!moviesToLoad.Contains(url))
+                        {
+                            var movie = "http://sfanytime.com" + htmlNode.Attributes["href"].Value;
+                            moviesToLoad.Add(movie);
+                        }
                     }
                 }
 
                 skip += movieCount;
 
-                lastPage = list.Count != movieCount;
             }
 
             StartedThreads = moviesToLoad.Count;
