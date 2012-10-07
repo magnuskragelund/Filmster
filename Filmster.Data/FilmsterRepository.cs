@@ -192,6 +192,18 @@ namespace Filmster.Data
             return movies;
         }
 
+        public List<Status> GetVendorStatus()
+        {
+            var blockingDate = DateTime.Now.AddDays(0 - RENTAL_OPTION_VALIDATION_PERIOD_IN_DAYS);
+
+            return _context.Vendors.Select(v => new Status { 
+                Name = v.Name, 
+                LatestRentalOption = v.RentalOptions.OrderByDescending(ro => ro.LastSeen).FirstOrDefault().LastSeen,
+                TotalActiveRentalOptions = v.RentalOptions.Where(r => r.LastSeen > blockingDate).Count(),
+                TotalRentalOptions = v.RentalOptions.Count()
+            } ).ToList();
+        }
+
         public void Save(bool dispose = true)
         {
             _context.SaveChanges();

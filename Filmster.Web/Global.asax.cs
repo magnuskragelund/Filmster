@@ -48,6 +48,11 @@ namespace Filmster.Web
 
             routes.MapRoute(
                 null,
+                "status",
+                new { controller = "Filmster", action = "Status" });
+
+            routes.MapRoute(
+                null,
                 "soeg/",
                 new { controller = "Filmster", action = "Search" });
 

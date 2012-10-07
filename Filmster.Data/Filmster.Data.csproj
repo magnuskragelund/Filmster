@@ -63,6 +63,7 @@
     <Compile Include="FilmsterRepository.cs" />
     <Compile Include="IFilmsterRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Filmster.edmx">

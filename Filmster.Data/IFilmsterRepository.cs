@@ -24,6 +24,7 @@ namespace Filmster.Data
         void AddImpression(Movie movie);
         void AddImpression(RentalOption rentalOption);
         List<Movie> Query(string query, bool titleOnly = false);
+        List<Status> GetVendorStatus();
         void Save(bool dispose = true);
         void Undo();
     }
