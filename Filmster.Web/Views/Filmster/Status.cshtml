@@ -1,0 +1,15 @@
+﻿@model List<Filmster.Data.Status>
+@{
+    ViewBag.Title = "Filmster Status";
+}
+
+<section class="block">
+    @foreach (var status in Model)
+    {
+        <dl>
+            <dt>@status.Name</dt>
+            <dd>Date of last seen rental option: @status.LatestRentalOption</dd>
+            <dd>Rental Options: @status.TotalActiveRentalOptions / @status.TotalRentalOptions</dd>
+        </dl>
+    }
+</section>

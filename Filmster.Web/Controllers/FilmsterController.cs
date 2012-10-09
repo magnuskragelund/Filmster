@@ -8,6 +8,7 @@ using System.Web.Routing;
 using Filmster.Data;
 using Filmster.Web.Models;
 using Filmster.Web.Utils;
+using System.Dynamic;
 
 namespace Filmster.Web.Controllers
 {
@@ -115,6 +116,11 @@ namespace Filmster.Web.Controllers
         public ActionResult About()
         {
             return View();
+        }
+
+        public ViewResult Status()
+        {
+            return View(_repo.GetVendorStatus());
         }
 
         public FileContentResult RobotsText()
