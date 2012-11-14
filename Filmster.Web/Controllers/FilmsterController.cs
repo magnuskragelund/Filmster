@@ -8,7 +8,6 @@ using System.Web.Routing;
 using Filmster.Data;
 using Filmster.Web.Models;
 using Filmster.Web.Utils;
-using System.Dynamic;
 
 namespace Filmster.Web.Controllers
 {
@@ -98,6 +97,9 @@ namespace Filmster.Web.Controllers
             {
                 case "CDON":
                     url = string.Format("http://clk.tradedoubler.com/click?p=120&a=2050910&g=0&url={0}", rentalOption.Url);
+                    break;
+                case "Apple iTunes":
+                    url = string.Format("http://clk.tradedoubler.com/click?p=24375&a=2050910&g=0&url={0}", rentalOption.Url);
                     break;
                 default:
                     url = rentalOption.Url;
